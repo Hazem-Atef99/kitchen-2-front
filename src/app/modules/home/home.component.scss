@@ -1,0 +1,22 @@
+$second-color: #D9D9D9;
+.bg-hover{
+    transition: .3s all;
+}
+.bg-icon {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: $second-color
+}
+
+.icon:not(.icon-c-s):not(.icon-custom-size).icon-xl {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+.bg-hover:hover{
+    background-color: #fff;
+    box-shadow: 0 0 6px #ccc;
+}
