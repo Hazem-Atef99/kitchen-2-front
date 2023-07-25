@@ -72,9 +72,10 @@
       <table [striped]="true" cTable>
         <thead>
           <tr>
-            <th scope="col">المبيعات</th>
+            <th scope="col">العميل</th>
+            <th scope="col">الموظف</th>
             <th scope="col">التاريخ</th>
-            <th scope="col">الحالة</th>
+            <th scope="col">النوع</th>
             <th scope="col">طباعة</th>
             <th scope="col">تعديل</th>
             <th scope="col">تراجع</th>
@@ -84,10 +85,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of [1,2,3,4,5,6]">
-            <td>اسلام على سعيد</td>
-            <td>{{today | date}}</td>
-            <td>تحت القياس</td>
+          <tr *ngFor="let item of allQuotations">
+            <td>{{item?.client.clientName}}</td>
+            <td>{{item?.createdByUserName}}</td>
+            <td>{{item.creationDate | date}}</td>
+            <td>{{item?.fileTypeName}}</td>
             <td>
               <button cButton class="btn btn-outline-secondary m-0 p-2">
                 <svg cIcon name="cil-print"></svg>

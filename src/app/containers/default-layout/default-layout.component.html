@@ -17,6 +17,7 @@
   </ng-scrollbar>
   <c-sidebar-toggler *ngIf="!sidebar.narrow" toggle="unfoldable" cSidebarToggle="sidebar" />
 </c-sidebar>
+<c-toaster [ngClass]="'p-3'" position="fixed" placement="top-end"></c-toaster>
 
 <!--main-->
 <div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">

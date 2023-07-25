@@ -37,7 +37,9 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-
+import { LoginService } from './views/pages/login/login.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from './core/core.module'
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -72,7 +74,9 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    HttpClientModule,
+    CoreModule
   ],
   providers: [
     {
@@ -80,7 +84,9 @@ const APP_CONTAINERS = [
       useClass: HashLocationStrategy
     },
     IconSetService,
-    Title
+    Title,
+    LoginService,
+    HttpClientModule
   ],
   bootstrap: [AppComponent]
 })
