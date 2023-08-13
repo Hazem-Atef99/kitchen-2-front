@@ -5,14 +5,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuotationsService {
-  domain: string = 'http://194.163.132.242:5000/api/ClientFile/';
+  domain: string = 'http://194.163.132.242:5000/api/';
 
   constructor(private _HttpClient: HttpClient) { }
   
   GetAllClientFiles(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}GetAllClientFiles`)
+    return this._HttpClient.get(`${this.domain}ClientFile/GetAllClientFiles`)
   }
   AddClientFile(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}AddClientFile`)
+    return this._HttpClient.get(`${this.domain}ClientFile/AddClientFile`)
+  }
+  GetStatusCategoryById(id:number): Observable<any> {
+    return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)
   }
 }

@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { QuotationsComponent } from '../quotations/quotations.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CardModule, FormModule, GridModule, TableModule } from '@coreui/angular';
-import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { IconModule } from '@coreui/icons-angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http'
 import { QuotationsService } from './quotations.service';
 import { FormQuotationComponent } from './form-quotation/form-quotation.component';
@@ -30,7 +29,8 @@ const routes: Routes = [
     IconModule,
     FormModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [ QuotationsService]
 })

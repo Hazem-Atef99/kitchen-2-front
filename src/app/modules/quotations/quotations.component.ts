@@ -9,8 +9,9 @@ import { QuotationsService } from './quotations.service';
 export class QuotationsComponent implements OnInit{
  today:Date = new Date();
  allQuotations:any[]=[];
+
  constructor(
-  private _QuotationsService: QuotationsService
+  private _QuotationsService: QuotationsService,
  ){}
  ngOnInit(): void {
      this.GetAllClientFiles();
