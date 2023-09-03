@@ -14,10 +14,10 @@ export class QuotationsComponent implements OnInit{
   private _QuotationsService: QuotationsService,
  ){}
  ngOnInit(): void {
-     this.GetAllClientFiles();
+     this.GetShortClientFiles();
  }
- GetAllClientFiles(){
-  this._QuotationsService.GetAllClientFiles().subscribe({
+ GetShortClientFiles(){
+  this._QuotationsService.GetShortClientFiles().subscribe({
     next:(res:any)=>{
       this.allQuotations = res.data
     }

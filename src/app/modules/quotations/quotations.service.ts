@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,11 +10,11 @@ export class QuotationsService {
 
   constructor(private _HttpClient: HttpClient) { }
 
-  GetAllClientFiles(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/GetAllClientFiles`)
+  GetShortClientFiles(): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles?PageType=1`)
   }
-  AddClientFile(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/AddClientFile`)
+  AddClientFile(body:FormGroup): Observable<any> {
+    return this._HttpClient.post(`${this.domain}ClientFile/AddClientFile`,body)
   }
   GetStatusCategoryById(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)

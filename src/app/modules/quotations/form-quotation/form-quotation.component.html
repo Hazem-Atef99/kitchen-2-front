@@ -1,7 +1,7 @@
 <c-card class="mb-4">
     <c-card-header class="d-flex justify-content-between align-items-center py-4">
         <strong> اضافة عروض الأسعار</strong>
-        <button class="btn btn-success" (click)="onSubmit()">
+        <button class="btn btn-success" (click)="AddClientFile()">
             اضافة
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                 viewBox="0 0 16 16">
@@ -13,104 +13,158 @@
 </c-card>
 <c-card class="mb-4 py-4">
     <form [formGroup]="AddClientFileForm">
-        <c-row class="px-2">
+        <c-row class="p-2">
             <c-col>
                 <c-form-check>
-                    <input cFormCheckInput type="radio" name="value" value="1" />
+                    <input cFormCheckInput formControlName="fileTypeId" type="radio" name="fileTypeId" value="1" />
                     <label cFormCheckLabel>المطابخ</label>
                 </c-form-check>
             </c-col>
             <c-col>
                 <c-form-check>
-                    <input cFormCheckInput type="radio" name="value" value="2" />
+                    <input cFormCheckInput formControlName="fileTypeId" type="radio" name="fileTypeId" value="2" />
                     <label cFormCheckLabel>الابواب</label>
                 </c-form-check>
             </c-col>
             <c-col>
                 <c-form-check>
-                    <input cFormCheckInput type="radio" name="value" value="4" />
+                    <input cFormCheckInput formControlName="fileTypeId" type="radio" name="fileTypeId" value="4" />
                     <label cFormCheckLabel>خزائن الحائط</label>
                 </c-form-check>
             </c-col>
             <c-col>
                 <c-form-check>
-                    <input cFormCheckInput type="radio" name="value" value="6" />
+                    <input cFormCheckInput formControlName="fileTypeId" type="radio" name="fileTypeId" value="6" />
                     <label cFormCheckLabel>الاعمال الخشبية</label>
                 </c-form-check>
             </c-col>
         </c-row>
-        <c-row class="px-2">
-            <ng-container formArrayName="items" *ngIf="loadPriceOffer">
-                <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
-                    <ng-container [formGroupName]="i">
-                        <div class="col-md-6 mb-3" >
-                            <div class="row">
-                                <div class="col-8">
-                                    <label>{{ListOfItems[i].name}}</label>
-                                    <select aria-label="Default select example" formControlName="itemId" cSelect>
-                                        <option value="">اختر {{ListOfItems[i].name}}</option>
-                                        <option *ngFor="let load of loadPriceOffer[ListOfItems[i].value].statuses"
-                                            [value]="load.statusId">{{load.description}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <label>العدد</label>
-                                    <input aria-label="default input example" cFormControl formControlName="itemCount"
-                                        type="number" />
-                                </div>
-                            </div>
+        <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
+            <div class="card">
+                <div class="card-header m-0">
+                    <h5>المجاميع</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <label>الخصم الاضافى</label>
+                            <input aria-label="default input example" cFormControl formControlName="additionaldiscount"
+                                type="number" />
                         </div>
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-        </c-row>
-        <c-row class="px-2 mt-4">
-            <div class="col-md-6 mb-3">
-                <div class="row">
-                    <div class="col-12">
-                        <label>متطلبات العميل</label>
-                        <textarea cFormControl formControlName="deviceNotes" cols="30" rows="3"></textarea>
                     </div>
                 </div>
             </div>
-        </c-row>
+        </c-col>
+        <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
+            <div class="card">
+                <div class="card-header m-0">
+                    <h5>المطبخ</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <ng-container formArrayName="items">
+                            <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
+                                <ng-container *ngIf="ListOfItems[i].x">
+                                    <ng-container [formGroupName]="i">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <label>{{ListOfItems[i].name}}</label>
+                                                    <select aria-label="Default select example" formControlName="itemId"
+                                                        cSelect>
+                                                        <option selected value="">اختر {{ListOfItems[i].name}}</option>
+                                                        <option
+                                                            *ngFor="let load of loadPriceOffer[ListOfItems[i].value]?.statuses"
+                                                            [value]="load.statusId">{{load.description}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label>العدد</label>
+                                                    <input aria-label="default input example" cFormControl
+                                                        formControlName="itemCount" type="number" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                        <div class="col-md-6 mb-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>متطلبات العميل</label>
+                                    <textarea cFormControl formControlName="deviceNotes" cols="30" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c-col>
         <c-row class="px-2">
             <ng-container formArrayName="items" *ngIf="loadPriceOffer">
                 <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
-                    <ng-container [formGroupName]="i">
-                        <div class="col-md-6 mb-3" *ngIf="ListOfItems[i].itemTypeId !== 4">
-                            <div class="row">
-                                <div class="col-4">
-                                    <label>{{ListOfItems[i].name}}</label>
-                                    <select aria-label="Default select example" formControlName="categoryId" cSelect>
-                                        <option value="">اختر {{ListOfItems[i].name}}</option>
-                                        <option *ngFor="let load of loadPriceOffer[ListOfItems[i].value].statuses"
-                                            [value]="load.statusId">{{load.description}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-6">
-                                    <label>{{ListOfItems[i].name}}</label>
-                                    <select aria-label="Default select example" formControlName="itemId" cSelect>
-                                        <option value="">اختر {{ListOfItems[i].name}}</option>
-                                        <option *ngFor="let Unit of UnitsItemsbyCategory.statuses"
-                                            [value]="Unit.statusId">{{Unit.description}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-2">
-                                    <label>العدد</label>
-                                    <input aria-label="default input example" cFormControl formControlName="itemCount"
-                                        type="number" />
-                                </div>
-                                <div class="col-md-12 mb-3">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <label>الملاحظة</label>
-                                            <textarea cFormControl name="" id="" cols="30" rows="3"></textarea>
+                    <ng-container *ngIf="!ListOfItems[i].x">
+                        <ng-container [formGroupName]="i">
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>{{ListOfItems[i].name}}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4" *ngIf="ListOfItems[i].id == 3">
+                                                <label style="visibility: hidden;">.</label>
+                                                <h5>{{ListOfItems[i].accessories.name}}</h5>
+                                            </div>
+                                            <div class="col-4" *ngIf="ListOfItems[i].id == 1">
+                                                <label style="visibility: hidden;">.</label>
+                                                <select aria-label="Default select example" formControlName="itemId"
+                                                    cSelect>
+                                                    <option selected value="">اختر {{ListOfItems[i].name}}</option>
+                                                    <option
+                                                        *ngFor="let load of loadPriceOffer[ListOfItems[i].value]?.statuses"
+                                                        [value]="load.statusId">{{load.description}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6" *ngIf="ListOfItems[i].id == 1">
+                                                <label>{{ListOfItems[i].units.name}}</label>
+                                                <select aria-label="Default select example" formControlName="categoryId"
+                                                    cSelect>
+                                                    <option selected value="">اختر {{ListOfItems[i].name}}</option>
+                                                    <option *ngFor="let Unit of UnitsItemsbyCategory?.statuses"
+                                                        [value]="Unit.statusId">{{Unit.description}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6" *ngIf="ListOfItems[i].id == 3">
+                                                <label style="visibility: hidden;">.</label>
+                                                <select aria-label="Default select example" formControlName="itemId"
+                                                    cSelect>
+                                                    <option selected value="">اختر {{ListOfItems[i].name}}</option>
+                                                    <option
+                                                        *ngFor="let load of loadPriceOffer[ListOfItems[i].value]?.statuses?.statuses"
+                                                        [value]="load.statusId">{{load.description}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-2">
+                                                <label>العدد</label>
+                                                <input aria-label="default input example" cFormControl
+                                                    formControlName="itemCount" type="number" />
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label>الملاحظة</label>
+                                                        <textarea cFormControl name="" id="" cols="30"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
             </ng-container>
