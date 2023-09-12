@@ -39,7 +39,9 @@ import {
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { LoginService } from './views/pages/login/login.service';
 import { HttpClientModule } from '@angular/common/http';
-import { CoreModule } from './core/core.module'
+import { CoreModule } from './core/core.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { ToastrModule } from 'ngx-toastr';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -77,6 +79,8 @@ const APP_CONTAINERS = [
     NgScrollbarModule,
     HttpClientModule,
     CoreModule,
+    NgbModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

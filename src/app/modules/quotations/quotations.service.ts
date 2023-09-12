@@ -11,7 +11,7 @@ export class QuotationsService {
   constructor(private _HttpClient: HttpClient) { }
 
   GetShortClientFiles(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles?PageType=1`)
+    return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles?PageType=0`)
   }
   AddClientFile(body:FormGroup): Observable<any> {
     return this._HttpClient.post(`${this.domain}ClientFile/AddClientFile`,body)

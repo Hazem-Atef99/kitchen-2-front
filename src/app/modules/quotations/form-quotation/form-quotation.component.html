@@ -42,6 +42,27 @@
         <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
             <div class="card">
                 <div class="card-header m-0">
+                    <h5>الزبون</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <label>الزبون</label>
+                            <select aria-label="Default select example" formControlName="clientId"
+                            cSelect>
+                            <option selected value="">اختر الزبون</option>
+                            <option
+                                *ngFor="let Client of allClients"
+                                [value]="Client.clientId">{{Client.clientName}}</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c-col>
+        <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
+            <div class="card">
+                <div class="card-header m-0">
                     <h5>المجاميع</h5>
                 </div>
                 <div class="card-body">
