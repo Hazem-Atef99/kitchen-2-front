@@ -10,6 +10,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class QuotationsComponent implements OnInit{
  today:Date = new Date();
  allQuotations:any[]=[];
+ statusCategoryById:any;;
+ viewImg:any [] = [] ;
+uploadedImg:any [] = [] ;
  currentPage: number = 1;
  filterForm!:FormGroup;
  constructor(
@@ -29,7 +32,8 @@ export class QuotationsComponent implements OnInit{
   
  }
  ngOnInit(): void {
-     this.GetShortClientFiles();
+   this.GetShortClientFiles();
+   this.GetStatusCategoryById()
  }
  GetShortClientFiles(){
   this._QuotationsService.GetShortClientFiles().subscribe({
@@ -38,4 +42,23 @@ export class QuotationsComponent implements OnInit{
     }
   })
  }
+ GetStatusCategoryById(){
+  this._QuotationsService.GetStatusCategoryById(100).subscribe({
+    next:(res:any)=>{
+      this.statusCategoryById = res.data
+    }
+  })
+ }
+ onImageSelected(event: any): void {
+  this.viewImg = []
+  this.uploadedImg = []
+  if (event.target.files && event.target.files[0]) {
+    const reader = new FileReader();
+    this.uploadedImg.push(event.target.files.item(0));
+    reader.onload = (event: any) => {
+      this.viewImg.push(event.target.result);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+}
 }

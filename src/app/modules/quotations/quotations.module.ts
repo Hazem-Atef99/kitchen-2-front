@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuotationsComponent } from '../quotations/quotations.component';
 import { RouterModule, Routes } from '@angular/router';
-import { CardModule, FormModule, GridModule, TableModule, ToastModule } from '@coreui/angular';
+import { ButtonModule, CardModule, FormModule, GridModule, ModalModule, TableModule, ToastModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http'
@@ -34,7 +34,9 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     NgbPaginationModule,
-    NgbToast
+    NgbToast,
+    ModalModule,
+    ButtonModule
   ],
   providers: [ QuotationsService]
 })

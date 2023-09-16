@@ -70,10 +70,10 @@
             <th scope="col">الموظف</th>
             <th scope="col">التاريخ</th>
             <th scope="col">النوع</th>
-            <th scope="col">طباعة</th>
+            <!-- <th scope="col">طباعة</th>
             <th scope="col">تعديل</th>
             <th scope="col">تراجع</th>
-            <th scope="col">ملاحظات</th>
+            <th scope="col">ملاحظات</th> -->
             <th scope="col">متابعات</th>
             <th scope="col">مرافقات</th>
           </tr>
@@ -84,7 +84,7 @@
             <td>{{item?.createdByUserName}}</td>
             <td>{{item.creationDate | date}}</td>
             <td>{{item?.fileTypeName}}</td>
-            <td>
+            <!-- <td>
               <button cButton class="btn btn-outline-secondary m-0 p-2">
                 <svg cIcon name="cil-print"></svg>
               </button>
@@ -103,14 +103,14 @@
               <button cButton class="btn btn-outline-secondary m-0 p-2">
                 <svg cIcon name="cil-bell"></svg>
               </button>
-            </td>
+            </td> -->
             <td>
-              <button cButton class="btn btn-outline-secondary m-0 p-2">
+              <button cButton  class="btn btn-outline-secondary m-0 p-2">
                 <svg cIcon name="cil-bell"></svg>
               </button>
             </td>
             <td>
-              <button cButton class="btn btn-outline-secondary m-0 p-2">
+              <button cButton [cModalToggle]="modalXl.id" class="btn btn-outline-secondary m-0 p-2">
                 <svg cIcon name="cil-bell"></svg>
               </button>
             </td>
@@ -122,3 +122,70 @@
     </c-card-body>
   </c-card>
 </c-col>
+
+
+<!-- AddClientFileAttachment -->
+<c-modal #modalXl id="modalXl" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>المرفقات</h5>
+    <button [cModalToggle]="modalXl.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+          <h5>اضافة</h5>
+      </div>
+      <div class="card-body">
+          <div class="row">
+              <div class="col-6">
+                  <label style="visibility: hidden;">.</label>
+                  <select aria-label="Default select example" 
+                      cSelect>
+                      <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
+                      <option
+                          *ngFor="let load of statusCategoryById.statuses"
+                          [value]="load.statusId">{{load.defaultDesc}}</option>
+                  </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label> الصورة </label>
+                <input type="file" accept="image/*" (change)="onImageSelected($event)"
+                       class="form-control">
+                <div class="row" *ngIf="viewImg[0]">
+                  <div class="col-2 card-image p-0 m-2 position-relative">
+                    <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      <div class="card my-4">
+        <div class="card-header">
+          عرض المرفقات
+        </div>
+        <div class="card-body">
+          <div class="row">
+              <div class="col-6">
+                  <label style="visibility: hidden;">.</label>
+                  <select aria-label="Default select example" 
+                      cSelect>
+                      <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
+                      <option
+                          *ngFor="let load of statusCategoryById.statuses"
+                          [value]="load.statusId">{{load.defaultDesc}}</option>
+                  </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label> الصورة </label>
+                <div class="row" *ngIf="viewImg[0]">
+                  <div class="col-2 card-image p-0 m-2 position-relative">
+                    <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      </div>
+  </div>
+  </c-modal-body>
+</c-modal>
