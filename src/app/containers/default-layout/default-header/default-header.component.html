@@ -45,9 +45,9 @@
         </a>
       </c-nav-item>
     </c-header-nav> -->
-    <!-- <c-header-nav class="ms-3">
+    <c-header-nav class="ms-3">
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
-    </c-header-nav> -->
+    </c-header-nav>
 
   </c-container>
   <!-- <c-header-divider></c-header-divider> -->
@@ -76,7 +76,7 @@
       </c-avatar>
     </button>
     <ul cDropdownMenu class="pt-0 pr-5 w-auto">
-      <li>
+      <!-- <li>
         <h6 cDropdownHeader class="bg-light fw-semibold py-2">Account</h6>
       </li>
       <li>
@@ -151,9 +151,9 @@
       </li>
       <li>
         <hr cDropdownDivider/>
-      </li>
-      <li>
-        <a routerLink="./" cDropdownItem>
+      </li> -->
+      <li (click)="logOut()" class="my-2" style="cursor: pointer;">
+        <a cDropdownItem>
           <svg cIcon class="me-2" name="cilLockLocked"></svg>
           Lock Account
         </a>

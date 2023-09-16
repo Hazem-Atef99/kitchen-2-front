@@ -12,33 +12,39 @@
   </c-card-header>
 </c-card>
 <c-card class="mb-4 py-4">
-  <c-row class="px-2">
+  <c-row class="p-2">
     <c-col>
       <c-form-check>
-        <input cFormCheckInput type="radio" name="value" value="two1" />
-        <label cFormCheckLabel>المطابخ</label>
+          <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="0" />
+          <label cFormCheckLabel>الكل</label>
       </c-form-check>
+  </c-col>
+    <c-col>
+        <c-form-check>
+            <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="1" />
+            <label cFormCheckLabel>المطابخ</label>
+        </c-form-check>
     </c-col>
     <c-col>
-      <c-form-check>
-        <input cFormCheckInput type="radio" name="value" value="two2" />
-        <label cFormCheckLabel>الابواب</label>
-      </c-form-check>
+        <c-form-check>
+            <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="2" />
+            <label cFormCheckLabel>الابواب</label>
+        </c-form-check>
     </c-col>
     <c-col>
-      <c-form-check>
-        <input cFormCheckInput type="radio" name="value" value="two3" />
-        <label cFormCheckLabel>خزائن الحائط</label>
-      </c-form-check>
+        <c-form-check>
+            <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="4" />
+            <label cFormCheckLabel>خزائن الحائط</label>
+        </c-form-check>
     </c-col>
     <c-col>
-      <c-form-check>
-        <input cFormCheckInput type="radio" name="value" value="two4" />
-        <label cFormCheckLabel>الاعمال الخشبية</label>
-      </c-form-check>
+        <c-form-check>
+            <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="6" />
+            <label cFormCheckLabel>الاعمال الخشبية</label>
+        </c-form-check>
     </c-col>
-  </c-row>
-  <c-row class="px-2 mt-4">
+</c-row>
+  <!-- <c-row class="px-2 mt-4">
     <c-col md="4">
       <input aria-label="default input example" cFormControl placeholder="البحث" type="text" />
     </c-col>
@@ -58,7 +64,7 @@
         <option value="3">Three</option>
       </select>
     </c-col>
-  </c-row>
+  </c-row> -->
 </c-card>
 <c-col xs="12">
   <c-card class="mb-4">
@@ -85,7 +91,7 @@
             <td>{{item.creationDate | date}}</td>
             <td>{{item?.fileTypeName}}</td>
             <!-- <td>
-              <button cButton class="btn btn-outline-secondary m-0 p-2">
+              <button cButton class="btn btn-light m-0 p-2">
                 <svg cIcon name="cil-print"></svg>
               </button>
             </td>
@@ -105,13 +111,20 @@
               </button>
             </td> -->
             <td>
-              <button cButton  class="btn btn-outline-secondary m-0 p-2">
-                <svg cIcon name="cil-bell"></svg>
+              <button (click)="clientFileId = item?.clientFileId;GetAllFollowUp()" [cModalToggle]="modalXl2.id" class="btn btn-light m-0 p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                  <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                </svg>
               </button>
             </td>
             <td>
-              <button cButton [cModalToggle]="modalXl.id" class="btn btn-outline-secondary m-0 p-2">
-                <svg cIcon name="cil-bell"></svg>
+              <button (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" [cModalToggle]="modalXl.id" class="btn btn-light m-0 p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
+                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                </svg>
               </button>
             </td>
           </tr>
@@ -138,12 +151,11 @@
       <div class="card-body">
           <div class="row">
               <div class="col-6">
-                  <label style="visibility: hidden;">.</label>
-                  <select aria-label="Default select example" 
+                  <label>تصنيف الملف</label>
+                  <select aria-label="Default select example" [(ngModel)]="statusId"
                       cSelect>
-                      <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
                       <option
-                          *ngFor="let load of statusCategoryById.statuses"
+                          *ngFor="let load of statusCategoryById?.statuses"
                           [value]="load.statusId">{{load.defaultDesc}}</option>
                   </select>
               </div>
@@ -158,25 +170,73 @@
                 </div>
               </div>
           </div>
+          <div class="col-12 text-center mt-4">
+            <button class="btn btn-success" (click)="AddClientFileAttachment()">
+              اضافة
+            </button>
+          </div>
       </div>
-      <div class="card my-4">
-        <div class="card-header">
-          عرض المرفقات
+    </div>
+    <div class="card my-4">
+      <div class="card-header">
+        عرض المرفقات
+      </div>
+      <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+              <label>تصنيف الملف</label>
+                <select aria-label="Default select example" 
+                    cSelect>
+                    <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
+                    <option
+                        *ngFor="let load of statusCategoryById?.statuses"
+                        [value]="load.statusId">{{load.defaultDesc}}</option>
+                </select>
+            </div>
+            <div class="card col-12 my-2">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
+                    <!-- <label> الصورة </label> -->
+                    <div class="row" *ngIf="item">
+                      <div class="col-3 card-image p-0 m-2 position-relative">
+                        <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                        <p>{{item.statusName}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-        <div class="card-body">
+    </div>
+    </div>
+  </c-modal-body>
+</c-modal>
+
+
+
+<!-- AddClientFileFollowUp -->
+<c-modal #modalXl2 id="modalXl2" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>المتابعات</h5>
+    <button [cModalToggle]="modalXl2.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+          <h5>اضافة</h5>
+      </div>
+      <div class="card-body">
           <div class="row">
-              <div class="col-6">
-                  <label style="visibility: hidden;">.</label>
-                  <select aria-label="Default select example" 
-                      cSelect>
-                      <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
-                      <option
-                          *ngFor="let load of statusCategoryById.statuses"
-                          [value]="load.statusId">{{load.defaultDesc}}</option>
-                  </select>
+              <div class="col-12">
+                  <label>تصنيف الملف</label>
+                  <textarea  class="form-control" name="Note" id="Note" cols="30" rows="4" [(ngModel)]="Note"></textarea>
               </div>
               <div class="col-md-6 mb-3">
                 <label> الصورة </label>
+                <input type="file" accept="image/*" (change)="onImageSelected($event)"
+                       class="form-control">
                 <div class="row" *ngIf="viewImg[0]">
                   <div class="col-2 card-image p-0 m-2 position-relative">
                     <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
@@ -184,8 +244,46 @@
                 </div>
               </div>
           </div>
+          <div class="col-12 text-center mt-4">
+            <button class="btn btn-success" (click)="AddClientFileFollowUp()">
+              اضافة
+            </button>
+          </div>
       </div>
+    </div>
+    <div class="card my-4">
+      <div class="card-header">
+        عرض المتابعات
       </div>
-  </div>
+      <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+              <label>تصنيف الملف</label>
+                <select aria-label="Default select example" 
+                    cSelect>
+                    <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
+                    <option
+                        *ngFor="let load of statusCategoryById?.statuses"
+                        [value]="load.statusId">{{load.defaultDesc}}</option>
+                </select>
+            </div>
+            <div class="card col-12 my-2">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
+                    <!-- <label> الصورة </label> -->
+                    <div class="row" *ngIf="item">
+                      <div class="col-3 card-image p-0 m-2 position-relative">
+                        <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                        <p>{{item.statusName}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    </div>
   </c-modal-body>
 </c-modal>

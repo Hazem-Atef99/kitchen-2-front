@@ -10,8 +10,14 @@ export class QuotationsService {
 
   constructor(private _HttpClient: HttpClient) { }
 
-  GetShortClientFiles(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles?PageType=0`)
+  GetShortClientFiles(query:any): Observable<any> {
+    let value:any = {}
+    for (const key in query) {
+      if (query[key] != null) {
+        value[key] = query[key]
+      }
+    }
+    return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles` , {params:value})
   }
   AddClientFile(body:FormGroup): Observable<any> {
     return this._HttpClient.post(`${this.domain}ClientFile/AddClientFile`,body)
@@ -24,5 +30,29 @@ export class QuotationsService {
   }
   GetUnitsItemsbyCategory(): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetUnitsItemsbyCategory`)
+  }
+  AddClientFileAttachment(value:any): Observable<any> {
+    const formData = new FormData();
+    for (const key in value) {
+      if (value[key]) {
+        formData.append(key, value[key])
+      }
+    }
+    return this._HttpClient.put(`${this.domain}ClientFile/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
+  }
+  GetAllClientFileAttachment(clientFileId:number): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFile/GetAllClientFileAttachment?clientFileId=${clientFileId}`)
+  }
+  AddClientFileFollowUp(value:any): Observable<any> {
+    const formData = new FormData();
+    for (const key in value) {
+      if (value[key]) {
+        formData.append(key, value[key])
+      }
+    }
+    return this._HttpClient.put(`${this.domain}ClientFile/AddClientFileFollowUp?clientFileId=${value.clientFileId}`,formData)
+  }
+  GetAllFollowUp(clientFileId:number): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFile/GetAllFollowUp?clientFileId=${clientFileId}`)
   }
 }

@@ -36,7 +36,8 @@ const routes: Routes = [
     NgbPaginationModule,
     NgbToast,
     ModalModule,
-    ButtonModule
+    ButtonModule,
+    
   ],
   providers: [ QuotationsService]
 })
