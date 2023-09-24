@@ -13,9 +13,11 @@ import { Router } from '@angular/router';
 export class FormQuotationComponent implements OnInit {
   AddClientFileForm!: FormGroup;
   allClients: DataClients[] = [];
-
+  myArray1: any[] = [];
+  myArray2: any[] = [];
   ListOfItems: any[] = [
     {
+      isCount: true,
       x: 1,
       name: 'الجرانيت',
       value: 'garanet',
@@ -23,6 +25,7 @@ export class FormQuotationComponent implements OnInit {
       id: 16
     },
     {
+      isCount: false,
       x: 1,
       name: 'المجلى',
       value: 'magla',
@@ -30,6 +33,7 @@ export class FormQuotationComponent implements OnInit {
       id: 12
     },
     {
+      isCount: true,
       x: 1,
       name: 'البانيل',
       value: 'panel',
@@ -37,6 +41,7 @@ export class FormQuotationComponent implements OnInit {
       id: 15
     },
     {
+      isCount: false,
       x: 1,
       name: 'حفرة المجلى',
       value: 'maglaHole',
@@ -44,6 +49,7 @@ export class FormQuotationComponent implements OnInit {
       id: 13
     },
     {
+      isCount: true,
       x: 1,
       name: 'تصفيح الجدران من التوب',
       value: 'platingTopWall',
@@ -51,6 +57,7 @@ export class FormQuotationComponent implements OnInit {
       id: 227
     },
     {
+      isCount: false,
       x: 1,
       name: 'سترب خارجي',
       value: 'outerStrop',
@@ -58,6 +65,7 @@ export class FormQuotationComponent implements OnInit {
       id: 83
     },
     {
+      isCount: true,
       x: 1,
       name: 'نوع الايادي',
       value: 'handType',
@@ -65,6 +73,7 @@ export class FormQuotationComponent implements OnInit {
       id: 9
     },
     {
+      isCount: false,
       x: 1,
       name: 'الشفاط',
       value: 'shafat',
@@ -72,6 +81,7 @@ export class FormQuotationComponent implements OnInit {
       id: 23
     },
     {
+      isCount: true,
       x: 1,
       name: 'تسميك التوب',
       value: 'thickeningTop',
@@ -79,6 +89,7 @@ export class FormQuotationComponent implements OnInit {
       id: 276
     },
     {
+      isCount: false,
       x: 1,
       name: 'البطارية',
       value: 'batery',
@@ -86,6 +97,7 @@ export class FormQuotationComponent implements OnInit {
       id: 14
     },
     {
+      isCount: true,
       x: 1,
       name: 'الكورنيش',
       value: 'corniche',
@@ -93,6 +105,7 @@ export class FormQuotationComponent implements OnInit {
       id: 178
     },
     {
+      isCount: false,
       x: 1,
       name: 'توصيلات صحية',
       value: 'healthLinking',
@@ -100,6 +113,7 @@ export class FormQuotationComponent implements OnInit {
       id: 274
     },
     {
+      isCount: true,
       x: 1,
       name: 'الانارة',
       value: 'lighting',
@@ -169,21 +183,69 @@ export class FormQuotationComponent implements OnInit {
       deviceNotes: ['', [Validators.required]],
       fileTypeId: [null, [Validators.required]],
       additionaldiscount: [null, [Validators.required]],
-      items: this._FormBuilder.array([])
+      items: this._FormBuilder.array([]),
+      items1: this._FormBuilder.group({
+        itemId: [null, [Validators.required]],
+        itemCount: [1, [Validators.required]],
+        itemTypeId: [1, [Validators.required]],
+        itemPrice: [null],
+        eachItemPrice: [null],
+        notes: [null],
+        categoryId: null
+      }),
+      items2: this._FormBuilder.group({
+        itemId: [null, [Validators.required]],
+        itemCount: [1, [Validators.required]],
+        itemTypeId: [3, [Validators.required]],
+        itemPrice: [null],
+        eachItemPrice: [null],
+        notes: [null],
+        categoryId: null
+      })
     })
   }
   ClientFileFormGroup(): FormGroup {
     return this._FormBuilder.group({
       itemId: [null, [Validators.required]],
-      itemCount: [null, [Validators.required]],
-      itemTypeId: [null, [Validators.required]],
+      itemCount: [1, [Validators.required]],
+      itemTypeId: [4, [Validators.required]],
       itemPrice: [null],
+      eachItemPrice: [null],
       notes: [null],
       categoryId: null
     })
   }
+  setPrice(e: any, i: number) {
+    console.log(e.target.value)
+    let price = 0
+    price = this.loadPriceOffer[this.ListOfItems[i].value]?.statuses.filter((ele: any)=> ele.statusId == e.target.value)[0].price
+    console.log(price)
+    this.itemsFormArray.controls[i]?.get('eachItemPrice')?.patchValue(price)
+  }
+  getPrice(i: number) {
+    let totPrice = 0
+    totPrice = (this.itemsFormArray.controls[i]?.get('eachItemPrice')?.value * this.itemsFormArray.controls[i]?.get('itemCount')?.value)
+    this.itemsFormArray.controls[i]?.get('itemPrice')?.patchValue(totPrice)
+  }
+
+  addUnitItem() {
+    this.myArray1.push(this.items1Form)
+    console.log(this.myArray1)
+    // this.QuestionAnswer.controls[i]?.get('options')?.patchValue(this.myArray)
+  }
+  addAccessoriesItem() {
+    this.myArray2.push(this.items2Form)
+    console.log(this.myArray2)
+    // this.QuestionAnswer.controls[i]?.get('options')?.patchValue(this.myArray)
+  }
   get itemsFormArray() {
     return this.AddClientFileForm.controls["items"] as FormArray;
+  }
+  get items1Form() {
+    return this.AddClientFileForm.controls["items1"]
+  }
+  get items2Form() {
+    return this.AddClientFileForm.controls["items2"]
   }
 
   addItemsFormArray() {
@@ -221,6 +283,12 @@ export class FormQuotationComponent implements OnInit {
 
   }
   AddClientFile() {
+    for (let i = 0; i < this.myArray1.length; i++){
+      this.itemsFormArray.push(this.myArray1[i])
+    }
+    for (let i = 0; i < this.myArray2.length; i++){
+      this.itemsFormArray.push(this.myArray2[i])
+    }
     console.log(this.AddClientFileForm.value);
     this._QuotationsService.AddClientFile(this.AddClientFileForm.value).subscribe({
       next: (res: any) => {

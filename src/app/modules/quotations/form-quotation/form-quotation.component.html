@@ -91,18 +91,20 @@
                                             <div class="row">
                                                 <div class="col-8">
                                                     <label>{{ListOfItems[i].name}}</label>
-                                                    <select aria-label="Default select example" formControlName="itemId"
+                                                    <select aria-label="Default select example"
+                                                            formControlName="itemId" (change)="setPrice($event, i)"
                                                         cSelect>
-                                                        <option selected value="">اختر {{ListOfItems[i].name}}</option>
+<!--                                                        <option selected disabled>اختر {{ListOfItems[i].name}}</option>-->
                                                         <option
                                                             *ngFor="let load of loadPriceOffer[ListOfItems[i].value]?.statuses"
                                                             [value]="load.statusId">{{load.description}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-4">
-                                                    <label>العدد</label>
-                                                    <input aria-label="default input example" cFormControl
-                                                        formControlName="itemCount" type="number" />
+                                                    <label *ngIf="ListOfItems[i].isCount">العدد</label>
+                                                    <input *ngIf="ListOfItems[i].isCount" aria-label="default input example" cFormControl
+                                                        formControlName="itemCount" type="number" (keyup)="getPrice(i)"
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -123,50 +125,45 @@
             </div>
         </c-col>
         <c-row class="px-2">
-            <ng-container formArrayName="items" *ngIf="loadPriceOffer">
-                <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
-                    <ng-container *ngIf="!ListOfItems[i].x">
-                        <ng-container [formGroupName]="i">
+            <ng-container formGroupName="items1" *ngIf="loadPriceOffer">
+                <ng-container>
+                    <ng-container>
+                        <ng-container>
                             <div class="col-md-6 mb-3">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5>{{ListOfItems[i].name}}</h5>
+                                    <div class="card-header d-flex justify-content-between">
+                                        <h5>الوحدات</h5>
+                                        <button class="btn btn-success" (click)="addUnitItem()">
+                                          اضافة
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                                               viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                          </svg>
+                                        </button>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-4" *ngIf="ListOfItems[i].id == 3">
+                                            <div class="col-4">
                                                 <label style="visibility: hidden;">.</label>
-                                                <h5>{{ListOfItems[i].accessories.name}}</h5>
-                                            </div>
-                                            <div class="col-4" *ngIf="ListOfItems[i].id == 1">
-                                                <label style="visibility: hidden;">.</label>
-                                                <select aria-label="Default select example" formControlName="itemId"
-                                                    cSelect>
-                                                    <option selected value="">اختر {{ListOfItems[i].name}}</option>
+                                                <select aria-label="Default select example" formControlName="itemId" cSelect>
+<!--                                                    <option selected value="">اختر الوحدات</option>-->
                                                     <option
-                                                        *ngFor="let load of loadPriceOffer[ListOfItems[i].value]?.statuses"
-                                                        [value]="load.statusId">{{load.description}}</option>
+                                                        *ngFor="let load of loadPriceOffer['unites']?.statuses"
+                                                        [value]="load.statusId">{{load.description}}
+                                                    </option>
                                                 </select>
                                             </div>
-                                            <div class="col-6" *ngIf="ListOfItems[i].id == 1">
-                                                <label>{{ListOfItems[i].units.name}}</label>
+                                            <div class="col-6">
+                                                <label>الوحدة</label>
                                                 <select aria-label="Default select example" formControlName="categoryId"
                                                     cSelect>
-                                                    <option selected value="">اختر {{ListOfItems[i].name}}</option>
+                                                    <option selected value="">اختر الوحدة</option>
                                                     <option *ngFor="let Unit of UnitsItemsbyCategory?.statuses"
                                                         [value]="Unit.statusId">{{Unit.description}}</option>
                                                 </select>
                                             </div>
-                                            <div class="col-6" *ngIf="ListOfItems[i].id == 3">
-                                                <label style="visibility: hidden;">.</label>
-                                                <select aria-label="Default select example" formControlName="itemId"
-                                                    cSelect>
-                                                    <option selected value="">اختر {{ListOfItems[i].name}}</option>
-                                                    <option
-                                                        *ngFor="let load of loadPriceOffer[ListOfItems[i].value]?.statuses?.statuses"
-                                                        [value]="load.statusId">{{load.description}}</option>
-                                                </select>
-                                            </div>
+
                                             <div class="col-2">
                                                 <label>العدد</label>
                                                 <input aria-label="default input example" cFormControl
@@ -182,12 +179,104 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table>
+                                                  <table [striped]="true" cTable>
+                                                    <thead>
+                                                    <tr>
+                                                      <th scope="col">العميل</th>
+                                                      <th scope="col">الموظف</th>
+                                                      <th scope="col">التاريخ</th>
+                                                      <th scope="col">البريد الالكترونى</th>
+                                                      <th scope="col">رقم الهاتف</th>
+                                                      <th scope="col">فاكس</th>
+                                                      <th scope="col">تعديل</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                      <td>kkkkkkkkk</td>
+                                                      <td>kkkkkkkkk</td>
+                                                      <td>kkkkkkkkk</td>
+                                                      <td>kkkkkkkkk</td>
+                                                      <td>kkkkkkkkk</td>
+                                                      <td>kkkkkkkkk</td>
+
+                                                      <td>
+                                                        <button cButton class="btn btn-outline-secondary m-0 p-2">
+                                                          <svg cIcon name="cil-pencil"></svg>
+                                                        </button>
+                                                      </td>
+
+                                                    </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </ng-container>
                     </ng-container>
                 </ng-container>
+            </ng-container>
+            <ng-container formGroupName="items2" *ngIf="loadPriceOffer">
+              <ng-container>
+                <ng-container>
+                  <ng-container>
+                    <div class="col-md-6 mb-3">
+                      <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                          <h5>الاكسسوارات</h5>
+                          <button class="btn btn-success" (click)="addAccessoriesItem()">
+                            اضافة
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                                 viewBox="0 0 16 16">
+                              <path fill-rule="evenodd"
+                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                            </svg>
+                          </button>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-4">
+                              <label style="visibility: hidden;">.</label>
+                              <h5>الاكسسوارات</h5>
+                            </div>
+                            <div class="col-6">
+                              <label style="visibility: hidden;">.</label>
+                              <select aria-label="Default select example" formControlName="itemId"
+                                      cSelect>
+<!--                                <option selected value="">اختر الاضافات</option>-->
+                                <option
+                                  *ngFor="let load of loadPriceOffer['accessories']?.statuses?.statuses"
+                                  [value]="load.statusId">{{load.description}}</option>
+                              </select>
+                            </div>
+
+                            <div class="col-2">
+                              <label>العدد</label>
+                              <input aria-label="default input example" cFormControl
+                                     formControlName="itemCount" type="number" />
+                            </div>
+                            <div class="col-md-12 mb-3">
+                              <div class="row">
+                                <div class="col-12">
+                                  <label>الملاحظة</label>
+                                  <textarea cFormControl name="" id="" cols="30"
+                                            rows="3"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
             </ng-container>
         </c-row>
     </form>
