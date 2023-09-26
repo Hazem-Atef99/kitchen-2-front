@@ -13,9 +13,11 @@ import { Router } from '@angular/router';
 export class FormQuotationComponent implements OnInit {
   AddClientFileForm!: FormGroup;
   allClients: DataClients[] = [];
-  myArray1: any[] = [];
-  myArray2: any[] = [];
-  ListOfItems: any[] = [
+  myArray1: any = [];
+  myArray2: any = [];
+  myViewArray1: any = [];
+  myViewArray2: any = [];
+  ListOfItems: any = [
     {
       isCount: true,
       x: 1,
@@ -227,16 +229,78 @@ export class FormQuotationComponent implements OnInit {
     totPrice = (this.itemsFormArray.controls[i]?.get('eachItemPrice')?.value * this.itemsFormArray.controls[i]?.get('itemCount')?.value)
     this.itemsFormArray.controls[i]?.get('itemPrice')?.patchValue(totPrice)
   }
+  setPrice1(e: any) {
+    console.log(e.target.value)
+    let price = 0
+    price = this.loadPriceOffer['unites']?.statuses.filter((ele: any)=> ele.statusId == e.target.value)[0].price
+    console.log(price)
+    this.items1Form.get('eachItemPrice')?.patchValue(price)
+  }
+  getPrice1() {
+    let totPrice = 0
+    totPrice = (this.items1Form.get('eachItemPrice')?.value * this.items1Form.get('itemCount')?.value)
+    this.items1Form.get('itemPrice')?.patchValue(totPrice)
+  }
+  setPrice2(e: any) {
+    console.log(e.target.value)
+    let price = 0
+    price = this.loadPriceOffer['accessories']?.statuses.filter((ele: any)=> ele.statusId == e.target.value)[0].price
+    console.log(price)
+    this.items2Form.get('eachItemPrice')?.patchValue(price)
+  }
+  getPrice2() {
+    let totPrice = 0
+    totPrice = (this.items2Form.get('eachItemPrice')?.value * this.items2Form.get('itemCount')?.value)
+    this.items2Form.get('itemPrice')?.patchValue(totPrice)
+  }
 
   addUnitItem() {
-    this.myArray1.push(this.items1Form)
+    this.myArray1.push({
+      itemId: this.items1Form.get('itemId')?.value,
+      itemCount: this.items1Form.get('itemCount')?.value,
+      itemTypeId: this.items1Form.get('itemTypeId')?.value,
+      itemPrice: this.items1Form.get('itemPrice')?.value,
+      eachItemPrice: this.items1Form.get('eachItemPrice')?.value,
+      notes: this.items1Form.get('notes')?.value,
+      categoryId: this.items1Form.get('categoryId')?.value
+    })
     console.log(this.myArray1)
-    // this.QuestionAnswer.controls[i]?.get('options')?.patchValue(this.myArray)
+    let arr = []
+    for (let i = 0 ; i < this.myArray1.length; i++){
+      arr.push({
+        unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.myArray1[i].itemId )[0].description,
+        unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == this.myArray1[i].categoryId )[0].description,
+        price: this.myArray1[i].itemPrice,
+        count: this.myArray1[i].itemCount,
+        note: this.myArray1[i].notes,
+      })
+    }
+    this.myViewArray1 = arr
+    console.log(arr)
   }
   addAccessoriesItem() {
-    this.myArray2.push(this.items2Form)
+    this.myArray2.push({
+      itemId: this.items2Form.get('itemId')?.value,
+      itemCount: this.items2Form.get('itemCount')?.value,
+      itemTypeId: this.items2Form.get('itemTypeId')?.value,
+      itemPrice: this.items2Form.get('itemPrice')?.value,
+      eachItemPrice: this.items2Form.get('eachItemPrice')?.value,
+      notes: this.items2Form.get('notes')?.value,
+      categoryId: this.items2Form.get('categoryId')?.value
+    })
     console.log(this.myArray2)
-    // this.QuestionAnswer.controls[i]?.get('options')?.patchValue(this.myArray)
+    let arr = []
+    for (let i = 0 ; i < this.myArray2.length; i++){
+      arr.push({
+        unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == this.myArray2[i].itemId )[0].description,
+        unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == this.myArray2[i].categoryId )[0].description,
+        price: this.myArray2[i].itemPrice,
+        count: this.myArray2[i].itemCount,
+        note: this.myArray2[i].notes,
+      })
+    }
+    this.myViewArray1 = arr
+    console.log(arr)
   }
   get itemsFormArray() {
     return this.AddClientFileForm.controls["items"] as FormArray;
@@ -253,6 +317,14 @@ export class FormQuotationComponent implements OnInit {
   }
   deleteItemsFormArray(index: number) {
     this.itemsFormArray.removeAt(index);
+  }
+  deleteUnits(index: number) {
+    this.myArray1.splice(index, 1);
+    this.myViewArray1.splice(index, 1);
+  }
+  deleteAccessories(index: number) {
+    this.myArray2.splice(index, 1);
+    this.myViewArray2.splice(index, 1);
   }
   LoadPriceOffer() {
     this._QuotationsService.LoadPriceOffer().subscribe({
