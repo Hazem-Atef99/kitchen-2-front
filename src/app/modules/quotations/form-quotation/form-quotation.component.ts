@@ -280,7 +280,7 @@ export class FormQuotationComponent implements OnInit {
         count: this.myArray1[i].itemCount,
         note: this.myArray1[i].notes,
       })
-      count += this.myArray2[i].itemCount
+      count += this.myArray2[i]?.itemCount
     }
     this.myViewArray1 = arr
     console.log(arr)
