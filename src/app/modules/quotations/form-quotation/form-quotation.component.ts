@@ -271,6 +271,7 @@ export class FormQuotationComponent implements OnInit {
     })
     console.log(this.myArray1)
     let arr = []
+    let count =0
     for (let i = 0 ; i < this.myArray1.length; i++){
       arr.push({
         unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.myArray1[i].itemId )[0].description,
@@ -279,9 +280,11 @@ export class FormQuotationComponent implements OnInit {
         count: this.myArray1[i].itemCount,
         note: this.myArray1[i].notes,
       })
+      count += this.myArray2[i].itemCount
     }
     this.myViewArray1 = arr
     console.log(arr)
+    console.log(count)
   }
   addAccessoriesItem() {
     this.myArrayAsForm2.push(this.items2Form)
@@ -296,6 +299,7 @@ export class FormQuotationComponent implements OnInit {
     })
     console.log(this.myArray2)
     let arr = []
+    let count =0
     for (let i = 0 ; i < this.myArray2.length; i++){
       arr.push({
         unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == this.myArray2[i].itemId )[0]?.description,
@@ -304,9 +308,11 @@ export class FormQuotationComponent implements OnInit {
         count: this.myArray2[i].itemCount,
         note: this.myArray2[i].notes,
       })
+      count += this.myArray2[i].itemCount
     }
     this.myViewArray2 = arr
     console.log(arr)
+    console.log(count)
   }
   get itemsFormArray() {
     return this.AddClientFileForm.controls["items"] as FormArray;
