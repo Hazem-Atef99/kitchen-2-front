@@ -19,10 +19,11 @@ export class QuotationsComponent implements OnInit {
   filterForm!: FormGroup;
   clientFileId: number = 0;
   statusId: number = 0;
-  Note : String = '';
-  query:any ={
-    PageType : 0
+  Note: String = '';
+  query: any = {
+    PageType: 0
   }
+  filterstatusId!:number;
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
@@ -37,9 +38,7 @@ export class QuotationsComponent implements OnInit {
     })
   }
   filter(event: any) {
-    console.log(event.value);
-    event.value ? this.query['fileTypeId'] = event.value : this.query['fileTypeId'] = null ;
-
+    +event.value ? this.query['fileTypeId'] = event.value : this.query['fileTypeId'] = null;
     this.GetShortClientFiles();
   }
   ngOnInit(): void {
@@ -78,50 +77,55 @@ export class QuotationsComponent implements OnInit {
 
     value['clientFileId'] = this.clientFileId;
     value['attachmentPath'] = this.uploadedImg[0];
-    value['statusId'] = this.statusId ;
+    value['statusId'] = this.statusId;
 
-      this._QuotationsService.AddClientFileAttachment(value).subscribe({
-        next: (res: any) => {
-          this.toastr.success(`${res.message}`);
-          this.viewImg = []
-          this.uploadedImg = []
-        }, error: (err: any) => {
-          this.toastr.error(`${err.message}`);
-        }
-      })
-    }
-    GetAllClientFileAttachment(){
-      this._QuotationsService.GetAllClientFileAttachment(this.clientFileId).subscribe({
-        next: (res: any) => {
-          this.allClientFileAttachment = res.data
-        }
-      })
-    }
-
-    AddClientFileFollowUp() {
-      let value: any = {};
-  
-      value['clientFileId'] = this.clientFileId;
-      value['attachment'] = this.uploadedImg[0];
-      value['Note'] = this.Note ;
-  
-        this._QuotationsService.AddClientFileFollowUp(value).subscribe({
-          next: (res: any) => {
-            this.toastr.success(`${res.message}`);
-            this.viewImg = []
-            this.uploadedImg = [];
-            this.Note = ''
-          }, error: (err: any) => {
-            this.toastr.error(`${err.message}`);
-          }
-        })
+    this._QuotationsService.AddClientFileAttachment(value).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`${res.message}`);
+        this.viewImg = []
+        this.uploadedImg = [];
+        this.GetAllClientFileAttachment();
+      }, error: (err: any) => {
+        this.toastr.error(`${err.message}`);
       }
-
-      GetAllFollowUp(){
-        this._QuotationsService.GetAllFollowUp(this.clientFileId).subscribe({
-          next: (res: any) => {
-            this.allClientFileAttachment = res.data
-          }
-        })
-      }
+    })
   }
+  GetAllClientFileAttachment(statusId:any = 0) {
+    let value: any = {};
+    value['clientFileId'] = this.clientFileId;
+    value['statusId'] = statusId.value;
+    this._QuotationsService.GetAllClientFileAttachment(value).subscribe({
+      next: (res: any) => {
+        this.allClientFileAttachment = res.data
+      }
+    })
+  }
+
+  AddClientFileFollowUp() {
+    let value: any = {};
+
+    value['clientFileId'] = this.clientFileId;
+    value['attachment'] = this.uploadedImg[0];
+    value['Note'] = this.Note;
+
+    this._QuotationsService.AddClientFileFollowUp(value).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`${res.message}`);
+        this.viewImg = []
+        this.uploadedImg = [];
+        this.Note = '';
+        this.GetAllFollowUp()
+      }, error: (err: any) => {
+        this.toastr.error(`${err.message}`);
+      }
+    })
+  }
+
+  GetAllFollowUp() {
+    this._QuotationsService.GetAllFollowUp(this.clientFileId).subscribe({
+      next: (res: any) => {
+        this.allClientFileAttachment = res.data
+      }
+    })
+  }
+}

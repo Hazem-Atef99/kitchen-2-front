@@ -13,7 +13,9 @@ export class QuotationsService {
   GetShortClientFiles(query:any): Observable<any> {
     let value:any = {}
     for (const key in query) {
+      
       if (query[key] != null) {
+        console.log(query[key] , key);
         value[key] = query[key]
       }
     }
@@ -40,8 +42,14 @@ export class QuotationsService {
     }
     return this._HttpClient.put(`${this.domain}ClientFile/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
   }
-  GetAllClientFileAttachment(clientFileId:number): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/GetAllClientFileAttachment?clientFileId=${clientFileId}`)
+  GetAllClientFileAttachment(query:any): Observable<any> {
+    const value:any = {};
+    for (const key in query) {
+      if (query[key]) {
+        value[key] = query[key]
+      }
+    }
+    return this._HttpClient.get(`${this.domain}ClientFile/GetAllClientFileAttachment?`,{params:value})
   }
   AddClientFileFollowUp(value:any): Observable<any> {
     const formData = new FormData();

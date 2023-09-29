@@ -165,7 +165,7 @@
                        class="form-control">
                 <div class="row" *ngIf="viewImg[0]">
                   <div class="col-2 card-image p-0 m-2 position-relative">
-                    <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
+                    <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
                   </div>
                 </div>
               </div>
@@ -186,6 +186,7 @@
             <div class="col-6">
               <label>تصنيف الملف</label>
                 <select aria-label="Default select example" 
+                (change)="GetAllClientFileAttachment($event.target)"
                     cSelect>
                     <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
                     <option
@@ -200,7 +201,7 @@
                     <!-- <label> الصورة </label> -->
                     <div class="row" *ngIf="item">
                       <div class="col-3 card-image p-0 m-2 position-relative">
-                        <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                        <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="'http://194.163.132.242:5000/Photos/'+item.attachmentPath" />
                         <p>{{item.statusName}}</p>
                       </div>
                     </div>
@@ -231,7 +232,7 @@
           <div class="row">
               <div class="col-12">
                   <label>تصنيف الملف</label>
-                  <textarea  class="form-control" name="Note" id="Note" cols="30" rows="4" [(ngModel)]="Note"></textarea>
+                  <textarea  class="form-control" name="Note" id="Note" cols="30" rows="2" [(ngModel)]="Note"></textarea>
               </div>
               <div class="col-md-6 mb-3">
                 <label> الصورة </label>
@@ -239,7 +240,7 @@
                        class="form-control">
                 <div class="row" *ngIf="viewImg[0]">
                   <div class="col-2 card-image p-0 m-2 position-relative">
-                    <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
+                    <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
                   </div>
                 </div>
               </div>
@@ -274,7 +275,7 @@
                     <!-- <label> الصورة </label> -->
                     <div class="row" *ngIf="item">
                       <div class="col-3 card-image p-0 m-2 position-relative">
-                        <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                        <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="'http://194.163.132.242:5000/Photos/'+item.attachmentPath" />
                         <p>{{item.statusName}}</p>
                       </div>
                     </div>

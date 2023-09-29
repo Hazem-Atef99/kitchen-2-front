@@ -220,7 +220,7 @@ export class FormQuotationComponent implements OnInit {
   setPrice(e: any, i: number) {
     console.log(e.target.value)
     let price = 0
-    price = this.loadPriceOffer[this.ListOfItems[i].value]?.statuses.filter((ele: any)=> ele.statusId == e.target.value)[0].price
+    price = this.loadPriceOffer[this.ListOfItems[i].value]?.statuses.filter((ele: any) => ele.statusId == e.target.value)[0].price
     console.log(price)
     this.itemsFormArray.controls[i]?.get('eachItemPrice')?.patchValue(price)
   }
@@ -232,7 +232,7 @@ export class FormQuotationComponent implements OnInit {
   setPrice1(e: any) {
     console.log(e.target.value)
     let price = 0
-    price = this.loadPriceOffer['unites']?.statuses.filter((ele: any)=> ele.statusId == e.target.value)[0].price
+    price = this.loadPriceOffer['unites']?.statuses.filter((ele: any) => ele.statusId == e.target.value)[0].price
     console.log(price)
     this.items1Form.get('eachItemPrice')?.patchValue(price)
   }
@@ -244,7 +244,7 @@ export class FormQuotationComponent implements OnInit {
   setPrice2(e: any) {
     console.log(e.target.value)
     let price = 0
-    price = this.loadPriceOffer['accessories']?.statuses.filter((ele: any)=> ele.statusId == e.target.value)[0].price
+    price = this.loadPriceOffer['accessories']?.statuses.filter((ele: any) => ele.statusId == e.target.value)[0].price
     console.log(price)
     this.items2Form.get('eachItemPrice')?.patchValue(price)
   }
@@ -264,19 +264,17 @@ export class FormQuotationComponent implements OnInit {
       notes: this.items1Form.get('notes')?.value,
       categoryId: this.items1Form.get('categoryId')?.value
     })
-    console.log(this.myArray1)
     let arr = []
-    for (let i = 0 ; i < this.myArray1.length; i++){
+    for (let i = 0; i < this.myArray1.length; i++) {
       arr.push({
-        unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.myArray1[i].itemId )[0].description,
-        unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == this.myArray1[i].categoryId )[0].description,
+        unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.myArray1[i].itemId)[0]?.description,
+        unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == this.myArray1[i].categoryId)[0]?.description,
         price: this.myArray1[i].itemPrice,
         count: this.myArray1[i].itemCount,
         note: this.myArray1[i].notes,
       })
     }
     this.myViewArray1 = arr
-    console.log(arr)
   }
   addAccessoriesItem() {
     this.myArray2.push({
@@ -288,19 +286,17 @@ export class FormQuotationComponent implements OnInit {
       notes: this.items2Form.get('notes')?.value,
       categoryId: this.items2Form.get('categoryId')?.value
     })
-    console.log(this.myArray2)
     let arr = []
-    for (let i = 0 ; i < this.myArray2.length; i++){
+    for (let i = 0; i < this.myArray2.length; i++) {
       arr.push({
-        unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == this.myArray2[i].itemId )[0].description,
-        unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == this.myArray2[i].categoryId )[0].description,
+        unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == this.myArray2[i].itemId)[0]?.description,
+        unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == this.myArray2[i].categoryId)[0]?.description,
         price: this.myArray2[i].itemPrice,
         count: this.myArray2[i].itemCount,
         note: this.myArray2[i].notes,
       })
     }
     this.myViewArray1 = arr
-    console.log(arr)
   }
   get itemsFormArray() {
     return this.AddClientFileForm.controls["items"] as FormArray;
@@ -351,17 +347,18 @@ export class FormQuotationComponent implements OnInit {
     this.LoadPriceOffer();
     this.GetUnitsItemsbyCategory();
     this.GetAllClients();
-    console.log(this.AddClientFileForm.value);
-
   }
   AddClientFile() {
-    for (let i = 0; i < this.myArray1.length; i++){
-      this.itemsFormArray.push(this.myArray1[i])
+    if (this.myArray1.length) {
+      for (let i = 0; i < this.myArray1.length; i++) {
+        this.itemsFormArray.push(this.myArray1[i])
+      }
     }
-    for (let i = 0; i < this.myArray2.length; i++){
-      this.itemsFormArray.push(this.myArray2[i])
+    if (this.myArray2.length) {
+      for (let i = 0; i < this.myArray2.length; i++) {
+        this.itemsFormArray.push(this.myArray2[i])
+      }
     }
-    console.log(this.AddClientFileForm.value);
     this._QuotationsService.AddClientFile(this.AddClientFileForm.value).subscribe({
       next: (res: any) => {
         this.toastr.success(`${res.message}`);
