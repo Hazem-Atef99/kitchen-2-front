@@ -72,6 +72,30 @@
                             <input aria-label="default input example" cFormControl formControlName="additionaldiscount"
                                 type="number" />
                         </div>
+                      <div class="col-4">
+                        <label>خصم الوحدات</label>
+                        <input aria-label="default input example" cFormControl formControlName="discount"
+                               type="number" />
+                      </div>
+                      <div class="col-4">
+                        <label>خصم الاكسسوارات</label>
+                        <input aria-label="default input example" cFormControl formControlName="accessoryDiscount"
+                               type="number" />
+                      </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                      <div class="col-4">
+
+                      </div>
+                      <div class="col-4">
+
+                      </div>
+                      <div class="col-4">
+
+                      </div>
                     </div>
                 </div>
             </div>
@@ -85,7 +109,7 @@
                     <div class="row">
                         <ng-container formArrayName="items">
                             <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
-                                <ng-container *ngIf="ListOfItems[i].x">
+                                <ng-container *ngIf="ListOfItems[i]?.x">
                                     <ng-container [formGroupName]="i">
                                         <div class="col-md-6 mb-3">
                                             <div class="row">
