@@ -140,7 +140,7 @@
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
                                         <h5>الوحدات</h5>
-                                        <button class="btn btn-success" (click)="addUnitItem()">
+                                        <button [disabled]="myViewArray1.length == 0" class="btn btn-success" (click)="addUnitItem()">
                                           اضافة
                                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                                                viewBox="0 0 16 16">
@@ -239,7 +239,7 @@
                       <div class="card">
                         <div class="card-header d-flex justify-content-between">
                           <h5>الاكسسوارات</h5>
-                          <button class="btn btn-success" (click)="addAccessoriesItem()">
+                          <button [disabled]="myViewArray2.length == 0" class="btn btn-success" (click)="addAccessoriesItem()">
                             اضافة
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                                  viewBox="0 0 16 16">

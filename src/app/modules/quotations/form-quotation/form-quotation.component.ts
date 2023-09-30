@@ -299,7 +299,7 @@ export class FormQuotationComponent implements OnInit {
         note: this.myArray2[i].notes,
       })
     }
-    this.myViewArray1 = arr
+    this.myViewArray2 = arr
     console.log(arr)
   }
   get itemsFormArray() {
