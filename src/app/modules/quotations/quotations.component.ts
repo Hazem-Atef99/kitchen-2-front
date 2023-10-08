@@ -11,7 +11,9 @@ import { ToastrService } from 'ngx-toastr';
 export class QuotationsComponent implements OnInit {
   today: Date = new Date();
   allQuotations: any[] = [];
-  statusCategoryById: any;;
+  statusCategoryById: any;
+  cities: any;
+  selectedCity: any;
   viewImg: any[] = [];
   uploadedImg: any[] = [];
   allClientFileAttachment: any[] = [];
@@ -100,11 +102,11 @@ export class QuotationsComponent implements OnInit {
 
     AddClientFileFollowUp() {
       let value: any = {};
-  
+
       value['clientFileId'] = this.clientFileId;
       value['attachment'] = this.uploadedImg[0];
       value['Note'] = this.Note ;
-  
+
         this._QuotationsService.AddClientFileFollowUp(value).subscribe({
           next: (res: any) => {
             this.toastr.success(`${res.message}`);

@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http'
 import { QuotationsService } from './quotations.service';
 import { FormQuotationComponent } from './form-quotation/form-quotation.component';
 import { NgbPaginationModule, NgbToast } from '@ng-bootstrap/ng-bootstrap';
+import {NgSelectModule} from "@ng-select/ng-select";
 
 const routes: Routes = [
   {path:'',component: QuotationsComponent},
@@ -22,23 +23,24 @@ const routes: Routes = [
     QuotationsComponent,
     FormQuotationComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    TableModule,
-    CardModule,
-    GridModule,
-    IconModule,
-    FormModule,
-    FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    NgbPaginationModule,
-    NgbToast,
-    ModalModule,
-    ButtonModule,
-    
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        TableModule,
+        CardModule,
+        GridModule,
+        IconModule,
+        FormModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        NgbPaginationModule,
+        NgbToast,
+        ModalModule,
+        ButtonModule,
+        NgSelectModule,
+
+    ],
   providers: [ QuotationsService]
 })
 export class QuotationsModule { }

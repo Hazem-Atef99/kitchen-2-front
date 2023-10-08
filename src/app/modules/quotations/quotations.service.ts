@@ -38,10 +38,10 @@ export class QuotationsService {
         formData.append(key, value[key])
       }
     }
-    return this._HttpClient.put(`${this.domain}ClientFile/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
+    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
   }
   GetAllClientFileAttachment(clientFileId:number): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/GetAllClientFileAttachment?clientFileId=${clientFileId}`)
+    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllClientFileAttachment?clientFileId=${clientFileId}`)
   }
   AddClientFileFollowUp(value:any): Observable<any> {
     const formData = new FormData();
@@ -50,9 +50,9 @@ export class QuotationsService {
         formData.append(key, value[key])
       }
     }
-    return this._HttpClient.put(`${this.domain}ClientFile/AddClientFileFollowUp?clientFileId=${value.clientFileId}`,formData)
+    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileFollowUp?clientFileId=${value.clientFileId}`,formData)
   }
   GetAllFollowUp(clientFileId:number): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/GetAllFollowUp?clientFileId=${clientFileId}`)
+    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllFollowUp?clientFileId=${clientFileId}`)
   }
 }

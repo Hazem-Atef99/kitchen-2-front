@@ -185,7 +185,7 @@
         <div class="row">
             <div class="col-6">
               <label>تصنيف الملف</label>
-                <select aria-label="Default select example" 
+                <select aria-label="Default select example"
                     cSelect>
                     <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
                     <option
@@ -229,9 +229,16 @@
       </div>
       <div class="card-body">
           <div class="row">
-              <div class="col-12">
+<!--              <div class="col-12">-->
+<!--                <ng-select [items]="cities"-->
+<!--                           bindLabel="name"-->
+<!--                           placeholder="Select city"-->
+<!--                           [(ngModel)]="selectedCity">-->
+<!--                </ng-select>-->
+<!--              </div>-->
+              <div class="col-6">
                   <label>تصنيف الملف</label>
-                  <textarea  class="form-control" name="Note" id="Note" cols="30" rows="4" [(ngModel)]="Note"></textarea>
+                  <input type="text"  class="form-control" name="Note" id="Note" [(ngModel)]="Note">
               </div>
               <div class="col-md-6 mb-3">
                 <label> الصورة </label>
@@ -257,15 +264,21 @@
       </div>
       <div class="card-body">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
               <label>تصنيف الملف</label>
-                <select aria-label="Default select example" 
-                    cSelect>
-                    <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
-                    <option
-                        *ngFor="let load of statusCategoryById?.statuses"
-                        [value]="load.statusId">{{load.defaultDesc}}</option>
-                </select>
+              <ng-select [items]="statusCategoryById?.statuses"
+                         bindLabel="defaultDesc"
+                         bindValue="statusId"
+                         placeholder="Select city"
+                         (change)="null">
+              </ng-select>
+<!--                <select aria-label="Default select example"-->
+<!--                    cSelect>-->
+<!--                    &lt;!&ndash; <option selected value="">اختر {{ListOfItems[i].name}}</option> &ndash;&gt;-->
+<!--                    <option-->
+<!--                        *ngFor="let load of statusCategoryById?.statuses"-->
+<!--                        [value]="load.statusId">{{load.defaultDesc}}</option>-->
+<!--                </select>-->
             </div>
             <div class="card col-12 my-2">
               <div class="card-body">
