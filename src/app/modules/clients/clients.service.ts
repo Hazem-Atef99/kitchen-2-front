@@ -7,10 +7,10 @@ import { FormGroup } from '@angular/forms';
   providedIn: 'root'
 })
 export class ClientsService {
-  domain: string = 'http://194.163.132.242:5000/api/Client/';
+  domain: string = 'http://194.163.132.242:8080/api/Client/';
 
   constructor(private _HttpClient: HttpClient) { }
-  
+
   GetAllClients(): Observable<Clients> {
     return this._HttpClient.get<Clients>(`${this.domain}GetAllClients`)
   }

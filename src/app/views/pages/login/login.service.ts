@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  domain: string = 'http://194.163.132.242:5000/api/';
+  domain: string = 'http://194.163.132.242:8080/api/';
 
   constructor(private _HttpClient: HttpClient) { }
 

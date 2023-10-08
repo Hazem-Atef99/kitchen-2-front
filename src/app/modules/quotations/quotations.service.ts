@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   providedIn: 'root'
 })
 export class QuotationsService {
-  domain: string = 'http://194.163.132.242:5000/api/';
+  domain: string = 'http://194.163.132.242:8080/api/';
 
   constructor(private _HttpClient: HttpClient) { }
 

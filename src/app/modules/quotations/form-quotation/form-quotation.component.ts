@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuotationsService } from '../quotations.service';
 import { ClientsService } from '../../clients/clients.service';
 import { Clients, DataClients } from '../../clients/modal/clients';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-form-quotation',
   templateUrl: './form-quotation.component.html',
   styleUrls: ['./form-quotation.component.scss']
 })
 export class FormQuotationComponent implements OnInit {
+
   AddClientFileForm!: FormGroup;
   allClients: DataClients[] = [];
   myArray1: any = [];
@@ -21,6 +24,7 @@ export class FormQuotationComponent implements OnInit {
   myViewArray2: any = [];
   unitsCounts: number = 0;
   accessoriesCount: number = 0;
+  TopCount: number = 0;
   ListOfItems: any = [
     {
       isCount: true,
@@ -167,6 +171,18 @@ export class FormQuotationComponent implements OnInit {
   ]
   loadPriceOffer: any;
   UnitsItemsbyCategory: any;
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    ///////////
+    let count = 0;
+    ////////////
+    for (let i =0 ; i < this.itemsFormArray.controls.length; i++){
+      count += this.itemsFormArray.controls[i]?.get('itemPrice')?.value
+    }
+    this.TopCount = count
+    console.log(count)
+    // console.log('Clicked!', event);
+  }
   constructor(
     private _FormBuilder: FormBuilder,
     private _QuotationsService: QuotationsService,
@@ -229,14 +245,16 @@ export class FormQuotationComponent implements OnInit {
     this.itemsFormArray.controls[i]?.get('eachItemPrice')?.patchValue(price)
   }
   getPrice(i: number) {
+    console.log(this.itemsFormArray.controls[i]?.get('eachItemPrice')?.value)
     let totPrice = 0
     totPrice = (this.itemsFormArray.controls[i]?.get('eachItemPrice')?.value * this.itemsFormArray.controls[i]?.get('itemCount')?.value)
     this.itemsFormArray.controls[i]?.get('itemPrice')?.patchValue(totPrice)
-    let count = 0
-    for (let i = 0 ; i < this.itemsFormArray.controls.length; i++){
-      count += this.itemsFormArray.controls[i].get('itemPrice')?.value
-    }
-    console.log(count)
+    console.log(this.itemsFormArray.controls[i]?.get('itemPrice')?.value, 'value')
+    // let count = 0
+    // for (let i = 0 ; i < this.itemsFormArray.controls.length; i++){
+    //   count += this.itemsFormArray.controls[i].get('itemPrice')?.value
+    // }
+    // console.log(count)
   }
   setPrice1(e: any) {
     console.log(e.target.value)
@@ -318,15 +336,7 @@ export class FormQuotationComponent implements OnInit {
         note: this.myArray2[i].notes,
       })
     }
-<<<<<<< HEAD
     this.myViewArray2 = arr
-=======
-    for (let i = 0 ; i < arr.length; i++){
-      count += arr[i].count
-    }
-    this.myViewArray2 = arr
-    this.accessoriesCount = count
->>>>>>> d51211892da72c8da2f911d12345c7295fb660ec
     console.log(arr)
     console.log(count)
   }
