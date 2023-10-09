@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Clients} from './modal/clients'
 import { FormGroup } from '@angular/forms';
+import { environment as env } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ClientsService {
-  domain: string = 'http://194.163.132.242:8080/api/Client/';
+  domain: string = env.apiUrl;
 
   constructor(private _HttpClient: HttpClient) { }
 

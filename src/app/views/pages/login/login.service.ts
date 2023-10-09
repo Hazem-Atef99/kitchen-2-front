@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment as env } from '../../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  domain: string = 'http://194.163.132.242:8080/api/';
+  domain: string = env.apiUrl;
 
   constructor(private _HttpClient: HttpClient) { }
 
