@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { environment as env } from '../../../environments/environment';
+import { environment as env } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
