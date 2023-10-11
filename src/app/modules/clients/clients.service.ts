@@ -14,9 +14,9 @@ export class ClientsService {
   constructor(private _HttpClient: HttpClient) { }
 
   GetAllClients(): Observable<Clients> {
-    return this._HttpClient.get<Clients>(`${this.domain}GetAllClients`)
+    return this._HttpClient.get<Clients>(`${this.domain}Client/GetAllClients`)
   }
   AddClientFile(form:FormGroup): Observable<Clients> {
-    return this._HttpClient.post<Clients>(`${this.domain}AddClientFile`,form)
+    return this._HttpClient.post<Clients>(`${this.domain}Client/AddClientFile`,form)
   }
 }

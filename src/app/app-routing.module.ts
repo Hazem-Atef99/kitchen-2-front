@@ -23,7 +23,8 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('./modules/home/home.module').then((m) => m.HomeModule)
+          import('./modules/home/home.module').then((m) => m.HomeModule),
+        canActivate:[authGuard]
       },
       {
         path: 'quotations',
@@ -40,52 +41,62 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
+          import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule),
+        canActivate:[authGuard]
       },
       {
         path: 'theme',
         loadChildren: () =>
-          import('./views/theme/theme.module').then((m) => m.ThemeModule)
+          import('./views/theme/theme.module').then((m) => m.ThemeModule),
+        canActivate:[authGuard]
       },
       {
         path: 'base',
         loadChildren: () =>
-          import('./views/base/base.module').then((m) => m.BaseModule)
+          import('./views/base/base.module').then((m) => m.BaseModule),
+        canActivate:[authGuard]
       },
       {
         path: 'buttons',
         loadChildren: () =>
-          import('./views/buttons/buttons.module').then((m) => m.ButtonsModule)
+          import('./views/buttons/buttons.module').then((m) => m.ButtonsModule),
+        canActivate:[authGuard]
       },
       {
         path: 'forms',
         loadChildren: () =>
-          import('./views/forms/forms.module').then((m) => m.CoreUIFormsModule)
+          import('./views/forms/forms.module').then((m) => m.CoreUIFormsModule),
+        canActivate:[authGuard]
       },
       {
         path: 'charts',
         loadChildren: () =>
-          import('./views/charts/charts.module').then((m) => m.ChartsModule)
+          import('./views/charts/charts.module').then((m) => m.ChartsModule),
+        canActivate:[authGuard]
       },
       {
         path: 'icons',
         loadChildren: () =>
-          import('./views/icons/icons.module').then((m) => m.IconsModule)
+          import('./views/icons/icons.module').then((m) => m.IconsModule),
+        canActivate:[authGuard]
       },
       {
         path: 'notifications',
         loadChildren: () =>
-          import('./views/notifications/notifications.module').then((m) => m.NotificationsModule)
+          import('./views/notifications/notifications.module').then((m) => m.NotificationsModule),
+        canActivate:[authGuard]
       },
       {
         path: 'widgets',
         loadChildren: () =>
-          import('./views/widgets/widgets.module').then((m) => m.WidgetsModule)
+          import('./views/widgets/widgets.module').then((m) => m.WidgetsModule),
+        canActivate:[authGuard]
       },
       {
         path: 'pages',
         loadChildren: () =>
-          import('./views/pages/pages.module').then((m) => m.PagesModule)
+          import('./views/pages/pages.module').then((m) => m.PagesModule),
+        canActivate:[authGuard]
       },
     ]
   },

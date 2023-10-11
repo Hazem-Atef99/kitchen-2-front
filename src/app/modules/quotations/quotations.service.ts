@@ -41,8 +41,11 @@ export class QuotationsService {
     }
     return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
   }
-  GetAllClientFileAttachment(clientFileId:number): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllClientFileAttachment?clientFileId=${clientFileId}`)
+  AddFinalStatusListApi(value:any): Observable<any> {
+    return this._HttpClient.put(`${this.domain}ClientFile/ChangeFinalStatusClientFile`,value)
+  }
+  GetAllClientFileAttachment(data:any): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllClientFileAttachment`, {params: data})
   }
   AddClientFileFollowUp(value:any): Observable<any> {
     const formData = new FormData();
@@ -55,5 +58,11 @@ export class QuotationsService {
   }
   GetAllFollowUp(clientFileId:number): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllFollowUp?clientFileId=${clientFileId}`)
+  }
+  AllFinalStatusClientFile(clientFileId:number): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFile/GetAllFinalStatusClientFile?clientFileId=${clientFileId}`)
+  }
+  LoadFinalStatusList(itemType :number): Observable<any> {
+    return this._HttpClient.get(`${this.domain}StatusCategory/LoadFinalStatusList/${itemType}`)
   }
 }
