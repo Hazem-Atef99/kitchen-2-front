@@ -105,6 +105,7 @@ export class QuotationsComponent implements OnInit {
         this.viewImg = []
         this.uploadedImg = []
         this.GetAllClientFileAttachment()
+        this.GetShortClientFiles();
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
       }
@@ -120,7 +121,8 @@ export class QuotationsComponent implements OnInit {
         this.toastr.success(`${res.message}`);
         this.viewImg = []
         this.uploadedImg = []
-        this.GetAllClientFileAttachment()
+        this.GetAllFinalStatusClientFile()
+        this.GetShortClientFiles();
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
       }
@@ -141,17 +143,17 @@ export class QuotationsComponent implements OnInit {
 
   AddClientFileFollowUp() {
     let value: any = {};
-
     value['clientFileId'] = this.clientFileId;
     value['attachment'] = this.uploadedImg[0];
     value['Note'] = this.Note;
-
     this._QuotationsService.AddClientFileFollowUp(value).subscribe({
       next: (res: any) => {
         this.toastr.success(`${res.message}`);
         this.viewImg = []
         this.uploadedImg = [];
         this.Note = ''
+        this.GetShortClientFiles();
+        this.GetAllFollowUp();
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
       }
