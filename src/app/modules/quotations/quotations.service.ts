@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
+import { environment as env } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class QuotationsService {
-  domain: string = 'http://194.163.132.242:5000/api/';
+  domain: string = env.apiUrl;
 
   constructor(private _HttpClient: HttpClient) { }
 
@@ -40,16 +41,13 @@ export class QuotationsService {
         formData.append(key, value[key])
       }
     }
-    return this._HttpClient.put(`${this.domain}ClientFile/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
+    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
   }
-  GetAllClientFileAttachment(query:any): Observable<any> {
-    const value:any = {};
-    for (const key in query) {
-      if (query[key]) {
-        value[key] = query[key]
-      }
-    }
-    return this._HttpClient.get(`${this.domain}ClientFile/GetAllClientFileAttachment?`,{params:value})
+  AddFinalStatusListApi(value:any): Observable<any> {
+    return this._HttpClient.put(`${this.domain}ClientFile/ChangeFinalStatusClientFile`,value)
+  }
+  GetAllClientFileAttachment(data:any): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllClientFileAttachment`, {params: data})
   }
   AddClientFileFollowUp(value:any): Observable<any> {
     const formData = new FormData();
@@ -58,9 +56,15 @@ export class QuotationsService {
         formData.append(key, value[key])
       }
     }
-    return this._HttpClient.put(`${this.domain}ClientFile/AddClientFileFollowUp?clientFileId=${value.clientFileId}`,formData)
+    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileFollowUp?clientFileId=${value.clientFileId}`,formData)
   }
   GetAllFollowUp(clientFileId:number): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/GetAllFollowUp?clientFileId=${clientFileId}`)
+    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllFollowUp?clientFileId=${clientFileId}`)
+  }
+  AllFinalStatusClientFile(clientFileId:number): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFile/GetAllFinalStatusClientFile?clientFileId=${clientFileId}`)
+  }
+  LoadFinalStatusList(itemType :number): Observable<any> {
+    return this._HttpClient.get(`${this.domain}StatusCategory/LoadFinalStatusList/${itemType}`)
   }
 }

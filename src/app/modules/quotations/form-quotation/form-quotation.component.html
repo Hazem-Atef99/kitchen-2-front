@@ -48,13 +48,12 @@
                     <div class="row">
                         <div class="col-4">
                             <label>الزبون</label>
-                            <select aria-label="Default select example" formControlName="clientId"
-                            cSelect>
-                            <option selected value="">اختر الزبون</option>
-                            <option
-                                *ngFor="let Client of allClients"
-                                [value]="Client.clientId">{{Client.clientName}}</option>
-                        </select>
+                            <ng-select [items]="allClients"
+                                       bindLabel="clientName"
+                                       bindValue="clientId"
+                                       placeholder="اختر الزبون"
+                                       formControlName="clientId">
+                            </ng-select>
                         </div>
                     </div>
                 </div>
@@ -88,13 +87,13 @@
                 <div class="card-body">
                     <div class="row">
                       <div class="col-4">
-
+                        مجموع التوب: {{TopCount}}
                       </div>
                       <div class="col-4">
-
+                        مجموع الوحدات: {{unitsCounts}}
                       </div>
                       <div class="col-4">
-
+                        مجموع الاكسسوارات: {{accessoriesCount}}
                       </div>
                     </div>
                 </div>
@@ -115,14 +114,13 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <label>{{ListOfItems[i].name}}</label>
-                                                    <select aria-label="Default select example"
-                                                            formControlName="itemId" (change)="setPrice($event, i); getPrice(i)"
-                                                        cSelect>
-<!--                                                        <option selected disabled>اختر {{ListOfItems[i].name}}</option>-->
-                                                        <option
-                                                            *ngFor="let load of loadPriceOffer[ListOfItems[i].value]?.statuses"
-                                                            [value]="load.statusId">{{load.description}}</option>
-                                                    </select>
+                                                    <ng-select [items]="loadPriceOffer[ListOfItems[i].value]?.statuses"
+                                                               bindLabel="description"
+                                                               bindValue="statusId"
+                                                               placeholder="{{ListOfItems[i].name}}"
+                                                               (change)="setPrice($event, i); getPrice(i)"
+                                                               formControlName="itemId">
+                                                    </ng-select>
                                                 </div>
                                                 <div class="col-3" *ngIf="ListOfItems[i].isCount">
                                                     <label>العدد</label>
@@ -164,6 +162,7 @@
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
                                         <h5>الوحدات</h5>
+<!--                                        <button [disabled]="myViewArray1.length == 0" class="btn btn-success" (click)="addUnitItem()">-->
                                         <button class="btn btn-success" (click)="addUnitItem()">
                                           اضافة
                                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
@@ -177,22 +176,23 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <label style="visibility: hidden;">.</label>
-                                                <select aria-label="Default select example" formControlName="itemId" cSelect>
-<!--                                                    <option selected value="">اختر الوحدات</option>-->
-                                                    <option (change)="setPrice1($event); getPrice1()"
-                                                        *ngFor="let load of loadPriceOffer['unites']?.statuses"
-                                                        [value]="load.statusId">{{load.description}}
-                                                    </option>
-                                                </select>
+                                                <ng-select [items]="loadPriceOffer['unites']?.statuses"
+                                                           bindLabel="description"
+                                                           bindValue="statusId"
+                                                           placeholder="اختر الوحدات"
+                                                           (change)="setPrice1($event); getPrice1()"
+                                                           formControlName="itemId">
+                                                </ng-select>
+
                                             </div>
                                             <div class="col-4">
                                                 <label>الوحدة</label>
-                                                <select aria-label="Default select example" formControlName="categoryId"
-                                                    cSelect>
-                                                    <option selected value="">اختر الوحدة</option>
-                                                    <option *ngFor="let Unit of UnitsItemsbyCategory?.statuses"
-                                                        [value]="Unit.statusId">{{Unit.description}}</option>
-                                                </select>
+                                                <ng-select [items]="UnitsItemsbyCategory?.statuses"
+                                                           bindLabel="description"
+                                                           bindValue="statusId"
+                                                           placeholder="اختر الوحدة"
+                                                           formControlName="categoryId">
+                                                </ng-select>
                                             </div>
 
                                             <div class="col-2">
@@ -263,7 +263,8 @@
                       <div class="card">
                         <div class="card-header d-flex justify-content-between">
                           <h5>الاكسسوارات</h5>
-                          <button class="btn btn-success" (click)="addAccessoriesItem()">
+<!--                          <button [disabled]="myViewArray2.length == 0" class="btn btn-success" (click)="addAccessoriesItem()">-->
+                          <button  class="btn btn-success" (click)="addAccessoriesItem()">
                             اضافة
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                                  viewBox="0 0 16 16">
@@ -280,13 +281,12 @@
                             </div>
                             <div class="col-4">
                               <label style="visibility: hidden;">.</label>
-                              <select aria-label="Default select example" formControlName="itemId"
-                                      cSelect>
-<!--                                <option selected value="">اختر الاضافات</option>-->
-                                <option
-                                  *ngFor="let load of loadPriceOffer['accessories']?.statuses?.statuses"
-                                  [value]="load.statusId">{{load.description}}</option>
-                              </select>
+                              <ng-select [items]="loadPriceOffer['accessories']?.statuses?.statuses"
+                                         bindLabel="description"
+                                         bindValue="statusId"
+                                         placeholder="اختر الاضافات"
+                                         formControlName="itemId">
+                              </ng-select>
                             </div>
 
                             <div class="col-2">

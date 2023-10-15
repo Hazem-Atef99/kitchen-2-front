@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -13,6 +14,27 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request);
+    const _Router = inject(Router);
+    return next.handle(request).pipe(
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse) {
+          const applicationError = error.headers.get('Application-Error');
+          if (applicationError) {
+            return throwError(applicationError);
+          }
+          if (error.status == (401||403)){
+            _Router.navigateByUrl('/login');
+          }
+          const errors: any[] = error.error?.errors || [];
+          return throwError(
+            {
+              code: error.status,
+              errors,
+            } || 'serverError'
+          );
+        }
+        return throwError('UnknownError');
+      })
+    );
   }
 }

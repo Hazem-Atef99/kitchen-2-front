@@ -82,6 +82,7 @@
             <th scope="col">ملاحظات</th> -->
             <th scope="col">متابعات</th>
             <th scope="col">مرافقات</th>
+            <th scope="col">الحالة النهائية</th>
           </tr>
         </thead>
         <tbody>
@@ -127,6 +128,11 @@
                 </svg>
               </button>
             </td>
+            <td>
+              <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" class="btn btn-light m-0 p-2">
+                {{item.finalStatusName? item.finalStatusName : 'لم يتم اضافة حالة'}}
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -138,10 +144,15 @@
 
 
 <!-- AddClientFileAttachment -->
-<c-modal #modalXl id="modalXl" size="xl">
+
+
+
+
+<!-- AddClientFileFollowUp -->
+<c-modal #modalXl2 id="modalXl2" size="xl">
   <c-modal-header>
-    <h5 cModalTitle>المرفقات</h5>
-    <button [cModalToggle]="modalXl.id" cButtonClose></button>
+    <h5 cModalTitle>المتابعات</h5>
+    <button class="mx-0" [cModalToggle]="modalXl2.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -150,28 +161,23 @@
       </div>
       <div class="card-body">
           <div class="row">
-              <div class="col-6">
-                  <label>تصنيف الملف</label>
-                  <select aria-label="Default select example" [(ngModel)]="statusId"
-                      cSelect>
-                      <option
-                          *ngFor="let load of statusCategoryById?.statuses"
-                          [value]="load.statusId">{{load.defaultDesc}}</option>
-                  </select>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label> الصورة </label>
-                <input type="file" accept="image/*" (change)="onImageSelected($event)"
-                       class="form-control">
-                <div class="row" *ngIf="viewImg[0]">
-                  <div class="col-2 card-image p-0 m-2 position-relative">
-                    <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
-                  </div>
+            <div class="col-md-12 mb-3">
+              <label> الصورة </label>
+              <input type="file" accept="image/*" (change)="onImageSelected($event)"
+                     class="form-control">
+              <div class="row" *ngIf="viewImg[0]">
+                <div class="col-2 card-image p-0 m-2 position-relative">
+                  <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
                 </div>
               </div>
+            </div>
+            <div class="col-12">
+              <label>ملاحظات</label>
+              <textarea type="text"  class="form-control" name="Note" id="Note" [(ngModel)]="Note"></textarea>
+            </div>
           </div>
           <div class="col-12 text-center mt-4">
-            <button class="btn btn-success" (click)="AddClientFileAttachment()">
+            <button class="btn btn-success" (click)="AddClientFileFollowUp()">
               اضافة
             </button>
           </div>
@@ -179,26 +185,14 @@
     </div>
     <div class="card my-4">
       <div class="card-header">
-        عرض المرفقات
+        عرض المتابعات
       </div>
       <div class="card-body">
         <div class="row">
-            <div class="col-6">
-              <label>تصنيف الملف</label>
-                <select aria-label="Default select example" 
-                (change)="GetAllClientFileAttachment($event.target)"
-                    cSelect>
-                    <!-- <option selected value="">اختر {{ListOfItems[i].name}}</option> -->
-                    <option
-                        *ngFor="let load of statusCategoryById?.statuses"
-                        [value]="load.statusId">{{load.defaultDesc}}</option>
-                </select>
-            </div>
             <div class="card col-12 my-2">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
-                    <!-- <label> الصورة </label> -->
+                  <div class="col-md-6 mb-3" *ngFor="let item of allClientFileFollowUp">
                     <div class="row" *ngIf="item">
                       <div class="col-3 card-image p-0 m-2 position-relative">
                         <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="'http://194.163.132.242:5000/Photos/'+item.attachmentPath" />
@@ -214,76 +208,144 @@
     </div>
   </c-modal-body>
 </c-modal>
-
-
-
-<!-- AddClientFileFollowUp -->
-<c-modal #modalXl2 id="modalXl2" size="xl">
+<c-modal #modalXl id="modalXl" size="xl">
   <c-modal-header>
-    <h5 cModalTitle>المتابعات</h5>
-    <button [cModalToggle]="modalXl2.id" cButtonClose></button>
+    <h5 cModalTitle>المرفقات</h5>
+    <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
       <div class="card-header">
-          <h5>اضافة</h5>
+        <h5>اضافة</h5>
       </div>
       <div class="card-body">
-          <div class="row">
-              <div class="col-12">
-                  <label>تصنيف الملف</label>
-                  <textarea  class="form-control" name="Note" id="Note" cols="30" rows="2" [(ngModel)]="Note"></textarea>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label> الصورة </label>
-                <input type="file" accept="image/*" (change)="onImageSelected($event)"
-                       class="form-control">
-                <div class="row" *ngIf="viewImg[0]">
-                  <div class="col-2 card-image p-0 m-2 position-relative">
-                    <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
-                  </div>
-                </div>
-              </div>
+        <div class="row">
+          <div class="col-6">
+            <label>تصنيف الملف</label>
+            <ng-select [items]="statusCategoryById?.statuses"
+                       bindLabel="defaultDesc"
+                       bindValue="statusId"
+                       placeholder="اختر التصنيف"
+                       [(ngModel)]="statusId">
+            </ng-select>
           </div>
-          <div class="col-12 text-center mt-4">
-            <button class="btn btn-success" (click)="AddClientFileFollowUp()">
-              اضافة
-            </button>
+          <div class="col-md-6 mb-3">
+            <label> الصورة </label>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)"
+                   class="form-control">
+            <div class="row" *ngIf="viewImg[0]">
+              <div class="col-2 card-image p-0 m-2 position-relative">
+                <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="col-12 text-center mt-4">
+          <button class="btn btn-success" (click)="AddClientFileAttachment()">
+            اضافة
+          </button>
+        </div>
       </div>
     </div>
     <div class="card my-4">
       <div class="card-header">
-        عرض المتابعات
+        عرض المرفقات
       </div>
       <div class="card-body">
         <div class="row">
-            <!-- <div class="col-6">
-              <label>تصنيف الملف</label>
-                <select aria-label="Default select example" 
-                    cSelect>
-                    <option
-                        *ngFor="let load of statusCategoryById?.statuses"
-                        [value]="load.statusId">{{load.defaultDesc}}</option>
-                </select>
-            </div> -->
-            <div class="card col-12 my-2">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
-                    <!-- <label> الصورة </label> -->
-                    <div class="row" *ngIf="item">
-                      <div class="col-3 card-image p-0 m-2 position-relative">
-                        <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="'http://194.163.132.242:5000/Photos/'+item.attachmentPath" />
-                        <p>{{item.statusName}}</p>
-                      </div>
+          <div class="col-12">
+            <label>تصنيف الملف</label>
+            <ng-select [items]="statusCategoryById?.statuses"
+                       bindLabel="defaultDesc"
+                       bindValue="statusId"
+                       placeholder="اختر التصنيف"
+                       [(ngModel)]="statusId"
+                       (change)="GetAllClientFileAttachment()">
+            </ng-select>
+          </div>
+          <div class="card col-12 my-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
+                  <div class="row" *ngIf="item">
+                    <div class="col-3 card-image p-0 m-2 position-relative">
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                      <p>{{item.statusName}}</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </c-modal-body>
+</c-modal>
+<c-modal #modalXl3 id="modalXl3" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>الحالة النهائية</h5>
+    <button class="mx-0" [cModalToggle]="modalXl3.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+        <h5>اضافة</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <label>قائمة الحالات</label>
+            <ng-select [items]="LoadFinalStatusList"
+                       bindLabel="defaultDesc"
+                       bindValue="statusId"
+                       placeholder="اختر التصنيف"
+                       [(ngModel)]="statusId">
+            </ng-select>
+          </div>
+          <div class="col-12">
+            <label>ملاحظة</label>
+            <textarea type="text"  class="form-control" name="Note" id="Note" [(ngModel)]="Note"></textarea>
+          </div>
+        </div>
+        <div class="col-12 text-center mt-4">
+          <button class="btn btn-success" (click)="AddFinalStatusList()">
+            اضافة
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card my-4">
+      <div class="card-header">
+        عرض الحالات النهائية
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <c-col xs="12">
+            <c-card class="mb-4">
+              <c-card-body>
+                <table [striped]="true" cTable>
+                  <thead>
+                  <tr>
+                    <th scope="col">الحالة</th>
+                    <th scope="col">ملاحظات</th>
+                    <th scope="col">تاريخ التعديل</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of AllFinalStatusClientFile">
+                    <td>{{item.toValue}}</td>
+                    <td>{{item.notes}}</td>
+                    <td>{{item.creationDate | date}}</td>
+                    <td>{{item?.fileTypeName}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </c-card-body>
+            </c-card>
+          </c-col>
+        </div>
+      </div>
     </div>
   </c-modal-body>
 </c-modal>

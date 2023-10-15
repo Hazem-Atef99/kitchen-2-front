@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  domain: string = 'http://194.163.132.242:5000/api/';
+  domain: string = 'http://194.163.132.242:8080/api/';
 
   constructor(@Inject(Injector) private readonly injector: Injector) { }
   private get authService() {
@@ -21,7 +21,7 @@ export class JwtInterceptor implements HttpInterceptor {
     const isApiUrl = request.url.startsWith(this.domain);
     if (token && isApiUrl) {
       request = request.clone({
-        setHeaders: { 
+        setHeaders: {
           Authorization: `Bearer ${token}`,
        }
       });
