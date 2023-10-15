@@ -195,7 +195,7 @@
                   <div class="col-md-6 mb-3" *ngFor="let item of allClientFileFollowUp">
                     <div class="row" *ngIf="item">
                       <div class="col-3 card-image p-0 m-2 position-relative">
-                        <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                        <img  width="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="'http://194.163.132.242:5000/Photos/'+item.attachmentPath" />
                         <p>{{item.statusName}}</p>
                       </div>
                     </div>
