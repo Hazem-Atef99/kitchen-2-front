@@ -29,6 +29,7 @@ export class QuotationsComponent implements OnInit {
     PageType: 0,
     fileTypeId: 0,
   }
+
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
@@ -175,6 +176,7 @@ export class QuotationsComponent implements OnInit {
       }
     })
   }
+
   GetLoadFinalStatusList() {
     console.log(this.query.PageType)
     this._QuotationsService.LoadFinalStatusList(this.query.PageType).subscribe({

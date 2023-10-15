@@ -14,9 +14,7 @@ export class QuotationsService {
   GetShortClientFiles(query:any): Observable<any> {
     let value:any = {}
     for (const key in query) {
-      
       if (query[key] != null) {
-        console.log(query[key] , key);
         value[key] = query[key]
       }
     }
