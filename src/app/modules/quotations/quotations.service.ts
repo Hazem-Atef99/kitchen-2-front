@@ -26,6 +26,9 @@ export class QuotationsService {
   GetStatusCategoryById(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)
   }
+  GetAllUsersApi(): Observable<any> {
+    return this._HttpClient.get(`${this.domain}Users/GetAllUsers`)
+  }
   LoadPriceOffer(): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFile/LoadPriceOffer`)
   }

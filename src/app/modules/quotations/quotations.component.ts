@@ -12,7 +12,10 @@ export class QuotationsComponent implements OnInit {
   today: Date = new Date();
   allQuotations: any[] = [];
   statusCategoryById: any;
+  statusCategoryById2: any;
+  allUsersData: any;
   cities: any;
+  clientData: any;
   selectedCity: any;
   viewImg: any[] = [];
   uploadedImg: any[] = [];
@@ -41,16 +44,16 @@ export class QuotationsComponent implements OnInit {
   initReceiveNoticeForm(): FormGroup {
     return this._FormBuilder.group({
       clientFileId: [null, [Validators.required]],
-      fileDate: [null, [Validators.required]],
+      fileDate: [null, [Validators.required]],//
       actionByHour: [null, [Validators.required]],
       clientNeed: [null, [Validators.required]],
-      designerId: [null, [Validators.required]],
-      designerDate: [null, [Validators.required]],
-      measurmentId: [null, [Validators.required]],
-      measurmentDate: [null, [Validators.required]],
-      kitchenModelId: [null, [Validators.required]],
-      kitchenLocation: [null, [Validators.required]],
-      salesId: [null, [Validators.required]],
+      designerId: [null, [Validators.required]],///
+      designerDate: [null, [Validators.required]],///
+      measurmentId: [null, [Validators.required]],////
+      measurmentDate: [null, [Validators.required]],////
+      kitchenModelId: [null, [Validators.required]],////
+      kitchenLocation: [null, [Validators.required]],///
+      salesId: [null, [Validators.required]],//
       devices: this._FormBuilder.group({
         deviceId: [null, [Validators.required]]
       }),
@@ -96,6 +99,22 @@ export class QuotationsComponent implements OnInit {
         this.statusCategoryById = res.data
         console.log()
         this.statusId = res.data.statuses[0].statusId
+      }
+    })
+  }
+  GetStatusCategoryById2() {
+    this._QuotationsService.GetStatusCategoryById(18).subscribe({
+      next: (res: any) => {
+        this.statusCategoryById2 = res.data
+        console.log()
+        this.statusId = res.data.statuses[0].statusId
+      }
+    })
+  }
+  GetAllUsers() {
+    this._QuotationsService.GetAllUsersApi().subscribe({
+      next: (res: any) => {
+        this.allUsersData = res.data
       }
     })
   }
@@ -158,6 +177,11 @@ export class QuotationsComponent implements OnInit {
         this.allClientFileAttachment = res.data
       }
     })
+  }
+  GetAllClientNotice(data: any) {
+    this.clientData = data.client
+    this.GetAllUsers()
+    this.GetStatusCategoryById2()
   }
 
   AddClientFileFollowUp() {
