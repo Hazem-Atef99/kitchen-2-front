@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {QuotationsService} from './quotations.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -29,14 +29,33 @@ export class QuotationsComponent implements OnInit {
     PageType: 0,
     fileTypeId: 0,
   }
+  AddReceiveNotice!: FormGroup;
 
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
     private toastr: ToastrService,
   ) {
+    this.AddReceiveNotice = this.initReceiveNoticeForm();
   }
-
+  initReceiveNoticeForm(): FormGroup {
+    return this._FormBuilder.group({
+      clientFileId: [null, [Validators.required]],
+      fileDate: [null, [Validators.required]],
+      actionByHour: [null, [Validators.required]],
+      clientNeed: [null, [Validators.required]],
+      designerId: [null, [Validators.required]],
+      designerDate: [null, [Validators.required]],
+      measurmentId: [null, [Validators.required]],
+      measurmentDate: [null, [Validators.required]],
+      kitchenModelId: [null, [Validators.required]],
+      kitchenLocation: [null, [Validators.required]],
+      salesId: [null, [Validators.required]],
+      devices: this._FormBuilder.group({
+        deviceId: [null, [Validators.required]]
+      }),
+    })
+  }
   initFilterForm(): FormGroup {
     return this._FormBuilder.group({
       userId: [null],
