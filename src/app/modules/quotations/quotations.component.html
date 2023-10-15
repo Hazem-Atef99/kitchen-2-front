@@ -205,7 +205,7 @@
                 <div class="col-md-6 mb-3" *ngFor="let item of allClientFileFollowUp">
                   <div class="row" *ngIf="item">
                     <div class="col-3 card-image p-0 m-2 position-relative">
-                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="Domain+item.attachmentPath" />
                       <p>{{item.statusName}}</p>
                     </div>
                   </div>
@@ -279,7 +279,7 @@
                 <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
                   <div class="row" *ngIf="item">
                     <div class="col-3 card-image p-0 m-2 position-relative">
-                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item" />
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="Domain+item.attachmentPath" />
                       <p>{{item.statusName}}</p>
                     </div>
                   </div>
@@ -362,7 +362,7 @@
 <c-modal #modalXl4 id="modalXl4" size="xl">
   <c-modal-header>
     <h5 cModalTitle>محضر الاستلام</h5>
-    <button class="mx-0" [cModalToggle]="modalXl3.id" cButtonClose></button>
+    <button class="mx-0" [cModalToggle]="modalXl4.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div [formGroup]="AddReceiveNotice">
@@ -423,7 +423,7 @@
                   <label>نوع المطبخ</label>
                   <ng-select [items]="statusCategoryById2?.statuses"
                              bindLabel="description"
-                             bindValue="id"
+                             bindValue="statusId"
                              placeholder="اختر نوع المطبخ"
                              formControlName="kitchenModelId">
                   </ng-select>
@@ -458,12 +458,12 @@
                 </div>
                 <div class="col-6">
                   <label>موعد القياس</label>
-                  <div class="d-flex">
-                    <div class="d-flex">
-                      <label>الدقيقة</label>
-                      <input aria-label="default input example" cFormControl
-                             type="number" formControlName="actionByHour"/>
-                    </div>
+                  <div class="d-flex mt-1">
+<!--                    <div class="d-flex">-->
+<!--                      <label>الدقيقة</label>-->
+<!--                      <input aria-label="default input example" cFormControl-->
+<!--                             type="number" formControlName="actionByHour"/>-->
+<!--                    </div>-->
                     <div class="d-flex">
                       <label>الساعة</label>
                       <input aria-label="default input example" cFormControl
@@ -483,30 +483,41 @@
         <div class="card-body">
           <div class="row">
             <c-col xs="12">
-              <div class="d-flex mb-4 ms-2">
-                <label>الأجهزة الموجودة</label>
-                <ng-select [items]="cities"
-                           bindLabel="clientName"
-                           bindValue="clientId"
-                           placeholder="اختر مسئول التصميم"
-                           formControlName="designerId">
+              <div class="row mb-4 ms-2">
+                <label class="col-2">الأجهزة الموجودة</label>
+                <ng-select [items]="DevicesData"
+                           class="col-4"
+                           bindLabel="name"
+                           bindValue="id"
+                           placeholder="اختر الجهاز"
+                           formControlName="selectedDevice">
                 </ng-select>
+                <div class="col-2 text-center">
+                  <button class="btn btn-success" (click)="AddDevice()">
+                    اضافة
+                  </button>
+                </div>
               </div>
               <c-card class="mb-4">
                 <c-card-body>
                   <div class="col-md-12 mb-3">
                     <div class="row">
-                      <div class="col-12">
-                        <div class="col-md-6 mb-3" *ngFor="let item of allClientFileFollowUp">
-                          <div class="row" *ngIf="item">
-                            <div class="col-3 card-image p-0 m-2 position-relative">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
+                      <div class="col-md-2 mb-3" *ngFor="let item of MyDevices index as i">
+                        <div *ngIf="item">
+                          <div class="card-image p-0 m-2 position-relative">
+                            <div class=" text-center">
+                              <button class="btn btn-danger" (click)="DeleteDevice(i)">
+                                حذف
+                              </button>
+                            </div>
+                            <div class="mt-2 text-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
                                 <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
                                 <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
                               </svg>
-                              <p>{{item.statusName}}</p>
                             </div>
+                            <p class="text-center mt-2">{{item.name}}</p>
                           </div>
                         </div>
                       </div>
@@ -522,6 +533,11 @@
             </c-col>
           </div>
         </div>
+      </div>
+      <div class="col-12 text-center mt-4">
+        <button class="btn btn-success" (click)="AddNotice()">
+          اضافة
+        </button>
       </div>
     </div>
   </c-modal-body>

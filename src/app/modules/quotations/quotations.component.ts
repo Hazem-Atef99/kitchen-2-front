@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {QuotationsService} from './quotations.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
+import value from "*.json";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-quotations',
@@ -9,12 +11,20 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./quotations.component.scss']
 })
 export class QuotationsComponent implements OnInit {
+  Domain: any = environment.apiUrl;
   today: Date = new Date();
   allQuotations: any[] = [];
+  MyDevices: any[] = [];
   statusCategoryById: any;
   statusCategoryById2: any;
   allUsersData: any;
   cities: any;
+  DevicesData: any= [
+    {name: 'ثلاجة',id: 1 },
+    {name: 'غسالة',id: 2 },
+    {name: 'ثلاجة',id: 3 },
+    {name: 'بوتجاز',id: 4 },
+  ]
   clientData: any;
   selectedCity: any;
   viewImg: any[] = [];
@@ -54,8 +64,9 @@ export class QuotationsComponent implements OnInit {
       kitchenModelId: [null, [Validators.required]],////
       kitchenLocation: [null, [Validators.required]],///
       salesId: [null, [Validators.required]],//
+      selectedDevice: [null, [Validators.required]],//
       devices: this._FormBuilder.group({
-        deviceId: [null, [Validators.required]]
+        deviceId: [[], [Validators.required]]
       }),
     })
   }
@@ -77,6 +88,7 @@ export class QuotationsComponent implements OnInit {
   ngOnInit(): void {
     this.GetShortClientFiles();
     this.GetStatusCategoryById()
+    console.log(this.device)
   }
 
   GetShortClientFiles() {
@@ -184,6 +196,21 @@ export class QuotationsComponent implements OnInit {
     this.GetStatusCategoryById2()
   }
 
+  AddDevice() {
+    this.MyDevices.push(
+      this.DevicesData.filter((ele: any) => ele.id === this.AddReceiveNotice.get('selectedDevice')?.value)[0]
+    )
+    console.log(this.MyDevices)
+    this.devices?.get('deviceId')?.value.push(
+      this.AddReceiveNotice.get('selectedDevice')?.value
+    )
+  }
+  DeleteDevice(i: number) {
+    this.MyDevices.splice(i, 1);
+    this.devices?.get('deviceId')?.value.splice(i, 1);
+    console.log(this.MyDevices)
+    console.log(this.device)
+  }
   AddClientFileFollowUp() {
     let value: any = {};
     value['clientFileId'] = this.clientFileId;
@@ -197,6 +224,24 @@ export class QuotationsComponent implements OnInit {
         this.Note = ''
         this.GetShortClientFiles();
         this.GetAllFollowUp();
+      }, error: (err: any) => {
+        this.toastr.error(`${err.message}`);
+      }
+    })
+  }
+  get devices() {
+    return this.AddReceiveNotice.get('devices')
+  }
+  get device() {
+    return this.devices?.get('deviceId')?.value
+  }
+  AddNotice() {
+    let value: any = this.AddReceiveNotice.value;
+    value['clientFileId'] = this.clientFileId
+    this._QuotationsService.AddNotices(value).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`${res.message}`);
+        this.GetShortClientFiles();
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
       }
