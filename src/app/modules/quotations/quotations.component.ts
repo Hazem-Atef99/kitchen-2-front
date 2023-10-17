@@ -59,7 +59,7 @@ export class QuotationsComponent implements OnInit {
       clientNeed: [null, [Validators.required]],
       designerId: [null, [Validators.required]],///
       designerDate: [null, [Validators.required]],///
-      measurmentId: [null, [Validators.required]],////
+      measurmentId: ['', [Validators.required]],////
       measurmentDate: [null, [Validators.required]],////
       kitchenModelId: [null, [Validators.required]],////
       kitchenLocation: [null, [Validators.required]],///
