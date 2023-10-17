@@ -250,6 +250,7 @@ export class QuotationsComponent implements OnInit {
       next: (res: any) => {
         this.toastr.success(`${res.message}`);
         this.GetShortClientFiles();
+        location.reload()
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
       }
