@@ -59,15 +59,14 @@ export class QuotationsComponent implements OnInit {
       clientNeed: [null, [Validators.required]],
       designerId: [null, [Validators.required]],///
       designerDate: [null, [Validators.required]],///
-      measurmentId: ['', [Validators.required]],////
+      measurementId: [null, [Validators.required]],////
+      measurmentId: [null, [Validators.required]],////
       measurmentDate: [null, [Validators.required]],////
       kitchenModelId: [null, [Validators.required]],////
       kitchenLocation: [null, [Validators.required]],///
       salesId: [null, [Validators.required]],//
       selectedDevice: [null, [Validators.required]],//
-      devices: this._FormBuilder.group({
-        deviceId: [[], [Validators.required]]
-      }),
+      devices: [[], [Validators.required]]
     })
   }
   initFilterForm(): FormGroup {
@@ -128,6 +127,15 @@ export class QuotationsComponent implements OnInit {
       next: (res: any) => {
         this.allUsersData = res.data
       }
+    })
+  }
+  setMeasurement() {
+    let val1, val2
+    val1 = this.AddReceiveNotice.get('measurementId')?.value
+    val2 = val1.toString()
+    console.log(val2)
+    this.AddReceiveNotice.patchValue({
+      measurmentId: val2
     })
   }
 
@@ -201,8 +209,8 @@ export class QuotationsComponent implements OnInit {
       this.DevicesData.filter((ele: any) => ele.id === this.AddReceiveNotice.get('selectedDevice')?.value)[0]
     )
     console.log(this.MyDevices)
-    this.devices?.get('deviceId')?.value.push(
-      this.AddReceiveNotice.get('selectedDevice')?.value
+    this.devices?.value.push(
+      {deviceId: this.AddReceiveNotice.get('selectedDevice')?.value}
     )
   }
   DeleteDevice(i: number) {

@@ -432,9 +432,10 @@
                   <label>مسئول القياس</label>
                   <ng-select [items]="allUsersData"
                              bindLabel="userName"
+                             (change)="setMeasurement()"
                              bindValue="id"
                              placeholder="اختر مسئول القياس"
-                             formControlName="measurmentId">
+                             formControlName="measurementId">
                   </ng-select>
                 </div>
                 <div class="col-6">
