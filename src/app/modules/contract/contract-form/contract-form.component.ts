@@ -1,6 +1,6 @@
 import {Component, OnInit, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {QuotationsService} from '../quotations.service';
+import {ContractService} from '../contract.service';
 import {ClientsService} from '../../clients/clients.service';
 import {Clients, DataClients} from '../../clients/modal/clients';
 import {ToastrService} from 'ngx-toastr';
@@ -8,11 +8,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
-  selector: 'app-form-quotation',
-  templateUrl: './form-quotation.component.html',
-  styleUrls: ['./form-quotation.component.scss']
+  selector: 'app-contract-form',
+  templateUrl: './contract-form.component.html',
+  styleUrls: ['./contract-form.component.scss']
 })
-export class FormQuotationComponent implements OnInit {
+export class ContractFormComponent implements OnInit {
 
   AddClientFileForm!: FormGroup;
   allClients: DataClients[] = [];
@@ -217,7 +217,7 @@ export class FormQuotationComponent implements OnInit {
 
   constructor(
     private _FormBuilder: FormBuilder,
-    private _QuotationsService: QuotationsService,
+    private _contractService: ContractService,
     private _ClientsService: ClientsService,
     private _activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
@@ -245,7 +245,7 @@ export class FormQuotationComponent implements OnInit {
   }
 
   GetClientFileById(id: number) {
-    this._QuotationsService.GetClientFileByIdApi(id).subscribe({
+    this._contractService.GetClientFileByIdApi(id).subscribe({
       next: (res: any) => {
         this.AddClientFileForm.patchValue({
           clientId: res.data.client.clientId,
@@ -459,7 +459,7 @@ export class FormQuotationComponent implements OnInit {
   }
 
   LoadPriceOffer() {
-    this._QuotationsService.LoadPriceOffer().subscribe({
+    this._contractService.LoadPriceOffer().subscribe({
       next: (res: any) => {
         this.loadPriceOffer = res.data
         if (this.clientFileId) {
@@ -470,7 +470,7 @@ export class FormQuotationComponent implements OnInit {
   }
 
   GetUnitsItemsbyCategory() {
-    this._QuotationsService.GetUnitsItemsbyCategory().subscribe({
+    this._contractService.GetUnitsItemsbyCategory().subscribe({
       next: (res: any) => {
         this.UnitsItemsbyCategory = res.data
       }
@@ -497,7 +497,7 @@ export class FormQuotationComponent implements OnInit {
       this.itemsFormArray.push(this.myArrayAsForm2[i])
     }
     if (!this.clientFileId) {
-      this._QuotationsService.AddClientFile(this.AddClientFileForm.value).subscribe({
+      this._contractService.AddClientFile(this.AddClientFileForm.value).subscribe({
         next: (res: any) => {
           this.toastr.success(`${res.message}`);
           this._Router.navigateByUrl('/quotations')
@@ -506,7 +506,7 @@ export class FormQuotationComponent implements OnInit {
         }
       })
     } else {
-      this._QuotationsService.EditClientFile(this.AddClientFileForm.value, this.clientFileId).subscribe({
+      this._contractService.EditClientFile(this.AddClientFileForm.value, this.clientFileId).subscribe({
         next: (res: any) => {
           this.toastr.success(`${res.message}`);
           this._Router.navigateByUrl('/quotations')

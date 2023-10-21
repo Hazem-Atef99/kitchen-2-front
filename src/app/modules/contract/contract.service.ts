@@ -6,7 +6,7 @@ import { environment as env } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class QuotationsService {
+export class ContractService {
   domain: string = env.apiUrl;
 
   constructor(private _HttpClient: HttpClient) { }
