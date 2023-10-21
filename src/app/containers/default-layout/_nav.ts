@@ -28,7 +28,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'العقد',
-    url: '/home',
+    url: '/contract',
     // iconComponent: { name: 'cil-speedometer' },
   },
   {
