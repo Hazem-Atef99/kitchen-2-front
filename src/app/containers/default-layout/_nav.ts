@@ -58,7 +58,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'طلبات الانتاج',
-    url: '/home',
+    url: '/productionRequests',
     // iconComponent: { name: 'cil-speedometer' },
   },
   {
