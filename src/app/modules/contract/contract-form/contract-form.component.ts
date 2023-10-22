@@ -29,146 +29,81 @@ export class ContractFormComponent implements OnInit {
   TopCount: number = 0;
   ListOfItems: any = [
     {
-      isCount: true,
-      x: 1,
-      name: 'الجرانيت',
-      value: 'garanet',
-      itemTypeId: 4,
-      id: 16
+      name: 'الخشب الداخلي',
+      value: 'innerWood',
+      statusCategoryId: 4,
     },
     {
-      isCount: false,
-      x: 1,
-      name: 'المجلى',
-      value: 'magla',
+      name: 'Front Type',
+      value: 'shutterWood',
       itemTypeId: 4,
       id: 12
     },
     {
-      isCount: true,
-      x: 1,
       name: 'البانيل',
       value: 'panel',
       itemTypeId: 4,
       id: 15
     },
     {
-      isCount: false,
-      x: 1,
       name: 'حفرة المجلى',
       value: 'maglaHole',
       itemTypeId: 4,
       id: 13
     },
     {
-      isCount: true,
-      x: 1,
       name: 'تصفيح الجدران من التوب',
       value: 'platingTopWall',
       itemTypeId: 4,
       id: 227
     },
     {
-      isCount: false,
-      x: 1,
       name: 'سترب خارجي',
       value: 'outerStrop',
       itemTypeId: 4,
       id: 83
     },
     {
-      isCount: true,
-      x: 1,
       name: 'نوع الايادي',
       value: 'handType',
       itemTypeId: 4,
       id: 9
     },
     {
-      isCount: false,
-      x: 1,
       name: 'الشفاط',
       value: 'shafat',
       itemTypeId: 4,
       id: 23
     },
     {
-      isCount: true,
-      x: 1,
       name: 'تسميك التوب',
       value: 'thickeningTop',
       itemTypeId: 4,
       id: 276
     },
     {
-      isCount: false,
-      x: 1,
       name: 'البطارية',
       value: 'batery',
       itemTypeId: 4,
       id: 14
     },
     {
-      isCount: true,
-      x: 1,
       name: 'الكورنيش',
       value: 'corniche',
       itemTypeId: 4,
       id: 178
     },
     {
-      isCount: false,
-      x: 1,
       name: 'توصيلات صحية',
       value: 'healthLinking',
       itemTypeId: 4,
       id: 274
     },
     {
-      isCount: true,
-      x: 1,
       name: 'الانارة',
       value: 'lighting',
       itemTypeId: 4,
       id: 275
-    },
-    // {
-    //   name: 'تصفيح خشب ',
-    //   value:'',
-    //   id: 96
-    // },
-    // {
-    //   name: 'متطلبات العميل',
-    //   value:'',
-    //   id: 0
-    // },
-
-    // ======================
-    {
-      x: 0,
-      name: 'الوحدات',
-      units: {
-        name: 'الوحدة',
-        value: 'unit',
-        id: 1,
-        itemTypeId: 1
-      },
-      value: 'unites',
-      id: 1,
-      itemTypeId: 1
-    },
-    {
-      x: 0,
-      name: 'اضافات',
-      accessories: {
-        name: 'الاكسسوارات',
-        value: 'accessories',
-        id: 3,
-        itemTypeId: 3
-      },
-      value: 'accessories',
-      id: 3,
-      itemTypeId: 3
     },
   ]
   clientFileTypes: any = [
@@ -224,12 +159,7 @@ export class ContractFormComponent implements OnInit {
     private _Router: Router
   ) {
     this.AddClientFileForm = this.initClientFileForm();
-    this.ListOfItems.forEach((ele: any, index: number) => {
-      this.addItemsFormArray();
-      this.itemsFormArray.controls[index].patchValue({
-        itemTypeId: ele.itemTypeId
-      })
-    })
+
     this.LoadPriceOffer();
     this.GetUnitsItemsbyCategory();
     this.GetAllClients();
@@ -322,24 +252,6 @@ export class ContractFormComponent implements OnInit {
       discount: [null, [Validators.required]],
       accessoryDiscount: [null, [Validators.required]],
       items: this._FormBuilder.array([]),
-      items1: this._FormBuilder.group({
-        itemId: [null, [Validators.required]],
-        itemCount: [1, [Validators.required]],
-        itemTypeId: [1, [Validators.required]],
-        itemPrice: [null],
-        eachItemPrice: [null],
-        notes: [null],
-        categoryId: null
-      }),
-      items2: this._FormBuilder.group({
-        itemId: [null, [Validators.required]],
-        itemCount: [1, [Validators.required]],
-        itemTypeId: [3, [Validators.required]],
-        itemPrice: [null],
-        eachItemPrice: [null],
-        notes: [null],
-        categoryId: null
-      })
     })
   }
 
@@ -461,7 +373,16 @@ export class ContractFormComponent implements OnInit {
   LoadPriceOffer() {
     this._contractService.LoadPriceOffer().subscribe({
       next: (res: any) => {
+        Object.entries(res.data).forEach(([key, value]) => {
+          this.addItemsFormArray();
+          // console.log(`Key: ${key}, Value: ${value}`);
+          console.log(value);
+          // this.itemsFormArray.controls[index].patchValue({
+          //   itemTypeId: ele.itemTypeId
+          // })
+        })
         this.loadPriceOffer = res.data
+        console.log(this.loadPriceOffer)
         if (this.clientFileId) {
           this.GetClientFileById(this.clientFileId)
         }

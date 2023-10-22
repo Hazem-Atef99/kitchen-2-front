@@ -36,7 +36,7 @@ export class ContractService {
     return this._HttpClient.get(`${this.domain}ClientFile/GetClientFileById/${id}`)
   }
   LoadPriceOffer(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFile/LoadPriceOffer`)
+    return this._HttpClient.get(`${this.domain}ClientFile/LoadContractPageRequests`)
   }
   GetUnitsItemsbyCategory(): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetUnitsItemsbyCategory`)
