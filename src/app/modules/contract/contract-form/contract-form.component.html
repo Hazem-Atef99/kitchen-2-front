@@ -23,112 +23,112 @@
             </c-col>
         </c-row>
       <c-row class="px-2">
-        <div class="col-md-3 mb-3">
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <h5>الزبون</h5>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-4">
-                  <label>الزبون</label>
-                  <ng-select [items]="allClients"
-                             bindLabel="clientName"
-                             bindValue="clientId"
-                             placeholder="اختر الزبون"
-                             formControlName="clientId">
-                  </ng-select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-9 mb-3">
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <h5>الاكسسوارات</h5>
-              <!--                          <button [disabled]="myViewArray2.length == 0" class="btn btn-success" (click)="addAccessoriesItem()">-->
-              <button  class="btn btn-success" (click)="addAccessoriesItem()">
-                اضافة
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
-                     viewBox="0 0 16 16">
-                  <path fill-rule="evenodd"
-                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-                </svg>
-              </button>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-4">
-                  <label style="visibility: hidden;">.</label>
-                  <h5>العقد</h5>
-                </div>
-                <div class="col-4">
-                  <label style="visibility: hidden;">.</label>
-                  <ng-select [items]="loadPriceOffer['accessories']?.statuses?.statuses"
-                             bindLabel="description"
-                             bindValue="statusId"
-                             placeholder="اختر الاضافات"
-                             formControlName="itemId">
-                  </ng-select>
-                </div>
+<!--        <div class="col-md-3 mb-3">-->
+<!--          <div class="card">-->
+<!--            <div class="card-header d-flex justify-content-between">-->
+<!--              <h5>الزبون</h5>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--              <div class="row">-->
+<!--                <div class="col-4">-->
+<!--                  <label>الزبون</label>-->
+<!--                  <ng-select [items]="allClients"-->
+<!--                             bindLabel="clientName"-->
+<!--                             bindValue="clientId"-->
+<!--                             placeholder="اختر الزبون"-->
+<!--                             formControlName="clientId">-->
+<!--                  </ng-select>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-9 mb-3">-->
+<!--          <div class="card">-->
+<!--            <div class="card-header d-flex justify-content-between">-->
+<!--              <h5>الاكسسوارات</h5>-->
+<!--              &lt;!&ndash;                          <button [disabled]="myViewArray2.length == 0" class="btn btn-success" (click)="addAccessoriesItem()">&ndash;&gt;-->
+<!--              <button  class="btn btn-success" (click)="addAccessoriesItem()">-->
+<!--                اضافة-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"-->
+<!--                     viewBox="0 0 16 16">-->
+<!--                  <path fill-rule="evenodd"-->
+<!--                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />-->
+<!--                </svg>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--              <div class="row">-->
+<!--                <div class="col-4">-->
+<!--                  <label style="visibility: hidden;">.</label>-->
+<!--                  <h5>العقد</h5>-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                  <label style="visibility: hidden;">.</label>-->
+<!--                  <ng-select [items]="loadPriceOffer['accessories']?.statuses?.statuses"-->
+<!--                             bindLabel="description"-->
+<!--                             bindValue="statusId"-->
+<!--                             placeholder="اختر الاضافات"-->
+<!--                             formControlName="itemId">-->
+<!--                  </ng-select>-->
+<!--                </div>-->
 
-                <div class="col-2">
-                  <label>العدد</label>
-                  <input aria-label="default input example" cFormControl
-                         formControlName="itemCount" type="number" (keyup)="getPrice2(); setPrice2($event)"/>
-                </div>
-                <div class="col-2">
-                  <label>السعر</label>
-                  <input [style]="items2Form.get('eachItemPrice')?.value > 0? 'opacity: 50%; pointer-events: none' : ''"
-                         aria-label="default input example" cFormControl
-                         formControlName="itemPrice" type="number" />
-                </div>
-                <div class="col-md-12 mb-3">
-                  <div class="row">
-                    <div class="col-12">
-                      <label>الملاحظة</label>
-                      <textarea formControlName="notes" id="" cols="30"
-                                rows="3" class="form-control">
-                                  </textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <table class="w-100">
-                    <table [striped]="true" cTable>
-                      <thead>
-                      <tr>
-                        <th scope="col">الوحدة</th>
-                        <th scope="col">العدد</th>
-                        <th scope="col">الملاحظات</th>
-                        <th scope="col">السعر</th>
-                        <th scope="col">حذف</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr *ngFor="let units of myArray2; index as i">
-                        <td>{{units.unit}}</td>
-                        <!--                                    <td>{{units.unit2}}</td>-->
-                        <td>{{units.itemCount}}</td>
-                        <td>{{units.notes}}</td>
-                        <td>{{units.itemPrice}}</td>
-                        <td>
-                          <button (click)="deleteAccessories(i)" cButton class="btn btn-danger m-0 p-2">
-                            <svg cIcon name="cil-trash"></svg>
-                          </button>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+<!--                <div class="col-2">-->
+<!--                  <label>العدد</label>-->
+<!--                  <input aria-label="default input example" cFormControl-->
+<!--                         formControlName="itemCount" type="number" (keyup)="getPrice2(); setPrice2($event)"/>-->
+<!--                </div>-->
+<!--                <div class="col-2">-->
+<!--                  <label>السعر</label>-->
+<!--                  <input [style]="items2Form.get('eachItemPrice')?.value > 0? 'opacity: 50%; pointer-events: none' : ''"-->
+<!--                         aria-label="default input example" cFormControl-->
+<!--                         formControlName="itemPrice" type="number" />-->
+<!--                </div>-->
+<!--                <div class="col-md-12 mb-3">-->
+<!--                  <div class="row">-->
+<!--                    <div class="col-12">-->
+<!--                      <label>الملاحظة</label>-->
+<!--                      <textarea formControlName="notes" id="" cols="30"-->
+<!--                                rows="3" class="form-control">-->
+<!--                                  </textarea>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                  <table class="w-100">-->
+<!--                    <table [striped]="true" cTable>-->
+<!--                      <thead>-->
+<!--                      <tr>-->
+<!--                        <th scope="col">الوحدة</th>-->
+<!--                        <th scope="col">العدد</th>-->
+<!--                        <th scope="col">الملاحظات</th>-->
+<!--                        <th scope="col">السعر</th>-->
+<!--                        <th scope="col">حذف</th>-->
+<!--                      </tr>-->
+<!--                      </thead>-->
+<!--                      <tbody>-->
+<!--                      <tr *ngFor="let units of myArray2; index as i">-->
+<!--                        <td>{{units.unit}}</td>-->
+<!--                        &lt;!&ndash;                                    <td>{{units.unit2}}</td>&ndash;&gt;-->
+<!--                        <td>{{units.itemCount}}</td>-->
+<!--                        <td>{{units.notes}}</td>-->
+<!--                        <td>{{units.itemPrice}}</td>-->
+<!--                        <td>-->
+<!--                          <button (click)="deleteAccessories(i)" cButton class="btn btn-danger m-0 p-2">-->
+<!--                            <svg cIcon name="cil-trash"></svg>-->
+<!--                          </button>-->
+<!--                        </td>-->
+<!--                      </tr>-->
+<!--                      </tbody>-->
+<!--                    </table>-->
+<!--                  </table>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
       </c-row>
       <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
         <div class="card">
@@ -139,36 +139,17 @@
             <div class="row">
               <ng-container formArrayName="items">
                 <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
-                  <ng-container *ngIf="ListOfItems[i]?.x">
-                    <ng-container [formGroupName]="i">
-                      <div class="col-md-6 mb-3">
-                        <div class="row">
-                          <div class="col-6">
-                            <label>{{ListOfItems[i].name}}</label>
-                            <ng-select [items]="loadPriceOffer[ListOfItems[i].value]?.statuses"
-                                       bindLabel="description"
-                                       bindValue="statusId"
-                                       placeholder="{{ListOfItems[i].name}}"
-                                       (change)="setPrice($event, i); getPrice(i)"
-                                       formControlName="itemId">
-                            </ng-select>
-                          </div>
-                          <div class="col-3" *ngIf="ListOfItems[i].isCount">
-                            <label>العدد</label>
-                            <input  aria-label="default input example" cFormControl
-                                    formControlName="itemCount" type="number" (keyup)="getPrice(i)"
-                            />
-                          </div>
-                          <div class="col-3">
-                            <label>السعر</label>
-                            <input [style]="item.get('eachItemPrice')?.value > 0? 'opacity: 50%; pointer-events: none' : ''"
-                                   aria-label="default input example" cFormControl
-                                   formControlName="itemPrice" type="number"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </ng-container>
+                  <ng-container [formGroupName]="i">
+                    <div class="col-md-4 mb-3">
+                      <label>{{loadPriceOfferList[i]?.defaultDesc}}</label>
+                      <ng-select [items]="loadPriceOffer[loadPriceOfferList[i]?.key]?.statuses"
+                                 bindLabel="description"
+                                 bindValue="statusId"
+                                 placeholder="{{loadPriceOfferList[i]?.defaultDesc}}"
+                                 formControlName="itemId">
+                      </ng-select>
+                      <!--                          (change)="setPrice($event, i); getPrice(i)"-->
+                    </div>
                   </ng-container>
                 </ng-container>
               </ng-container>

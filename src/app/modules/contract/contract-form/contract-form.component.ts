@@ -125,6 +125,7 @@ export class ContractFormComponent implements OnInit {
     },
   ]
   loadPriceOffer: any;
+  loadPriceOfferList: any[] = [];
   UnitsItemsbyCategory: any;
 
   @HostListener('document:click', ['$event'])
@@ -258,12 +259,8 @@ export class ContractFormComponent implements OnInit {
   ClientFileFormGroup(): FormGroup {
     return this._FormBuilder.group({
       itemId: [null, [Validators.required]],
-      itemCount: [1, [Validators.required]],
       itemTypeId: [4, [Validators.required]],
-      itemPrice: [null],
-      eachItemPrice: [null],
-      notes: [null],
-      categoryId: null
+      categoryId: null,
     })
   }
 
@@ -373,19 +370,24 @@ export class ContractFormComponent implements OnInit {
   LoadPriceOffer() {
     this._contractService.LoadPriceOffer().subscribe({
       next: (res: any) => {
-        Object.entries(res.data).forEach(([key, value]) => {
-          this.addItemsFormArray();
-          // console.log(`Key: ${key}, Value: ${value}`);
-          console.log(value);
-          // this.itemsFormArray.controls[index].patchValue({
-          //   itemTypeId: ele.itemTypeId
-          // })
-        })
+        this.loadPriceOfferList = []
         this.loadPriceOffer = res.data
-        console.log(this.loadPriceOffer)
-        if (this.clientFileId) {
-          this.GetClientFileById(this.clientFileId)
-        }
+        Object.entries(res.data).forEach(([key, value], index) => {
+          this.loadPriceOfferList.push({
+            key: key,
+            defaultDesc: res.data[key]?.defaultDesc,
+            // statuses: res.data[key]?.statuses,
+          })
+          ////
+          this.addItemsFormArray();
+          this.itemsFormArray.controls[index].patchValue({
+            itemTypeId: 4,
+            categoryId: res.data[key]?.statusCategoryId,
+          })
+        })
+        // if (this.clientFileId) {
+        //   this.GetClientFileById(this.clientFileId)
+        // }
       }
     })
   }
