@@ -17,6 +17,16 @@ export const navItems: INavData[] = [
     // iconComponent: { name: 'cil-speedometer' },
   },
   {
+    name: 'العقد',
+    url: '/contract',
+    // iconComponent: { name: 'cil-speedometer' },
+  },
+  {
+    name: 'طلبات الانتاج',
+    url: '/home',
+    // iconComponent: { name: 'cil-speedometer' },
+  },
+  {
     name: 'المتابعات',
     url: '/home',
     // iconComponent: { name: 'cil-speedometer' },
@@ -26,11 +36,7 @@ export const navItems: INavData[] = [
     url: '/home',
     // iconComponent: { name: 'cil-speedometer' },
   },
-  {
-    name: 'العقد',
-    url: '/contract',
-    // iconComponent: { name: 'cil-speedometer' },
-  },
+
   {
     name: 'الصيانة',
     url: '/home',
@@ -56,11 +62,7 @@ export const navItems: INavData[] = [
     url: '/home',
     // iconComponent: { name: 'cil-speedometer' },
   },
-  {
-    name: 'طلبات الانتاج',
-    url: '/home',
-    // iconComponent: { name: 'cil-speedometer' },
-  },
+
   {
     name: 'محضر استقبال',
     url: '/home',

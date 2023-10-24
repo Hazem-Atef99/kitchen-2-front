@@ -14,18 +14,6 @@ export class HomeComponent {
 
     },
     {
-      icon:'2',
-      name:'المتابعات',
-      link:'follows'
-
-    },
-    {
-      icon:'3',
-      name:'الملاحظات',
-      link:''
-
-    },
-    {
       icon:'4',
       name:'العقد',
       link:'contract'
@@ -37,6 +25,20 @@ export class HomeComponent {
       link:''
 
     },
+    {
+      icon:'2',
+      name:'المتابعات',
+      link:'follows'
+
+    },
+    {
+      icon:'3',
+      name:'الملاحظات',
+      link:''
+
+    },
+
+
     {
       icon:'6',
       name:'الصيانة',
