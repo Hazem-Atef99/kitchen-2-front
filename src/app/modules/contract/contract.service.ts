@@ -20,8 +20,8 @@ export class ContractService {
     }
     return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles` , {params:value})
   }
-  AddClientFile(body:FormGroup): Observable<any> {
-    return this._HttpClient.post(`${this.domain}ClientFile/AddClientFile`,body)
+  AddContract(body:FormGroup): Observable<any> {
+    return this._HttpClient.post(`${this.domain}ClientFile/AddContract`,body)
   }
   EditClientFile(body:FormGroup, id: number): Observable<any> {
     return this._HttpClient.post(`${this.domain}ClientFile/UpdateClientFile/${id}`,body)
