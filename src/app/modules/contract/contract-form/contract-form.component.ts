@@ -139,9 +139,22 @@ export class ContractFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    if(this.clientFileId) this.GetClientFileById(this.clientFileId);
   }
+  GetClientFileById(id: number) {
+    this._contractService.GetClientFileByIdApi(id).subscribe({
+      next: (res: any) => {
+        this.AddClientFileForm.patchValue({
+          clientId: res.data.client.clientId,
+        });
+        res.data.items.forEach((ele: any) => {
+          // let index = this.itemsFormArray.controls.findIndex((secEle: any) => secEle.categoryId == ele.categoryId)
 
+        })
+        console.log(res)
+      }
+    })
+  }
   addContract() {
     if (!this.clientFileId) {
       this._contractService.AddContract(this.AddClientFileForm.value).subscribe({
