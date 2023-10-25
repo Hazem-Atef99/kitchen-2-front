@@ -22,8 +22,8 @@ export class HomeComponent {
     {
       icon:'5',
       name:'طلبات الانتاج',
-      link:'productionRequests'
-    
+      link:'production-requests'
+
     },
     {
       icon:'2',
