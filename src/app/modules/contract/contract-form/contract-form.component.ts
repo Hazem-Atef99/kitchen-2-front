@@ -79,7 +79,7 @@ export class ContractFormComponent implements OnInit {
       phoneNumber: [null, [Validators.required]],
       address: [null, [Validators.required]],
       allPrice: [null, [Validators.required]],
-      contractStatusId: [null, [Validators.required]],
+      contractStatusId: [0, [Validators.required]],
       startWeek: [null, [Validators.required]],
       startMonth: [null, [Validators.required]],
       invoiceDate: [null, [Validators.required]],
@@ -123,9 +123,10 @@ export class ContractFormComponent implements OnInit {
           })
           this.itemsFormArray.controls[index]?.patchValue({
             itemTypeId: 4,
-            categoryId: res.data[key].statusCategoryId,
+            categoryId: res.data[key]?.statusCategoryId,
           })
         })
+        if(this.clientFileId) this.GetClientFileById();
       }
     })
   }
@@ -139,21 +140,7 @@ export class ContractFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.clientFileId) this.GetClientFileById(this.clientFileId);
-  }
-  GetClientFileById(id: number) {
-    this._contractService.GetClientFileByIdApi(id).subscribe({
-      next: (res: any) => {
-        this.AddClientFileForm.patchValue({
-          clientId: res.data.client.clientId,
-        });
-        res.data.items.forEach((ele: any) => {
-          // let index = this.itemsFormArray.controls.findIndex((secEle: any) => secEle.categoryId == ele.categoryId)
 
-        })
-        console.log(res)
-      }
-    })
   }
   addContract() {
     if (!this.clientFileId) {
@@ -175,5 +162,43 @@ export class ContractFormComponent implements OnInit {
         }
       })
     }
+  }
+  setClient(e: any){
+    console.log(e)
+    this.AddClientFileForm.patchValue({
+      phoneNumber: e.mobile,
+      address: e.email,
+    })
+  }
+  GetClientFileById(){
+    this._contractService.GetClientFileByIdApi(this.clientFileId).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        this.AddClientFileForm.patchValue({
+          clientId: res.data.client.clientId,
+          // contractDate: res.data,
+          phoneNumber: res.data.client.mobile,
+          address: res.data.client.email,
+          allPrice: res.data.allPrice,
+          contractStatusId: res.data.contractStatusId,
+          // startWeek: res.data,
+          // startMonth: res.data,
+          // invoiceDate: res.data,
+          withTax: res.data.withTax,
+          fileTypeId: res.data.fileTypeId,
+          notes: res.data.deviceNotes,
+        });
+        res.data.items.forEach((ele: any) => {
+          let index = this.itemsFormArray.controls.findIndex((secEle: any) => secEle.get('categoryId')?.value == ele.parentCategoryId)
+          if (index != -1){
+            this.itemsFormArray.controls[index].patchValue({
+              itemId: ele.itemId,
+              categoryId: ele.parentCategoryId,
+              itemTypeId: 4,
+            })
+          }
+        })
+      }
+    })
   }
 }

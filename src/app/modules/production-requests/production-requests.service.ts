@@ -35,7 +35,7 @@ export class ProductionRequestsService {
   GetAllUsersApi(): Observable<any> {
     return this._HttpClient.get(`${this.domain}Users/GetAllUsers`)
   }
-  GetClientFileByIdApi(id: number): Observable<any> {
+  GetProductionRequestsByIdApi(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFile/GetClientFileById/${id}`)
   }
   getLoadProductionRequests(): Observable<any> {

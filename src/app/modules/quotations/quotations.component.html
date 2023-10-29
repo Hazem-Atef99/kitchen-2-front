@@ -1,7 +1,8 @@
 <c-card class="mb-4">
   <c-card-header class="d-flex justify-content-between align-items-center py-4">
     <strong>عروض الأسعار</strong>
-    <button class="btn btn-success" routerLink="add" [queryParams]="{fileTypeId: query.fileTypeId}">
+    <button [disabled]="!query.fileTypeId"
+      class="btn btn-success" routerLink="add" [queryParams]="{fileTypeId: query.fileTypeId}">
       اضافة
       <i class='bx bx-plus'></i>
     </button>
@@ -11,7 +12,7 @@
   <c-row class="p-2">
     <c-col>
       <c-form-check>
-        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="0" />
+        <input cFormCheckInput [checked]="true" (click)="filter($event.target)" type="radio" name="fileTypeId" value="null" />
         <label cFormCheckLabel>الكل</label>
       </c-form-check>
     </c-col>

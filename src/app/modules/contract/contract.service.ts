@@ -29,6 +29,7 @@ export class ContractService {
   GetStatusCategoryById(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)
   }
+
   GetAllUsersApi(): Observable<any> {
     return this._HttpClient.get(`${this.domain}Users/GetAllUsers`)
   }
@@ -38,9 +39,7 @@ export class ContractService {
   LoadPriceOffer(): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFile/LoadContractPageRequests`)
   }
-  GetUnitsItemsbyCategory(): Observable<any> {
-    return this._HttpClient.get(`${this.domain}StatusCategory/GetUnitsItemsbyCategory`)
-  }
+
   AddClientFileAttachment(value:any): Observable<any> {
     const formData = new FormData();
     for (const key in value) {

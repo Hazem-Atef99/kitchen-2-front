@@ -40,7 +40,7 @@ export class QuotationsComponent implements OnInit {
   Note: String = '';
   query: any = {
     PageType: 0,
-    fileTypeId: 0,
+    fileTypeId: null,
   }
   AddReceiveNotice!: FormGroup;
 

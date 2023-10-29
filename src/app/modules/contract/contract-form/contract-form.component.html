@@ -34,18 +34,19 @@
                   <label>الزبون</label>
                   <ng-select [items]="allClients"
                              bindLabel="clientName"
+                             (change)="setClient($event)"
                              bindValue="clientId"
                              placeholder="اختر الزبون"
                              formControlName="clientId">
                   </ng-select>
                 </div>
-                <div class="col-12 mt-2">
+                <div class="col-12 mt-2" style="opacity: 50%; pointer-events: none">
                   <label>رقم الجوال</label>
                   <input aria-label="default input example" cFormControl
                          formControlName="phoneNumber" type="tel"/>
                 </div>
-                <div class="col-12 mt-2">
-                  <label>العنوان</label>
+                <div class="col-12 mt-2" style="opacity: 50%; pointer-events: none">
+                  <label>البريد</label>
                   <textarea aria-label="default input example" cFormControl
                             formControlName="address" rows="3">
                   </textarea>
@@ -90,7 +91,7 @@
                   <input aria-label="default input example" cFormControl
                          formControlName="contractDate" type="date"/>
                 </div>
-                <div class="col-3">
+                <div class="col-3" style="opacity: 50%; pointer-events: none">
                   <label>رقم العقد</label>
                   <input aria-label="default input example" cFormControl
                          formControlName="contractStatusId" type="number" />

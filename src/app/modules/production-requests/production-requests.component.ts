@@ -40,7 +40,7 @@ export class ProductionRequestsComponent implements OnInit{
   Note: String = '';
   query: any = {
     PageType: 4,
-    fileTypeId: 0,
+    fileTypeId: null,
   }
   AddReceiveNotice!: FormGroup;
 

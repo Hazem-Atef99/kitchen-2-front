@@ -127,7 +127,75 @@ export class FormProductionRequestsComponent {
       }
     })
   }
-
+  ProductionRequestsById(id: number) {
+    this._productionRequestsService.GetProductionRequestsByIdApi(id).subscribe({
+      next: (res: any) => {
+        console.log(res.data)
+        // this.AddClientFileForm.patchValue({
+        //   clientId: res.data.client.clientId,
+        //   deviceNotes: res.data.deviceNotes,
+        //   additionaldiscount: res.data.additionaldiscount,
+        //   discount: res.data.discount,
+        //   accessoryDiscount: res.data.accessoryDiscount,
+        // });
+        // res.data.items.forEach((ele: any) => {
+        //   if (ele.itemTypeId == 4) {
+        //     let index = this.ListOfItems.findIndex((secEle: any) => secEle.id == ele.parentCategoryId)
+        //     this.itemsFormArray.controls[index].patchValue({
+        //       itemId: ele.itemId,
+        //       categoryId: ele.parentCategoryId,
+        //       notes: ele.notes,
+        //       itemPrice: ele.itemPrice,
+        //       itemCount: ele.itemCount,
+        //       itemTypeId: 4,
+        //     })
+        //   } else if (ele.itemTypeId == 1) {
+        //     this.myArrayAsForm1.push(
+        //       this._FormBuilder.group({
+        //         itemId: ele.itemId,
+        //         itemCount: ele.itemCount,
+        //         itemTypeId: 3,
+        //         itemPrice: ele.itemPrice,
+        //         notes: ele.notes,
+        //         categoryId: ele.parentCategoryId
+        //       })
+        //     )
+        //     this.myArray1.push({
+        //       itemId: ele.itemId,
+        //       itemCount: ele.itemCount,
+        //       itemTypeId: 3,
+        //       itemPrice: ele.itemPrice,
+        //       notes: ele.notes,
+        //       categoryId: ele.parentCategoryId,
+        //       unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+        //       unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
+        //     })
+        //   } else if (ele.itemTypeId == 3) {
+        //     this.myArrayAsForm2.push(
+        //       this._FormBuilder.group({
+        //         itemId: ele.itemId,
+        //         itemCount: ele.itemCount,
+        //         itemTypeId: 3,
+        //         itemPrice: ele.itemPrice,
+        //         notes: ele.notes,
+        //         categoryId: ele.parentCategoryId
+        //       })
+        //     )
+        //     this.myArray2.push({
+        //       itemId: ele.itemId,
+        //       itemCount: ele.itemCount,
+        //       itemTypeId: 3,
+        //       itemPrice: ele.itemPrice,
+        //       notes: ele.notes,
+        //       categoryId: ele.parentCategoryId,
+        //       unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+        //     })
+        //   }
+        // })
+        // this.countTotal()
+      }
+    })
+  }
   GetAllClients() {
     this._ClientsService.GetAllClients().subscribe({
       next: (res: Clients) => {
