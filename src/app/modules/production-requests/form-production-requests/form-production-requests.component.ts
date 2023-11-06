@@ -4,7 +4,7 @@ import {QuotationsService} from '../../quotations/quotations.service';
 import {ClientsService} from '../../clients/clients.service';
 import {Clients, DataClients} from '../../clients/modal/clients';
 import {ToastrService} from 'ngx-toastr';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ProductionRequestsService} from '../production-requests.service';
 
 @Component({
@@ -36,6 +36,9 @@ export class FormProductionRequestsComponent {
   myArray: any = [];
   myArrayAsForm: any = [];
   loadPriceOffer: any;
+  newLoadPriceOffer: any = [];
+  fileTypeId: any;
+  clientFileId: any;
   loadPriceOfferList: any = [];
 
 
@@ -44,9 +47,19 @@ export class FormProductionRequestsComponent {
     private _productionRequestsService: ProductionRequestsService,
     private _ClientsService: ClientsService,
     private toastr: ToastrService,
+    private _activatedRoute: ActivatedRoute,
     private _Router: Router
   ) {
     this.AddProductionRequestsForm = this.initProductionRequestsForm();
+    let fileTypeId: any = _activatedRoute.snapshot.queryParamMap.get('fileTypeId')
+    let clientFileId: any = _activatedRoute.snapshot.queryParamMap.get('clientFileId')
+    this.fileTypeId = +fileTypeId
+    this.clientFileId = +clientFileId
+    if (fileTypeId) {
+      this.AddProductionRequestsForm.patchValue({
+        fileTypeId: +fileTypeId
+      });
+    }
   }
 
   initProductionRequestsForm(): FormGroup {
@@ -111,6 +124,7 @@ export class FormProductionRequestsComponent {
       next: (res: any) => {
         this.loadPriceOfferList = []
         this.loadPriceOffer = res.data
+        console.log( this.loadPriceOffer)
         Object.entries(res.data).forEach(([key, value], index) => {
           if (key != 'accessories') {
             this.addItemsFormArray();
@@ -123,7 +137,13 @@ export class FormProductionRequestsComponent {
               categoryId: res.data[key]?.statusCategoryId,
             })
           }
+          if (this.clientFileId) {
+            this.newLoadPriceOffer.push(value)
+          }
         })
+        if (this.clientFileId) {
+          this.ProductionRequestsById(this.clientFileId)
+        }
       }
     })
   }
@@ -131,68 +151,47 @@ export class FormProductionRequestsComponent {
     this._productionRequestsService.GetProductionRequestsByIdApi(id).subscribe({
       next: (res: any) => {
         console.log(res.data)
-        // this.AddClientFileForm.patchValue({
-        //   clientId: res.data.client.clientId,
-        //   deviceNotes: res.data.deviceNotes,
-        //   additionaldiscount: res.data.additionaldiscount,
-        //   discount: res.data.discount,
-        //   accessoryDiscount: res.data.accessoryDiscount,
-        // });
-        // res.data.items.forEach((ele: any) => {
-        //   if (ele.itemTypeId == 4) {
-        //     let index = this.ListOfItems.findIndex((secEle: any) => secEle.id == ele.parentCategoryId)
-        //     this.itemsFormArray.controls[index].patchValue({
-        //       itemId: ele.itemId,
-        //       categoryId: ele.parentCategoryId,
-        //       notes: ele.notes,
-        //       itemPrice: ele.itemPrice,
-        //       itemCount: ele.itemCount,
-        //       itemTypeId: 4,
-        //     })
-        //   } else if (ele.itemTypeId == 1) {
-        //     this.myArrayAsForm1.push(
-        //       this._FormBuilder.group({
-        //         itemId: ele.itemId,
-        //         itemCount: ele.itemCount,
-        //         itemTypeId: 3,
-        //         itemPrice: ele.itemPrice,
-        //         notes: ele.notes,
-        //         categoryId: ele.parentCategoryId
-        //       })
-        //     )
-        //     this.myArray1.push({
-        //       itemId: ele.itemId,
-        //       itemCount: ele.itemCount,
-        //       itemTypeId: 3,
-        //       itemPrice: ele.itemPrice,
-        //       notes: ele.notes,
-        //       categoryId: ele.parentCategoryId,
-        //       unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
-        //       unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
-        //     })
-        //   } else if (ele.itemTypeId == 3) {
-        //     this.myArrayAsForm2.push(
-        //       this._FormBuilder.group({
-        //         itemId: ele.itemId,
-        //         itemCount: ele.itemCount,
-        //         itemTypeId: 3,
-        //         itemPrice: ele.itemPrice,
-        //         notes: ele.notes,
-        //         categoryId: ele.parentCategoryId
-        //       })
-        //     )
-        //     this.myArray2.push({
-        //       itemId: ele.itemId,
-        //       itemCount: ele.itemCount,
-        //       itemTypeId: 3,
-        //       itemPrice: ele.itemPrice,
-        //       notes: ele.notes,
-        //       categoryId: ele.parentCategoryId,
-        //       unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
-        //     })
-        //   }
-        // })
-        // this.countTotal()
+        this.AddProductionRequestsForm.patchValue({
+          clientId: res.data.client.clientId,
+          notes: res.data.deviceNotes,
+          address: res.data.additionaldiscount,
+          phoneNumber: res.data.discount,
+          contractDate: res.data.accessoryDiscount,
+        });
+        console.log(this.newLoadPriceOffer)
+        res.data.items.forEach((ele: any) => {
+          if (ele.itemTypeId == 4) {
+            let index = this.newLoadPriceOffer.findIndex((secEle: any) => secEle?.statusCategoryId == ele?.parentCategoryId)
+            this.itemsFormArray.controls[index].patchValue({
+              itemId: ele.itemId,
+              categoryId: ele.parentCategoryId,
+              notes: ele.notes,
+              itemPrice: ele.itemPrice,
+              itemCount: ele.itemCount,
+              itemTypeId: 4,
+            })
+          } else if (ele.itemTypeId == 3) {
+            this.myArrayAsForm.push(
+              this._FormBuilder.group({
+                itemId: ele.itemId,
+                itemCount: ele.itemCount,
+                itemTypeId: 3,
+                itemPrice: ele.itemPrice,
+                notes: ele.notes,
+                categoryId: ele.parentCategoryId
+              })
+            )
+            this.myArray.push({
+              itemId: ele.itemId,
+              itemCount: ele.itemCount,
+              itemTypeId: 3,
+              itemPrice: ele.itemPrice,
+              notes: ele.notes,
+              categoryId: ele.parentCategoryId,
+              unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+            })
+          }
+        })
       }
     })
   }
