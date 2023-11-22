@@ -19,6 +19,7 @@ export class ContractFormComponent implements OnInit {
   months: any = [];
   myArray2: any = [];
   fileTypeId: any;
+  newLoadPriceOffer: any = [];
   clientFileId: any;
   checkValue: boolean = false;
   clientFileTypes: any = [
@@ -123,8 +124,9 @@ export class ContractFormComponent implements OnInit {
           })
           this.itemsFormArray.controls[index]?.patchValue({
             itemTypeId: 4,
-            categoryId: res.data[key]?.statusCategoryId,
+            // categoryId: res.data[key]?.statusCategoryId,
           })
+          if(this.clientFileId) this.newLoadPriceOffer.push(value)
         })
         if(this.clientFileId) this.GetClientFileById();
       }
@@ -147,7 +149,7 @@ export class ContractFormComponent implements OnInit {
       this._contractService.AddContract(this.AddClientFileForm.value).subscribe({
         next: (res: any) => {
           this.toastr.success(`${res.message}`);
-          this._Router.navigateByUrl('/quotations')
+          this._Router.navigateByUrl('/contract')
         }, error: (err: any) => {
           this.toastr.error(`${err.message}`);
         }
@@ -156,7 +158,7 @@ export class ContractFormComponent implements OnInit {
       this._contractService.EditClientFile(this.AddClientFileForm.value, this.clientFileId).subscribe({
         next: (res: any) => {
           this.toastr.success(`${res.message}`);
-          this._Router.navigateByUrl('/quotations')
+          // this._Router.navigateByUrl('/contract')
         }, error: (err: any) => {
           this.toastr.error(`${err.message}`);
         }
@@ -164,36 +166,64 @@ export class ContractFormComponent implements OnInit {
     }
   }
   setClient(e: any){
-    console.log(e)
-    this.AddClientFileForm.patchValue({
-      phoneNumber: e.mobile,
-      address: e.email,
-    })
+    if (this.fileTypeId) {
+      let client ;
+      client = this.allClients.filter((ele)=> ele.clientId == e)[0]
+      this.AddClientFileForm.patchValue({
+        phoneNumber: client.mobile,
+        address: client.email,
+      })
+    } else {
+      this.AddClientFileForm.patchValue({
+        phoneNumber: e.mobile,
+        address: e.email,
+      })
+    }
+
   }
   GetClientFileById(){
     this._contractService.GetClientFileByIdApi(this.clientFileId).subscribe({
       next: (res: any) => {
-        console.log(res)
+        console.log(res.data)
+        let year, month, day;
+        let contractDate = new Date(res.data.contractDate).toLocaleString().split(',')[0]
+        year = contractDate.split('/')[2]
+        month = contractDate.split('/')[0]
+        day = contractDate.split('/')[1]
+        let newContractDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
+        console.log(newContractDate)
+        let yearInvoice, monthInvoice, dayInvoice;
+        let invoiceDate = new Date(res.data.contractDate).toLocaleString().split(',')[0]
+        yearInvoice = invoiceDate.split('/')[2]
+        monthInvoice = invoiceDate.split('/')[0]
+        dayInvoice = invoiceDate.split('/')[1]
+        let newInvoiceDate = (yearInvoice)+'-'+(+monthInvoice < 10 ? '0'+monthInvoice : monthInvoice )+'-'+(+dayInvoice < 10 ? '0'+dayInvoice : dayInvoice )
+        console.log(newInvoiceDate)
+
+        this.setClient(res?.data?.client?.clientId)
+        let data = res.data;
         this.AddClientFileForm.patchValue({
-          clientId: res.data.client.clientId,
-          // contractDate: res.data,
-          phoneNumber: res.data.client.mobile,
-          address: res.data.client.email,
-          allPrice: res.data.allPrice,
-          contractStatusId: res.data.contractStatusId,
-          // startWeek: res.data,
-          // startMonth: res.data,
-          // invoiceDate: res.data,
-          withTax: res.data.withTax,
-          fileTypeId: res.data.fileTypeId,
-          notes: res.data.deviceNotes,
+          clientId: data.client?.clientId,
+          contractDate: newContractDate,
+          allPrice: data.allPrice,
+          contractStatusId: data.contractStatusId,
+          startWeek: data.startWeek,
+          startMonth: data.startMonth,
+          invoiceDate: newInvoiceDate,
+          withTax: data.withTax,
+          notes: data.notes,
         });
+        // console.log(this.newLoadPriceOffer)
+        data.withTax == 1 ? this.checkValue = true : this.checkValue = false
         res.data.items.forEach((ele: any) => {
-          let index = this.itemsFormArray.controls.findIndex((secEle: any) => secEle.get('categoryId')?.value == ele.parentCategoryId)
+          let index = this.newLoadPriceOffer.findIndex((secEle: any) => secEle?.statusCategoryId == ele?.parentCategoryId)
           if (index != -1){
-            this.itemsFormArray.controls[index].patchValue({
+            this.itemsFormArray.controls[index]?.patchValue({
               itemId: ele.itemId,
               categoryId: ele.parentCategoryId,
+              notes: ele.notes,
+              itemPrice: ele.itemPrice,
+              itemCount: ele.itemCount,
               itemTypeId: 4,
             })
           }

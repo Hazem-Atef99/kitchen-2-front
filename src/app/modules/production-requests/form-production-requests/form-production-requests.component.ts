@@ -84,12 +84,28 @@ export class FormProductionRequestsComponent {
   ProductionRequestsFormGroup(): FormGroup {
     return this._FormBuilder.group({
       itemId: [null, [Validators.required]],
+      categoryIds: [null],
+      defaultDesc: [null],
       itemTypeId: [4, [Validators.required]],
-      categoryId: null
     })
   }
 
+  setClient(e: any){
+    if (this.fileTypeId) {
+      let client ;
+      client = this.allClients.filter((ele)=> ele.clientId == e)[0]
+      this.AddProductionRequestsForm.patchValue({
+        phoneNumber: client.mobile,
+        address: client.email,
+      })
+    } else {
+      this.AddProductionRequestsForm.patchValue({
+        phoneNumber: e.mobile,
+        address: e.email,
+      })
+    }
 
+  }
   addAccessoriesItem() {
     this.myArrayAsForm.push(this.itemsForm)
     this.myArray.push({
@@ -124,9 +140,10 @@ export class FormProductionRequestsComponent {
       next: (res: any) => {
         this.loadPriceOfferList = []
         this.loadPriceOffer = res.data
-        console.log( this.loadPriceOffer)
-        Object.entries(res.data).forEach(([key, value], index) => {
-          if (key != 'accessories') {
+        let dataMap:any = {...res.data};
+        delete dataMap.accessories;
+        Object.entries(dataMap).forEach(([key, value], index) => {
+          // if (key != 'accessories') {
             this.addItemsFormArray();
             this.loadPriceOfferList.push({
               key: key,
@@ -134,9 +151,12 @@ export class FormProductionRequestsComponent {
             })
             this.itemsFormArray.controls[index]?.patchValue({
               itemTypeId: 4,
-              categoryId: res.data[key]?.statusCategoryId,
+              categoryIds: res.data[key]?.statusCategoryId,
+              defaultDesc: res.data[key]?.defaultDesc,
             })
-          }
+          // }else{
+          //   index--
+          // }
           if (this.clientFileId) {
             this.newLoadPriceOffer.push(value)
           }
@@ -150,26 +170,26 @@ export class FormProductionRequestsComponent {
   ProductionRequestsById(id: number) {
     this._productionRequestsService.GetProductionRequestsByIdApi(id).subscribe({
       next: (res: any) => {
-        console.log(res.data)
+        let year, month, day;
+        let contractDate = new Date(res.data.contractDate).toLocaleString().split(',')[0]
+        year = contractDate.split('/')[2]
+        month = contractDate.split('/')[0]
+        day = contractDate.split('/')[1]
+        let newContractDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
+        console.log(newContractDate)
+        let itemsMap:any[] = res.data.items.filter((item:any) => item.itemId != null)
         this.AddProductionRequestsForm.patchValue({
           clientId: res.data.client.clientId,
-          notes: res.data.deviceNotes,
-          address: res.data.additionaldiscount,
-          phoneNumber: res.data.discount,
-          contractDate: res.data.accessoryDiscount,
+          contractDate: newContractDate,
         });
-        console.log(this.newLoadPriceOffer)
-        res.data.items.forEach((ele: any) => {
+        itemsMap.forEach((ele: any) => {
           if (ele.itemTypeId == 4) {
-            let index = this.newLoadPriceOffer.findIndex((secEle: any) => secEle?.statusCategoryId == ele?.parentCategoryId)
-            this.itemsFormArray.controls[index].patchValue({
-              itemId: ele.itemId,
-              categoryId: ele.parentCategoryId,
-              notes: ele.notes,
-              itemPrice: ele.itemPrice,
-              itemCount: ele.itemCount,
-              itemTypeId: 4,
-            })
+            let index = this.newLoadPriceOffer.findIndex((secEle: any) => ele?.parentCategoryId == secEle?.statusCategoryId)
+            if (index != -1) {
+              this.itemsFormArray.controls[index]?.patchValue({
+                itemId: ele.itemId,
+              })
+            }
           } else if (ele.itemTypeId == 3) {
             this.myArrayAsForm.push(
               this._FormBuilder.group({
@@ -212,14 +232,24 @@ export class FormProductionRequestsComponent {
     for (let i = 0; i < this.myArrayAsForm.length; i++) {
       this.itemsFormArray.push(this.myArrayAsForm[i])
     }
-    console.log(this.AddProductionRequestsForm.value);
-    this._productionRequestsService.AddProductionRequests(this.AddProductionRequestsForm.value).subscribe({
-      next: (res: any) => {
-        this.toastr.success(`${res.message}`);
-        this._Router.navigateByUrl('/productionRequests')
-      }, error: (err: any) => {
-        this.toastr.error(`${err.message}`);
-      }
-    })
+    if (!this.clientFileId) {
+      this._productionRequestsService.AddProductionRequests(this.AddProductionRequestsForm.value).subscribe({
+        next: (res: any) => {
+          this.toastr.success(`${res.message}`);
+          this._Router.navigateByUrl('/production-requests')
+        }, error: (err: any) => {
+          this.toastr.error(`${err.message}`);
+        }
+      })
+    } else {
+      this._productionRequestsService.EditProductionRequests(this.AddProductionRequestsForm.value,  this.clientFileId).subscribe({
+        next: (res: any) => {
+          this.toastr.success(`${res.message}`);
+          // this._Router.navigateByUrl('/production-requests')
+        }, error: (err: any) => {
+          this.toastr.error(`${err.message}`);
+        }
+      })
+    }
   }
 }

@@ -29,6 +29,9 @@ export class ProductionRequestsService {
   AddProductionRequests(body:FormGroup): Observable<any> {
     return this._HttpClient.post(`${this.domain}ClientFile/AddProductionRequests`,body)
   }
+  EditProductionRequests(body:FormGroup, id: number): Observable<any> {
+    return this._HttpClient.put(`${this.domain}ClientFile/EditProductionRequests/${id}`,body)
+  }
   GetStatusCategoryById(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)
   }

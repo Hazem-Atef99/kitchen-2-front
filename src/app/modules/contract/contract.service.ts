@@ -24,7 +24,7 @@ export class ContractService {
     return this._HttpClient.post(`${this.domain}ClientFile/AddContract`,body)
   }
   EditClientFile(body:FormGroup, id: number): Observable<any> {
-    return this._HttpClient.post(`${this.domain}ClientFile/UpdateClientFile/${id}`,body)
+    return this._HttpClient.put(`${this.domain}ClientFile/EditContract/${id}`,body)
   }
   GetStatusCategoryById(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)

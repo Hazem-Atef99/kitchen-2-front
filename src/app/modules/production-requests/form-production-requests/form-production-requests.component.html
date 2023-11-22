@@ -1,8 +1,8 @@
 <c-card class="mb-4">
   <c-card-header class="d-flex justify-content-between align-items-center py-4">
-    <strong> اضافة عروض الأسعار</strong>
+    <strong> اضافة طلبات الانتاج</strong>
     <button class="btn btn-success" (click)="AddProductionRequests()">
-      اضافة
+      {{clientFileId? 'تعديل' : 'إضافة'}}
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
            viewBox="0 0 16 16">
         <path fill-rule="evenodd"
@@ -33,6 +33,7 @@
               <label>الزبون</label>
               <ng-select [items]="allClients"
                          bindLabel="clientName"
+                         (change)="setClient($event)"
                          bindValue="clientId"
                          placeholder="اختر الزبون"
                          formControlName="clientId">
@@ -40,7 +41,7 @@
             </div>
             <div class="col-4">
               <label>رقم الجوال</label>
-              <input aria-label="default input example" cFormControl
+              <input readonly aria-label="default input example" cFormControl
                      formControlName="phoneNumber" type="tel"/>
             </div>
             <div class="col-4">
@@ -50,7 +51,7 @@
             </div>
             <div class="col-12 mt-2">
               <label>العنوان</label>
-              <textarea aria-label="default input example" cFormControl
+              <textarea readonly aria-label="default input example" cFormControl
                         formControlName="address" rows="3">
               </textarea>
             </div>
