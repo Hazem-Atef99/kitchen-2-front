@@ -64,7 +64,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'محضر استقبال',
-    url: '/home',
+    url: '/reception-report',
     // iconComponent: { name: 'cil-speedometer' },
   },
   {

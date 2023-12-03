@@ -39,6 +39,12 @@ const routes: Routes = [
           canActivate:[authGuard]
       },
       {
+        path: 'reception-report',
+        loadChildren: () =>
+          import('./modules/reception-report/reception-report.module').then((m) => m.ReceptionReportModule),
+          canActivate:[authGuard]
+      },
+      {
         path: 'contract',
         loadChildren: () =>
           import('./modules/contract/contract.module').then((m) => m.ContractModule),
