@@ -54,7 +54,7 @@ export class HomeComponent {
     {
       icon:'8',
       name:'محضر استقبال',
-      link:''
+      link:'reception-report'
 
     },
     {
