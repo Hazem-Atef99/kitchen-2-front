@@ -94,6 +94,8 @@ export class ProductionRequestsComponent implements OnInit{
     this._QuotationsService.GetShortClientFiles(this.query).subscribe({
       next: (res: any) => {
         this.allQuotations = res.data
+        console.log(this.allQuotations);
+
       },
       error: (err: any) => {
         Object.entries(err.errors).forEach(([key, value]) => {

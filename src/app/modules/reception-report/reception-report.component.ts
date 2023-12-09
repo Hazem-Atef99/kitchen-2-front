@@ -35,11 +35,13 @@ export class ReceptionReportComponent implements OnInit {
   filter(event: any) {
     console.log(event.value);
     event.value ? this.query['fileTypeId'] = event.value : this.query['fileTypeId'] = null;
-    // this.GetShortClientFiles();
+     this.getReceptionRports();
   }
   getReceptionRports(){
     this.recptionReportService.getReceptionReport().subscribe((res:any)=>{
       this.allReceptionReports=res.data
+      console.log(res.data);
+
     })
   }
   GetAllClientFileAttachment() {
@@ -110,7 +112,7 @@ export class ReceptionReportComponent implements OnInit {
         this.viewImg = []
         this.uploadedImg = []
         this.GetAllFinalStatusClientFile()
-       // this.GetShortClientFiles();
+        this.getReceptionRports()
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
       }
@@ -121,6 +123,8 @@ export class ReceptionReportComponent implements OnInit {
       next: (res: any) => {
         console.log(res)
         this.AllFinalStatusClientFile  = res.data
+        console.log('all final status',this.AllFinalStatusClientFile);
+
       }
     })
   }

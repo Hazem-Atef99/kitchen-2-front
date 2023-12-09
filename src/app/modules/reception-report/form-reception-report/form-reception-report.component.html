@@ -12,8 +12,46 @@
   </c-card-header>
 </c-card>
  <c-card class="mb-4 py-4">
+  <form [formGroup]="clientForm">
+    <c-col class="mx-2 my-4" >
+      <div class="card">
+          <div class="card-header m-0">
+              <h5>الزبون</h5>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-4">
+                      <label>الزبون</label>
+                      <ng-select [items]="allClients"
+                                 bindLabel="clientName"
+                                 bindValue="clientId"
+                                 placeholder="اختر الزبون"
+                                 formControlName="clientId">
+                      </ng-select>
+                  </div>
+                  <div class="col-4">
+                    <label>رقم الجوال</label>
+                    <input readonly aria-label="default input example" cFormControl
+                           formControlName="phoneNumber" type="tel"/>
+                  </div>
+                  <!-- <div class="col-4">
+                    <label>تاريخ الانتاج</label>
+                    <input aria-label="default input example" cFormControl
+                           formControlName="contractDate" type="date"/>
+                  </div> -->
+                  <div class="col-12 mt-2">
+                    <label>العنوان</label>
+                    <textarea readonly aria-label="default input example" cFormControl
+                              formControlName="clientAdress" rows="3">
+                    </textarea>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </c-col>
+  </form>
   <form [formGroup]="AddClientFileForm">
-      <c-row class="p-2">
+      <!-- <c-row class="p-2">
           <c-col *ngFor="let type of clientFileTypes">
               <c-form-check>
                   <input [id]="type.id" [checked]="+fileTypeId === +type.id" cFormCheckInput
@@ -21,44 +59,9 @@
                   <label [for]="type.id" cFormCheckLabel>{{type.name}}</label>
               </c-form-check>
           </c-col>
-      </c-row>
+      </c-row> -->
       <!-- *ngIf="loadPriceOffer" -->
-       <c-col class="mx-2 my-4" >
-          <div class="card">
-              <div class="card-header m-0">
-                  <h5>الزبون</h5>
-              </div>
-              <div class="card-body">
-                  <div class="row">
-                      <div class="col-4">
-                          <label>الزبون</label>
-                          <ng-select [items]="allClients"
-                                     bindLabel="clientName"
-                                     bindValue="clientId"
-                                     placeholder="اختر الزبون"
-                                     formControlName="clientId">
-                          </ng-select>
-                      </div>
-                      <div class="col-4">
-                        <label>رقم الجوال</label>
-                        <input readonly aria-label="default input example" cFormControl
-                               formControlName="phoneNumber" type="tel"/>
-                      </div>
-                      <!-- <div class="col-4">
-                        <label>تاريخ الانتاج</label>
-                        <input aria-label="default input example" cFormControl
-                               formControlName="contractDate" type="date"/>
-                      </div> -->
-                      <div class="col-12 mt-2">
-                        <label>العنوان</label>
-                        <textarea readonly aria-label="default input example" cFormControl
-                                  formControlName="address" rows="3">
-                        </textarea>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </c-col>
+
       <!-- *ngIf="loadPriceOffer" -->
        <c-col class="mx-2 my-4" >
           <div class="card">
@@ -73,26 +76,26 @@
                                  bindLabel="clientName"
                                  bindValue="clientId"
                                  placeholder="اختر مسئول المبيعات"
-                                 formControlName="clientId">
+                                 formControlName="salesId">
                       </ng-select>
                   </div>
                     <div class="col-4">
                       <label>الموقع</label>
-                      <input aria-label="default input example" cFormControl formControlName="invoiceDate"
+                      <input aria-label="default input example" cFormControl formControlName="kitchenLocation"
                              type="text" />
                     </div>
                     <div class="col-4">
                       <label>تاريخ فتح الملف</label>
                       <input aria-label="default input example" cFormControl
-                             formControlName="invoiceDate" type="date"/>
+                             formControlName="fileDate" type="date"/>
                     </div>
                     <div class="col-4">
                       <label>نوع المطبخ</label>
-                      <ng-select [items]="allClients"
-                                 bindLabel="clientName"
-                                 bindValue="clientId"
+                      <ng-select [items]="KitchenType"
+                                 bindLabel="description"
+                                 bindValue="statusId"
                                  placeholder="اختر نوع المطبخ"
-                                 formControlName="clientId">
+                                 formControlName="kitchenModelId">
                       </ng-select>
                   </div>
                   <div class="col-4">
@@ -101,13 +104,13 @@
                                bindLabel="clientName"
                                bindValue="clientId"
                                placeholder="اختر مسئول القياس"
-                               formControlName="clientId">
+                               formControlName="measurmentId">
                     </ng-select>
                 </div>
                 <div class="col-4">
                   <label>تاريخ القياس</label>
                   <input aria-label="default input example" cFormControl
-                         formControlName="invoiceDate" type="date"/>
+                         formControlName="measurmentDate" type="date"/>
                 </div>
                 <div class="col-4">
                   <label>مسئول التصميم</label>
@@ -115,24 +118,24 @@
                              bindLabel="clientName"
                              bindValue="clientId"
                              placeholder="اختر مسئول التصميم"
-                             formControlName="clientId">
+                             formControlName="designerId">
                   </ng-select>
               </div>
               <div class="col-4">
                 <label>تاريخ التصميم</label>
                 <input aria-label="default input example" cFormControl
-                       formControlName="invoiceDate" type="date"/>
+                       formControlName="designerDate" type="date"/>
               </div>
               <div class="col-2">
                 <label>موعد القياس : الساعه</label>
-                <input aria-label="default input example" cFormControl formControlName="invoiceDate"
+                <input aria-label="default input example" cFormControl formControlName="actionByHour"
                     type="number" />
             </div>
-            <div class="col-2">
+            <!-- <div class="col-2">
               <label>الدقيقه</label>
-              <input aria-label="default input example" cFormControl formControlName="invoiceDate"
+              <input aria-label="default input example" cFormControl formControlName="actionByMin"
                   type="number" />
-          </div>
+          </div> -->
                   </div>
               </div>
 
@@ -140,23 +143,23 @@
           </div>
       </c-col>
 
-        <c-row class="p-2">
+        <!-- <c-row class="p-2">
           <div class="card-header m-0">
             <h5>الاجهزه</h5>
         </div>
           <div *ngFor="let type of devices" class="col-2">
-              <c-form-check>
-                  <input [id]="type.id" [checked]="+fileTypeId === +type.id" cFormCheckInput
-                         formControlName="fileTypeId" type="radio" name="fileTypeId" value="{{type.id}}" />
-                  <label [for]="type.id" cFormCheckLabel>{{type.name}}</label>
+              <c-form-check >
+                  <input multiple [id]="type.statusId" [checked]="+fileTypeId === +type.id" cFormCheckInput
+                         formControlName="devices" type="checkbox" name="devices" value="{{type.statusId}}" />
+                  <label [for]="type.statusId" cFormCheckLabel>{{type.defaultDesc}}</label>
               </c-form-check>
             </div>
-      </c-row>
+      </c-row> -->
       <c-row class="px-2">
            <div class="col-12 mt-2">
                         <label>متطلبات العميل</label>
                         <textarea readonly aria-label="default input example" cFormControl
-                                  formControlName="address" rows="3">
+                                  formControlName="clientNeed" rows="3">
                         </textarea>
                       </div>
       </c-row>

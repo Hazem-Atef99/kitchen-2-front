@@ -111,7 +111,7 @@
             <td>
             <!-- (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" -->
             <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" class="btn btn-light m-0 p-2">
-              {{item.finalStatusName? item.finalStatusName : 'لم يتم اضافة حالة'}}
+              {{item.finalStatus? item.finalStatus : 'لم يتم اضافة حالة'}}
             </button>
           </td>
           <td>
