@@ -1,0 +1,98 @@
+<c-card class="mb-4">
+  <c-card-header class="d-flex justify-content-between align-items-center py-4">
+    <strong>سندات القبض</strong>
+  </c-card-header>
+</c-card>
+<c-card class="mb-4 py-4">
+  <form [formGroup]="clientForm">
+    <c-col class="mx-2 my-4" >
+      <div class="card">
+          <div class="card-header m-0">
+              <h5>الزبون</h5>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-3">
+                      <label>الزبون</label>
+                      <ng-select [items]="allClients"
+                                 bindLabel="clientName"
+                                 bindValue="clientId"
+                                 placeholder="اختر الزبون"
+                                 formControlName="clientId"
+                                 (ngModelChange)="getpaymentClient()">
+
+                      </ng-select>
+                  </div>
+                  <div class="col-3">
+                    <label>الاجمالي</label>
+                    <input readonly aria-label="default input example" cFormControl
+                           formControlName="total" type="number"/>
+                  </div>
+                  <!-- <div class="col-4">
+                    <label>تاريخ الانتاج</label>
+                    <input aria-label="default input example" cFormControl
+                           formControlName="contractDate" type="date"/>
+                  </div> -->
+                  <div class="col-3">
+                    <label>المدفوع</label>
+                    <input readonly aria-label="default input example" cFormControl
+                    formControlName="total" type="number"/>
+
+                  </div>
+                  <div class="col-3">
+                    <label>المتبقي</label>
+                    <input readonly aria-label="default input example" cFormControl
+                    formControlName="remaining" type="number"/>
+
+                  </div>
+                  <div class="col-4">
+                    <label>التاريخ</label>
+                    <input aria-label="default input example" cFormControl
+                           formControlName="paymentDate" type="date"/>
+                  </div>
+                  <div class="col-4">
+                    <label>رقم المستند</label>
+                    <input readonly aria-label="default input example" cFormControl
+                    formControlName="noOfDoc" type="number"/>
+
+                  </div>
+                  <div class="col-4">
+                    <label>المبلغ</label>
+                    <input  aria-label="default input example" cFormControl
+                    formControlName="amount" type="number"/>
+
+                  </div>
+                  <div class="col-12">
+                    <label>ملاحظات</label>
+                    <textarea  aria-label="default input example" cFormControl
+                              formControlName="notes" rows="3">
+                    </textarea>
+                  </div>
+                  <div class="col-4">
+                    <label>طريقة الدفع</label>
+                  <ng-select [items]="paymentType"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="اختر طريقةالدفع "
+                  formControlName="paidTypeId"
+                  >
+
+       </ng-select>
+      </div>
+      <div class="col-4">
+        <label>المبيعات</label>
+      <ng-select [items]="allUsers"
+      bindLabel="userName"
+      bindValue="id"
+      placeholder=""
+      formControlName="salesId"
+      >
+
+</ng-select>
+</div>
+              </div>
+          </div>
+      </div>
+  </c-col>
+  </form>
+</c-card>

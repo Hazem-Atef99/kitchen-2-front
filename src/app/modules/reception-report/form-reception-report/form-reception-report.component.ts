@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Clients, DataClients } from '../../clients/modal/clients';
 import { ClientsService } from '../../clients/clients.service';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +18,8 @@ export class FormReceptionReportComponent {
   clientForm! :FormGroup;
   fileTypeId: any;
   allClients: DataClients[] = [];
+  selectedOptions: any[] = [];
+  dataToPatch:any[]=[];
   clientFileTypes: any = [
     {
       name: 'المطابخ',
@@ -36,64 +38,11 @@ export class FormReceptionReportComponent {
       id: 6
     },
   ]
-  devices:any[]=[];
-  // devices :any=[
-  //   {
-  //     name:'Fridge 60',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Fridge 90',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Freezer 60',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Freezer 90',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Oven 60',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Oven 90',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Hop',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Warming Drawer',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Microwave',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Cofee Maker',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Cooler',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Dish Washer',
-  //     id:1
-  //   },
-  //   {
-  //     name:'Washing Machine',
-  //     id:1
-  //   },
 
-  // ]
   KitchenType:any[]=[]
   MyDevices: any[]=[];
+  users: any;
+  Alldevices: any;
   constructor(private _FormBuilder: FormBuilder,
               private recptionReportService:ReceptionReportService,
               private _ClientsService: ClientsService,
@@ -105,9 +54,15 @@ export class FormReceptionReportComponent {
   }
   ngOnInit(): void {
     let fileTypeId: any = this._activatedRoute.snapshot.queryParamMap.get('fileTypeId')
+    this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
     this.GetAllClients();
     this.GetDevices();
     this.GetKitchenType();
+    this.getAllUsers()
+    if(this.clientFileId){
+      this.getReceptionReportById(this.clientFileId)
+    }
+
     this.fileTypeId = +fileTypeId
     if (fileTypeId) {
       this.AddClientFileForm.patchValue({
@@ -117,14 +72,25 @@ export class FormReceptionReportComponent {
   }
 
   AddClientFile(){
-    console.log(this.AddClientFileForm.value);
     let val1, val2
-    val1 = this.AddClientFileForm.get('measurementId')?.value
+    val1 = this.AddClientFileForm.controls['measurmentId']?.value
     val2 = val1.toString()
     console.log(val2)
     this.AddClientFileForm.patchValue({
       measurmentId: val2
     })
+    this.AddClientFileForm.patchValue({
+      clientId:this.clientForm.get('clientId')?.value
+    })
+    const devicesArray = this.AddClientFileForm.get('devices') as FormArray;
+    this.selectedOptions.forEach(device=>{
+      devicesArray.push(
+        this._FormBuilder.group({
+          deviceId: [device, Validators.required],
+        })
+      )
+    })
+    console.log(this.AddClientFileForm.value);
     this.recptionReportService.AddUpdatereceptionReport(this.AddClientFileForm.value).subscribe(res=>{
 this.toastr.success("added")
     },err=>{
@@ -142,8 +108,8 @@ this.toastr.success("added")
   }
   GetDevices(){
 this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
-  this.devices=res.data.statuses
-  console.log(this.devices);
+  this.Alldevices=res.data.statuses
+  console.log(this.Alldevices);
 
 })
   }
@@ -162,7 +128,7 @@ this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
   initClientFileForm(): FormGroup {
     return this._FormBuilder.group({
       clientFileId: [null, [Validators.required]],
-      clientId: [1, [Validators.required]],
+      clientId: [null, [Validators.required]],
       fileDate: [null, [Validators.required]],
       actionByHour: ['', [Validators.required]],
       clientNeed: [null, [Validators.required]],
@@ -173,6 +139,7 @@ this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
       kitchenModelId: [null, [Validators.required]],
       kitchenLocation: [null, [Validators.required]],
       devices: this._FormBuilder.array([]),
+      selectedDevice:[null, [Validators.required]],
       salesId:[null,Validators.required]
 
 })
@@ -187,28 +154,28 @@ setMeasurement() {
     measurmentId: val2
   })
 }
-AddDevice() {
-  this.MyDevices.push(
-    this.devices.filter((ele: any) => ele.id === this.AddClientFileForm.get('devices')?.value)[0]
-  )
-  console.log(this.MyDevices)
-  this.alldevices?.value.push(
-    {deviceId: this.AddClientFileForm.get('devices')?.value}
-  )
-  this.AddClientFileForm.controls['devices'].patchValue(this.alldevices)
-}
-DeleteDevice(i: number) {
-  this.MyDevices.splice(i, 1);
-  this.alldevices?.get('deviceId')?.value.splice(i, 1);
-  console.log(this.MyDevices)
-  console.log(this.device)
-}
-get alldevices() {
-  return this.AddClientFileForm.get('devices')
-}
-get device() {
-  return this.alldevices?.get('deviceId')?.value
-}
+// AddDevice() {
+//   this.MyDevices.push(
+//     this.devices.filter((ele: any) => ele.id === this.AddClientFileForm.get('devices')?.value)[0]
+//   )
+//   console.log(this.MyDevices)
+//   this.alldevices?.value.push(
+//     {deviceId: this.AddClientFileForm.get('devices')?.value}
+//   )
+//   this.AddClientFileForm.controls['devices'].patchValue(this.alldevices)
+// }
+// DeleteDevice(i: number) {
+//   this.MyDevices.splice(i, 1);
+//   this.alldevices?.get('deviceId')?.value.splice(i, 1);
+//   console.log(this.MyDevices)
+//   console.log(this.device)
+// }
+// get alldevices() {
+//   return this.AddClientFileForm.get('devices')
+// }
+// get device() {
+//   return this.alldevices?.get('deviceId')?.value
+// }
 AddNotice() {
   let value: any = this.AddClientFileForm.value;
   value['clientFileId'] = this.clientFileId
@@ -222,4 +189,72 @@ AddNotice() {
     }
   })
 }
+getAllUsers(){
+  this._ConttactService.GetAllUsersApi().subscribe(res=>{
+    this.users = res.data
+  })
 }
+isSelected(statusId: number): boolean {
+  return this.selectedOptions.includes(statusId);
+}
+getReceptionReportById(clientFileId:any){
+
+  this.recptionReportService.GetReceptionReportById(clientFileId).subscribe((res:any)=>{
+    let receptionReport=res.data;
+     this.dataToPatch = res.data.devices; // Replace this with actual data
+    this.dataToPatch.forEach(device=>{
+      this.selectedOptions.push(device.id)
+    })
+
+    console.log(this.selectedOptions);
+
+
+    this.AddClientFileForm.patchValue({
+      // clientId:receptionReport
+      actionByHour:receptionReport.actionByHour,
+      designerId:receptionReport.designerId,
+      designerDate:this.handleDate(receptionReport.designerDate),
+      measurmentId:receptionReport.measurmentid,
+      measurmentDate:this.handleDate(receptionReport.measurmentDate),
+      salesId:receptionReport.salesId,
+      kitchenLocation:receptionReport.kitchenLocation,
+      fileDate:this.handleDate(receptionReport.fileDate),
+      kitchenModelId:receptionReport.kitchecnModelId,
+      clientNeed:receptionReport.clientNeed,
+
+
+    })
+  })
+}
+handleDate(date:any){
+  let year, month, day;
+   let Fdate = new Date(date).toLocaleString().split(',')[0]
+  year = Fdate.split('/')[2]
+  month = Fdate.split('/')[0]
+  day = Fdate.split('/')[1]
+  let newDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
+  return newDate;
+}
+selectOption(event:any,option:any){
+  const isChecked = event.target.checked;
+
+  if (isChecked) {
+    // Add the option to the selectedOptions array
+    if (this.selectedOptions.indexOf(option.statusId) === -1) {
+      this.selectedOptions.push(option.statusId);
+    }
+  } else {
+    // Remove the option from the selectedOptions array
+    const index = this.selectedOptions.indexOf(option.statusId);
+    if (index !== -1) {
+      this.selectedOptions.splice(index, 1);
+
+}
+}
+console.log(this.selectedOptions);
+}}
+
+
+
+
+

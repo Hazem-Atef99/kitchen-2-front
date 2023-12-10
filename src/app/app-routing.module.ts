@@ -45,6 +45,12 @@ const routes: Routes = [
           canActivate:[authGuard]
       },
       {
+        path: 'client-payment',
+        loadChildren: () =>
+          import('./modules/client-payment/client-payment.module').then((m) => m.ClientPaymentModule),
+          canActivate:[authGuard]
+      },
+      {
         path: 'contract',
         loadChildren: () =>
           import('./modules/contract/contract.module').then((m) => m.ContractModule),

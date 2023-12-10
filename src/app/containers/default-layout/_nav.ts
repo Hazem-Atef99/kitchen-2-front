@@ -69,7 +69,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'سندات القبض',
-    url: '/home',
+    url: 'client-payment',
     // iconComponent: { name: 'cil-speedometer' },
   },
   {
