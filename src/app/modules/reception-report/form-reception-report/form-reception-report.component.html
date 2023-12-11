@@ -26,7 +26,8 @@
                                  bindLabel="clientName"
                                  bindValue="clientId"
                                  placeholder="اختر الزبون"
-                                 formControlName="clientId">
+                                 formControlName="clientId"
+                                 (ngModelChange)="getClientInfo($event)">
                       </ng-select>
                   </div>
                   <div class="col-4">

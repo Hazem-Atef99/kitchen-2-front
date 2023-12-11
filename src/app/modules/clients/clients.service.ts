@@ -18,4 +18,7 @@ export class ClientsService {
   AddClientFile(form:FormGroup): Observable<Clients> {
     return this._HttpClient.post<Clients>(`${this.domain}Client/AddClientFile`,form)
   }
+  GetClient(id :any){
+    return this._HttpClient.get(`${this.domain}Client/GetAllClients?clientId=${id}`)
+  }
 }

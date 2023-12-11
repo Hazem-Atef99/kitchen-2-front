@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ContractService } from '../../contract/contract.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReceptionReportService } from '../reception-report.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-form-reception-report',
@@ -43,6 +44,7 @@ export class FormReceptionReportComponent {
   MyDevices: any[]=[];
   users: any;
   Alldevices: any;
+
   constructor(private _FormBuilder: FormBuilder,
               private recptionReportService:ReceptionReportService,
               private _ClientsService: ClientsService,
@@ -117,6 +119,21 @@ this.toastr.success("added")
         this.allClients = res.data
       }
     })
+  }
+  getClientInfo(clientId:any){
+
+     console.log(clientId);
+if (clientId) {
+  this._ClientsService.GetClient(clientId).subscribe((res:any)=>{
+    console.log(res);
+
+    this.clientForm.patchValue({
+
+      phoneNumber:res.data[0].mobile,
+      clientAdress:res.data[0].clientAddress
+    })
+  })
+}
   }
   GetDevices(){
 this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
@@ -236,6 +253,13 @@ getReceptionReportById(clientFileId:any){
 
 
     })
+    this.clientForm.patchValue({
+      clientId:receptionReport.client.clientId,
+      phoneNumber:receptionReport.client.mobile,
+      clientAdress:receptionReport.client.clientAddress
+    })
+
+
   })
 }
 handleDate(date:any){
