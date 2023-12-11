@@ -10,4 +10,7 @@ export class ClientPaymentService {
   getClientPayment(id:any){
     return this.http.get(`${this.domain}ClientPayment/GetClientPayment?clientId=${id}`)
   }
+  AddClientPayment(data:any){
+    return this.http.post(`${this.domain}ClientPayment/AddClientPayment`,data)
+  }
 }

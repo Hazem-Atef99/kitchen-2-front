@@ -1,9 +1,11 @@
+import { ToastrService } from 'ngx-toastr';
 import { ClientPaymentService } from './../client-payment.service';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Clients, DataClients } from '../../clients/modal/clients';
 import { ClientsService } from '../../clients/clients.service';
 import { ContractService } from '../../contract/contract.service';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-client-payment',
@@ -15,17 +17,19 @@ export class ClientPaymentComponent {
   allClients: DataClients[] = [];
   allUsers:any[] = [];
   paymentType=[
-    {id:1,
+    {id:0,
       name:'Cash'
     },
-    {id:0,
+    {id:1,
       name:'Cheque'
     }
   ]
+  payType: number=0;
   constructor(private _FormBuilder: FormBuilder,
               private _ClientsService:ClientsService,
               private _ClientPaymentService:ClientPaymentService,
-              private _ConttactService:ContractService) {
+              private _ConttactService:ContractService,
+              private toastr:ToastrService) {
 
     this.clientForm=this.initClientForm()
   }
@@ -46,6 +50,7 @@ export class ClientPaymentComponent {
        paidTypeId:[null,Validators.required],
        drawer:[null,Validators.required],
        checkDate:[null,Validators.required],
+       checkNo:[null,Validators.required],
        salesId:[null,Validators.required]
     })
   }
@@ -55,6 +60,14 @@ export class ClientPaymentComponent {
         this.allClients = res.data
       }
     })
+  }
+  deterPaymentType(){
+    if(this.clientForm.get('paidTypeId')?.value ==0){
+      this.payType=0
+      }else{
+        this.payType=1;
+      }
+
   }
   getpaymentClient(){
     let clientId =this.clientForm.get('clientId')?.value
@@ -80,5 +93,21 @@ export class ClientPaymentComponent {
     this._ConttactService.GetAllUsersApi().subscribe(res=>{
       this.allUsers = res.data
   })}
+  AddClientPayment(){
+    let data={
+      clientId:this.clientForm.get('clientId')?.value,
+      amount:this.clientForm.get('amount')?.value,
+      paymentDate:this.clientForm.get('paymentDate')?.value,
+      paidTypeId:this.clientForm.get('paidTypeId')?.value,
+      notes:this.clientForm.get('notes')?.value,
+      checkNo:this.payType==1?this.clientForm.get('checkNo')?.value:EMPTY,
+      checkDate:this.payType==1?this.clientForm.get('checkDate')?.value:EMPTY
+    }
+this._ClientPaymentService.AddClientPayment(data).subscribe(res=>{
+  this.toastr.success('تم اضافة المستند')
+},err=>{
+  this.toastr.error('حدث خطأ ما')
+})
+  }
 
 }
