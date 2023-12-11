@@ -49,12 +49,14 @@ export class FormReceptionReportComponent {
               private toastr: ToastrService,
               private _activatedRoute: ActivatedRoute,
               private _ConttactService:ContractService) {
+                this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
     this.AddClientFileForm = this.initClientFileForm();
     this.clientForm=this.initClientForm()
   }
   ngOnInit(): void {
     let fileTypeId: any = this._activatedRoute.snapshot.queryParamMap.get('fileTypeId')
-    this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
+    console.log(this.clientFileId);
+
     this.GetAllClients();
     this.GetDevices();
     this.GetKitchenType();
@@ -76,14 +78,23 @@ export class FormReceptionReportComponent {
     val1 = this.AddClientFileForm.controls['measurmentId']?.value
     val2 = val1.toString()
     console.log(val2)
+    if(this.clientFileId!=null){
+
+      this.AddClientFileForm.get('clientFileId')?.patchValue(this.clientFileId)
+    }
+
     this.AddClientFileForm.patchValue({
       measurmentId: val2
     })
     this.AddClientFileForm.patchValue({
       clientId:this.clientForm.get('clientId')?.value
     })
+    console.log(this.AddClientFileForm.get('devices')?.value)
+    // this.AddClientFileForm.get('devices')?.reset();
     const devicesArray = this.AddClientFileForm.get('devices') as FormArray;
+
     this.selectedOptions.forEach(device=>{
+
       devicesArray.push(
         this._FormBuilder.group({
           deviceId: [device, Validators.required],
@@ -91,6 +102,7 @@ export class FormReceptionReportComponent {
       )
     })
     console.log(this.AddClientFileForm.value);
+
     this.recptionReportService.AddUpdatereceptionReport(this.AddClientFileForm.value).subscribe(res=>{
 this.toastr.success("added")
     },err=>{
