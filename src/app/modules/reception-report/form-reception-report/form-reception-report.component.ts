@@ -107,6 +107,7 @@ export class FormReceptionReportComponent {
 
     this.recptionReportService.AddUpdatereceptionReport(this.AddClientFileForm.value).subscribe(res=>{
 this.toastr.success("added")
+this.getReceptionReportById(this.clientFileId)
     },err=>{
       this.toastr.error("not")
     })
