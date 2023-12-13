@@ -1,3 +1,4 @@
+import { TopModule } from './../../.history/src/app/modules/top/top.module_20231213093708';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -48,6 +49,12 @@ const routes: Routes = [
         path: 'client-payment',
         loadChildren: () =>
           import('./modules/client-payment/client-payment.module').then((m) => m.ClientPaymentModule),
+          canActivate:[authGuard]
+      },
+      {
+        path: 'top',
+        loadChildren: () =>
+          import('./modules/top/top.module').then((m)=>m.TopModule),
           canActivate:[authGuard]
       },
       {

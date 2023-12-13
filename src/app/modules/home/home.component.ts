@@ -60,13 +60,13 @@ export class HomeComponent {
     {
       icon:'9',
       name:'التوب',
-      link:''
+      link:'top'
 
     },
     {
       icon:'10',
       name:'سندات القبض',
-      link:''
+      link:'client-payment'
 
     },
     {
