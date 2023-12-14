@@ -21,6 +21,6 @@ export class TopService {
     return this.http.get(`${this.domain}ClientFileTop/LoadClientFileTopPage`)
   }
   AddTop(data:any){
-    return this.http.post(`${this.domain}/ClientFileTop/AddClientFileTop`,data);
+    return this.http.post(`${this.domain}ClientFileTop/AddClientFileTop`,data);
   }
 }

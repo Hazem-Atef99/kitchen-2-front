@@ -1,4 +1,3 @@
-import { TopModule } from './../../.history/src/app/modules/top/top.module_20231213093708';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

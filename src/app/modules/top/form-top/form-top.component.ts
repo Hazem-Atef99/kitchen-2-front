@@ -42,25 +42,36 @@ export class FormTopComponent implements OnInit {
     this.LoadClientFileTopPage();
   }
   addTop(){
-    const devicesArray = this.AddTopForm.get('devices') as FormArray;
+    // const devicesArray = this.AddTopForm.get('devices') as FormArray;
 
+    // this.AddedDevices.forEach(device=>{
+
+    //   devicesArray.push(
+
+    //     this._FormBuilder.group({
+    //     width:[device.width, [Validators.required]],
+    //     height:[device.height, [Validators.required]],
+    //     length:[device.length, [Validators.required]],
+    //     notes:[device.notes, [Validators.required]],
+    //     attachmentPath:[device.attachmentPath, [Validators.required]],
+
+    //     })
+
+    //   )
+    // })
+    let formData = new FormData();
+    formData.append('ClientFileId',this.AddTopForm.get('ClientFileId')?.value)
+    formData.append('TypeId',this.AddTopForm.get('TypeId')?.value)
+    formData.append('TopColor',this.AddTopForm.get('TopColor')?.value)
+    formData.append('PanelTypeId',this.AddTopForm.get('PanelTypeId')?.value)
+    formData.append('TopHieght',this.AddTopForm.get('TopHieght')?.value)
+    formData.append('SinkHoleId',this.AddTopForm.get('SinkHoleId')?.value)
     this.AddedDevices.forEach(device=>{
-
-      devicesArray.push(
-
-        this._FormBuilder.group({
-        width:[device.width, [Validators.required]],
-        height:[device.height, [Validators.required]],
-        length:[device.length, [Validators.required]],
-        notes:[device.notes, [Validators.required]],
-        attachmentPath:[device.attachmentPath, [Validators.required]],
-
-        })
-
-      )
+      formData.append('devices',JSON.stringify(device))
     })
+
     console.log(this.AddTopForm.value);
-this.topService.AddTop(this.AddTopForm.value).subscribe(res=>{
+this.topService.AddTop(formData).subscribe(res=>{
   this.toastr.success("added")
 },err=>{
   this.toastr.error("not")
