@@ -23,4 +23,13 @@ export class TopService {
   AddTop(data:any){
     return this.http.post(`${this.domain}ClientFileTop/AddClientFileTop`,data);
   }
+  GetTopById(id:any){
+    return this.http.get(`${this.domain}ClientFileTop/GetFileClientTopById?Id=${id}`)
+  }
+  UpdateTop(id:any,data:any){
+    return this.http.put(`${this.domain}ClientFileTop/EditClientFileTop?id=${id}`,data)
+  }
+  DeletTop(id:any){
+    return this.http.get(`${this.domain}ClientFileTop/DeleteFileClientTopById?Id=${id}`)
+  }
 }

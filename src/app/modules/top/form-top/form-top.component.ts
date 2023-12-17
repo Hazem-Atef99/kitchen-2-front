@@ -27,6 +27,7 @@ export class FormTopComponent implements OnInit {
   viewImageContent:any[] = [];
   viewUploadedImageContent:any[] = [];
   ShowImage: any;
+  detailId: string | null;
   constructor(private _ClientsService:ClientsService,
               private _FormBuilder: FormBuilder,
               private _activatedRoute:ActivatedRoute,
@@ -36,29 +37,15 @@ export class FormTopComponent implements OnInit {
     this.AddTopForm=this.initTopForm()
     this.deviceForm=this.initDeciveForm()
     this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
+    this.detailId=this._activatedRoute.snapshot.queryParamMap.get('detailId')
   }
   ngOnInit(): void {
     this.GetAllClients();
     this.LoadClientFileTopPage();
+    this.GetTopById(this.detailId)
   }
   addTop(){
-    // const devicesArray = this.AddTopForm.get('devices') as FormArray;
 
-    // this.AddedDevices.forEach(device=>{
-
-    //   devicesArray.push(
-
-    //     this._FormBuilder.group({
-    //     width:[device.width, [Validators.required]],
-    //     height:[device.height, [Validators.required]],
-    //     length:[device.length, [Validators.required]],
-    //     notes:[device.notes, [Validators.required]],
-    //     attachmentPath:[device.attachmentPath, [Validators.required]],
-
-    //     })
-
-    //   )
-    // })
     let formData = new FormData();
     formData.append('ClientFileId',this.AddTopForm.get('ClientFileId')?.value)
     formData.append('TypeId',this.AddTopForm.get('TypeId')?.value)
@@ -71,11 +58,20 @@ export class FormTopComponent implements OnInit {
     })
 
     console.log(this.AddTopForm.value);
-this.topService.AddTop(formData).subscribe(res=>{
-  this.toastr.success("added")
-},err=>{
-  this.toastr.error("not")
-})
+    if (this.detailId) {
+      this.topService.UpdateTop(this.detailId,formData).subscribe(res=>{
+        this.toastr.success("added")
+      },err=>{
+        this.toastr.error("not")
+      })
+    }else{
+      this.topService.AddTop(formData).subscribe(res=>{
+        this.toastr.success("added")
+      },err=>{
+        this.toastr.error("not")
+      })
+    }
+
   }
   getClientInfo(clientId:any){
     this.clientId=clientId;
@@ -187,5 +183,27 @@ const reader = new FileReader();
     console.log(this.viewImageContent);
 
     reader.readAsDataURL(image);
+}
+GetTopById(id:any){
+this.topService.GetTopById(id).subscribe({next:(res:any)=>{
+console.log(res)
+this.clientForm.patchValue({
+  clientId:res.data.client.clientId,
+  phoneNumber:res.data.client.mobile
+})
+this.AddTopForm.patchValue({
+
+  ClientFileId:this.clientFileId,
+  TypeId:res.data.typeId,
+  TopColor:res.data.topColor,
+  TopHieght:res.data.topHieght,
+  SinkHoleId:res.data.sinkHoleId,
+  PanelTypeId:res.data.panelTypeId,
+  notes:res.data.notes
+})
+this.AddedDevices = res.data.devices
+},error:(err:any)=>{
+  console.log("Error",err)
+}})
 }
 }

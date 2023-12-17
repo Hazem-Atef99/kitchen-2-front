@@ -91,13 +91,13 @@
           <td>{{item.client.clientName}}</td>
           <td>
             <!-- [cModalToggle]="modalXl4.id" -->
-          <button routerLink="form-top" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }"  class="btn btn-light m-0 p-2">
+          <button routerLink="form-top" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, detailId:item?.id}"  class="btn btn-light m-0 p-2">
             <i class='bx bx-edit'></i>
           </button>
         </td>
         <td>
           <!-- [cModalToggle]="modalXl4.id" -->
-        <button  class="btn btn-light m-0 p-2">
+        <button (click)="deleteTop(item?.id)" class="btn btn-light m-0 p-2">
           <i class='bx bx-trash'></i>
         </button>
       </td>
