@@ -8,6 +8,7 @@ import { TableModule, CardModule, GridModule, FormModule, ModalModule, ButtonMod
 import { IconModule } from '@coreui/icons-angular';
 import { NgbPaginationModule, NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormFollowsComponent } from './form-follows/form-follows.component';
 
 const routes:Routes=[
   {path:'',component:FollowsComponent}
@@ -15,7 +16,8 @@ const routes:Routes=[
 
 @NgModule({
   declarations: [
-    FollowsComponent
+    FollowsComponent,
+    FormFollowsComponent
   ],
   imports: [
     CommonModule,

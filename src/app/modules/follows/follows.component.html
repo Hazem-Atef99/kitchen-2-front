@@ -1,54 +1,68 @@
 <c-card class="mb-4">
   <c-card-header class="d-flex justify-content-between align-items-center py-4">
-      <strong> {{clientFileId? 'تعديل 'متابعه' : 'اضافة منابعه'}} </strong>
-      <button class="btn btn-success" (click)="addTop()">
-          {{clientFileId? 'تعديل' : 'إضافة'}}
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
-              viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-          </svg>
-      </button>
+    <strong>التوب</strong>
+    <button [disabled]="!query.fileTypeId"
+      class="btn btn-success" routerLink="form-top" [queryParams]="{fileTypeId: query.fileTypeId}">
+      اضافة
+      <i class='bx bx-plus'></i>
+    </button>
   </c-card-header>
 </c-card>
 <c-card class="mb-4 py-4">
-<form>
-  <c-col class="mx-2 my-4" >
-    <div class="card">
-        <div class="card-header m-0">
-            <h5>الزبون</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-4">
-                    <label>الزبون</label>
-                    <ng-select [items]="allClients"
-                               bindLabel="clientName"
-                               bindValue="clientId"
-                               placeholder="اختر الزبون"
-                               formControlName="clientId"
-                               (ngModelChange)="getClientInfo($event)">
-                    </ng-select>
-                </div>
-                <div class="col-4">
-                  <label>رقم الجوال</label>
-                  <input readonly aria-label="default input example" cFormControl
-                         formControlName="phoneNumber" type="tel"/>
-                </div>
-                <!-- <div class="col-4">
-                  <label>تاريخ الانتاج</label>
-                  <input aria-label="default input example" cFormControl
-                         formControlName="contractDate" type="date"/>
-                </div> -->
-                <div class="col-12 mt-2">
-                  <label>العنوان</label>
-                  <textarea readonly aria-label="default input example" cFormControl
-                            formControlName="clientAdress" rows="3">
-                  </textarea>
-                </div>
-            </div>
-        </div>
-    </div>
-</c-col>
-</form>
+  <c-row class="p-2">
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput [checked]="true" (click)="filter($event.target)" type="radio" name="fileTypeId" value="null" />
+        <label cFormCheckLabel>الكل</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="1" />
+        <label cFormCheckLabel>المطابخ</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="2" />
+        <label cFormCheckLabel>الابواب</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="4" />
+        <label cFormCheckLabel>خزائن الحائط</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="6" />
+        <label cFormCheckLabel>الاعمال الخشبية</label>
+      </c-form-check>
+    </c-col>
+  </c-row>
 </c-card>
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <table [striped]="true" cTable>
+        <thead>
+          <tr>
+            <th scope="col">المبيعات</th>
+            <th scope="col">الزبون</th>
+            <th scope="col">التاريخ</th>
+            <th scope="col">المتابعات</th>
+            <th scope="col">تعديل</th>
+            <th scope="col">مرفقات</th>
+            <th scope="col">حذف</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of allfollows">
+
+          </tr>
+        </tbody>
+      </table>
+    </c-card-body>
+  </c-card>
+</c-col>
