@@ -62,13 +62,13 @@ export class ContractService {
         formData.append(key, value[key])
       }
     }
-    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileFollowUp?clientFileId=${value.clientFileId}`,formData)
+    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddNotesClientFile?clientFileId=${value.clientFileId}`,formData)
   }
   AddNotices(value:any): Observable<any> {
     return this._HttpClient.put(`${this.domain}ClientFile/AddPreparingReception?clientFileId=${value.clientFileId}`,value)
   }
   GetAllFollowUp(clientFileId:number): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllFollowUp?clientFileId=${clientFileId}`)
+    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllNotes?clientFileId=${clientFileId}`)
   }
   AllFinalStatusClientFile(clientFileId:number): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFile/GetAllFinalStatusClientFile?clientFileId=${clientFileId}`)

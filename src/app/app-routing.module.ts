@@ -64,6 +64,12 @@ const routes: Routes = [
           canActivate:[authGuard]
       },
       {
+      path: 'follows',
+      loadChildren: () =>
+        import('./modules/follows/follows.module').then((m)=>m.FollowsModule),
+        canActivate:[authGuard]
+    },
+      {
         path: 'clients',
         loadChildren: () =>
           import('./modules/clients/clients.module').then((m) => m.ClientsModule),
