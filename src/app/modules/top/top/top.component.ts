@@ -1,3 +1,4 @@
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { TopService } from './../top.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,7 +13,8 @@ export class TopComponent implements OnInit {
     fileTypeId: null,
   }
 allTopList:any []=[]
-  constructor(private topService:TopService) {
+  constructor(private topService:TopService,
+              private toastr:ToastrService) {
 
 
   }
@@ -28,6 +30,14 @@ allTopList:any []=[]
     this.topService.getTopList().subscribe((res:any)=>{
       console.log(res.data);
       this.allTopList=res.data
+    })
+  }
+  deleteTop(id:any){
+    this.topService.DeletTop(id).subscribe(res=>{
+      this.toastr.success("deleted")
+      this.getTopList()
+    },err=>{
+      this.toastr.error("not")
     })
   }
 
