@@ -8,7 +8,16 @@ export class FollowsService {
   domain: string = env.apiUrl;
   constructor(private http:HttpClient) { }
 
-  GetAllFollows(){
-    return this.http.get(`${this.domain}FollowUp/GetAllFollowUp`)
+  GetAllFollows(clientFileId:any){
+    return this.http.get(`${this.domain}FollowUp/GetAllFollowUp?clientFileId=${clientFileId}`)
+  }
+  GetFollowsByFilter(data:any){
+    return this.http.post(`${this.domain}FollowUp/FilterFollowUp`,data)
+  }
+  GetFollowDetails(FollowId:any){
+    return this.http.get(`${this.domain}FollowUp/GetFollowupDetails?id=${FollowId}`)
+  }
+  AddFollowdetail(data:any){
+    return this.http.post(`${this.domain}FollowUp/AddClientFileFollowUp`,data)
   }
 }

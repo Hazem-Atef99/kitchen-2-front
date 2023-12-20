@@ -11,7 +11,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormFollowsComponent } from './form-follows/form-follows.component';
 
 const routes:Routes=[
-  {path:'',component:FollowsComponent}
+  {path:'',component:FollowsComponent},
+  {path:'form-follow',component:FormFollowsComponent}
 ]
 
 @NgModule({
