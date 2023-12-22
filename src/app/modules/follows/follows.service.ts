@@ -17,7 +17,10 @@ export class FollowsService {
   GetFollowDetails(FollowId:any){
     return this.http.get(`${this.domain}FollowUp/GetFollowupDetails?id=${FollowId}`)
   }
-  AddFollowdetail(data:any){
+  AddFollow(data:any){
     return this.http.post(`${this.domain}FollowUp/AddClientFileFollowUp`,data)
+  }
+  AddFollowAttachment( clientFileId:any,data:any){
+    return this.http.post(`${this.domain}/FollowUp/AddClientFileFollowUpAttachment?clientFileId=${clientFileId}`,data)
   }
 }

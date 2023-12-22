@@ -53,9 +53,17 @@ this.FollowId=this._activatedRoute.snapshot.queryParamMap.get('FollowId')
 
   }
   addFollow(){
-    var Data={
+    // this.addFollowForm.get('Id')?.patchValue(this.clientFileId)
+    this.addFollowForm.get('Attachment')?.patchValue(this.uploadedImg[0])
+    console.log('Attachment',this.addFollowForm.get('Attachment')?.value);
 
-    }
+    this.followService.AddFollow(this.addFollowForm.value).subscribe({next:(res:any)=>{
+      this.toastr.success('Added')
+      this.GetFollows();
+    },
+  error:(err:any)=>{
+    this.toastr.error('Not Added')
+  }})
   }
   GetFollows(){
     this.followService.GetAllFollows(this.clientFileId).subscribe({next:(res:any)=>{
@@ -110,8 +118,9 @@ this.GetFileNo(this.clientId);
 GetClientFileId(FileNo:any){
   this.topService.getClietFileId(this.clientId,FileNo).subscribe((res:any)=>{
     this.addFollowForm.patchValue({
-      ClientFileId:res.data.clientFileId
+      Id:res.data.clientFileId
     })
+   // this.clientFileId=res.data.clientFileId;
   })
   }
   onImageSelected(event: any): void {
@@ -125,6 +134,8 @@ GetClientFileId(FileNo:any){
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+    console.log( this.uploadedImg[0]);
+
   }
 
   AddClientFileAttachment() {
@@ -180,7 +191,7 @@ GetClientFileId(FileNo:any){
     // }
     this.addFollowForm.get('Id')?.patchValue(this.clientFileId)
     this.addFollowForm.get('Attachment')?.patchValue(this.uploadedImg[0])
-    this.followService.AddFollowdetail(this.addFollowForm.value).subscribe({next:(res:any)=>{
+    this.followService.AddFollow(this.addFollowForm.value).subscribe({next:(res:any)=>{
       this.toastr.success('Added')
       this.GetFollows();
     },

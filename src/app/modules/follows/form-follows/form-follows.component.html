@@ -66,12 +66,12 @@
                formControlName="FileNo"
                (ngModelChange)="GetClientFileId($event)" *ngIf="!FollowId" >
     </ng-select>
-    <input type="text"  readonly
+    <input type="text"  readonly *ngIf="FollowId"
          class="form-control" formControlName="FileNo">
 </div>
-<div class="col-4 mt-3">
+<!-- <div class="col-4 mt-3">
   <button class="btn btn-success" (click)="addDetailFollow()">حفظ</button>
-</div>
+</div> -->
 </div>
 
             <div class="row">
