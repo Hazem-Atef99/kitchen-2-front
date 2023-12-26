@@ -83,4 +83,10 @@ export class ProductionRequestsService {
   LoadFinalStatusList(itemType :number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/LoadFinalStatusList/${itemType}`)
   }
+  AddShortage(data:any){
+    return this._HttpClient.post(`${this.domain}ClientShortage/AddClientShortage`, data);
+  }
+  GetClientShortage(clientFileId:any){
+    return this._HttpClient.get(`${this.domain}ClientShortage/GetAllClientShortage?clientFileId=${clientFileId}`)
+  }
 }

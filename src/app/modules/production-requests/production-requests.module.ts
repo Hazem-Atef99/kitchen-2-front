@@ -13,16 +13,19 @@ import {HttpClientModule} from '@angular/common/http'
 import { NgbPaginationModule, NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import {NgSelectModule} from "@ng-select/ng-select";
 import { RouterModule, Routes } from '@angular/router';
+import { ClientShortageComponent } from './client-shortage/client-shortage.component';
 
 const routes: Routes = [
   {path:'',component: ProductionRequestsComponent},
   {path:'add',component: FormProductionRequestsComponent},
+  {path : 'ClientShortage' , component : ClientShortageComponent}
 
 ];
 @NgModule({
   declarations: [
     ProductionRequestsComponent,
-    FormProductionRequestsComponent
+    FormProductionRequestsComponent,
+    ClientShortageComponent
   ],
   imports: [
     CommonModule,

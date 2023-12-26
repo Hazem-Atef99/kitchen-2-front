@@ -1,0 +1,100 @@
+<c-card class="mb-4">
+  <c-card-header class="d-flex justify-content-between align-items-center py-4">
+      <strong>اضافه النواقص</strong>
+      <button class="btn btn-success" (click)="addShortage()">
+          اضافة
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+          </svg>
+      </button>
+  </c-card-header>
+</c-card>
+<c-card class="mb-4 py-4">
+  <form [formGroup]="clientForm">
+    <c-col class="mx-2 my-4" >
+      <div class="card">
+          <div class="card-header m-0">
+              <h5>الزبون</h5>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-4">
+                      <label>الزبون</label>
+                      <input readonly aria-label="default input example" cFormControl
+                           formControlName="clientId" type="text"/>
+                  </div>
+                  <div class="col-4">
+                    <label>رقم الجوال</label>
+                    <input readonly aria-label="default input example" cFormControl
+                           formControlName="phoneNumber" type="text"/>
+                  </div>
+                  <!-- <div class="col-4">
+                    <label>تاريخ الانتاج</label>
+                    <input aria-label="default input example" cFormControl
+                           formControlName="contractDate" type="date"/>
+                  </div> -->
+                  <div class="col-12 mt-2">
+                    <label>العنوان</label>
+                    <textarea readonly aria-label="default input example" cFormControl
+                              formControlName="clientAdress" rows="3">
+                    </textarea>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </c-col>
+
+    <div class="col-4 mx-2 my-4">
+        <label>ملف طلب الانتاج</label>
+        <input readonly aria-label="default input example" cFormControl
+             formControlName="clientFileTypeId" type="text"/>
+    </div>
+  </form>
+  <c-col class="mx-2 my-4" >
+
+
+  <form [formGroup]="shortageForm">
+    <div class="row">
+      <div class="col-8 mt-2">
+        <label>طلب</label>
+        <textarea  aria-label="default input example" cFormControl
+                  formControlName="notes" rows="3">
+        </textarea>
+      </div>
+
+    <div class="col-4">
+      <label>تاريخ</label>
+      <input aria-label="default input example" cFormControl
+             formControlName="tarkeebDate" type="date"/>
+    </div>
+    </div>
+  </form>
+</c-col>
+</c-card>
+<c-col xs="12" *ngIf="allShortage.length>0" >
+<c-card class="mb-4">
+<c-card-body>
+  <table cTable [striped]="true">
+    <thead>
+      <tr>
+        <th scope="col">المستخدم</th>
+        <th scope="col">طلب النواقص</th>
+        <th scope="col">التاريخ</th>
+        <th scope="col">تارخ النركيب</th>
+        <th scope="col">حذف</th>
+        <th scope="col">مرفقات</th>
+        <th scope="col">التفاصيل</th>
+        <th scope="col">طباعة التفاصيل</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</c-card-body>
+</c-card>
+</c-col>
