@@ -64,7 +64,7 @@
         </textarea>
       </div>
 
-    <div class="col-4">
+    <div class="col-4 mt-2">
       <label>تاريخ</label>
       <input aria-label="default input example" cFormControl
              formControlName="tarkeebDate" type="date"/>
@@ -73,7 +73,8 @@
   </form>
 </c-col>
 </c-card>
-<c-col xs="12" *ngIf="allShortage.length>0" >
+<!-- *ngIf="allShortage.length>0"  -->
+<c-col xs="12" >
 <c-card class="mb-4">
 <c-card-body>
   <table cTable [striped]="true">
@@ -83,18 +84,119 @@
         <th scope="col">طلب النواقص</th>
         <th scope="col">التاريخ</th>
         <th scope="col">تارخ النركيب</th>
-        <th scope="col">حذف</th>
-        <th scope="col">مرفقات</th>
         <th scope="col">التفاصيل</th>
+        <th scope="col">مرفقات</th>
         <th scope="col">طباعة التفاصيل</th>
+        <th scope="col">حذف</th>
       </tr>
     </thead>
     <tbody>
-      <tr >
+      <!-- *ngFor="let item of allShortage" -->
+      <tr  >
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+
+        </td>
+        <td>
+          <!-- (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()"  [cModalToggle]="modalXl.id" -->
+          <button (click)="GetAllClientFileAttachment()"  [cModalToggle]="modalXl.id"  class="btn btn-light m-0 p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+          </button>
+        </td>
+        <td>
+          <button cButton class="btn btn-light m-0 p-2">
+            <svg cIcon name="cil-print"></svg>
+          </button>
+        </td>
+        <td>
+          <button  class="btn btn-light m-0 p-2">
+          <i class='bx bx-trash'></i>
+        </button>
+      </td>
       </tr>
     </tbody>
   </table>
 </c-card-body>
 </c-card>
 </c-col>
+<c-modal #modalXl id="modalXl" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>المرفقات</h5>
+    <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+        <h5>اضافة</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            <label>تصنيف الملف</label>
+            <ng-select [items]="statusCategoryById?.statuses"
+                       bindLabel="defaultDesc"
+                       bindValue="statusId"
+                       placeholder="اختر التصنيف"
+                       [(ngModel)]="statusId">
+            </ng-select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label> الصورة </label>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)"
+                   class="form-control">
+            <div class="row" *ngIf="viewImg[0]">
+              <div class="col-2 card-image p-0 m-2 position-relative">
+                <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-center mt-4">
+          <button class="btn btn-success" (click)="AddClientFileAttachment()">
+            اضافة
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card my-4">
+      <div class="card-header">
+        عرض المرفقات
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <label>تصنيف الملف</label>
+            <ng-select [items]="statusCategoryById?.statuses"
+                       bindLabel="defaultDesc"
+                       bindValue="statusId"
+                       placeholder="اختر التصنيف"
+                       [(ngModel)]="statusId"
+                       (change)="GetAllClientFileAttachment()">
+            </ng-select>
+          </div>
+          <div class="card col-12 my-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
+                  <div class="row" *ngIf="item">
+                    <div class="col-3 card-image p-0 m-2 position-relative">
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="Domain+item.attachmentPath" />
+                      <p>{{item.statusName}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </c-modal-body>
+</c-modal>

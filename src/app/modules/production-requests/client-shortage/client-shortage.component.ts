@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductionRequestsService } from '../production-requests.service';
 import { ToastrService } from 'ngx-toastr';
+import { QuotationsService } from '../../quotations/quotations.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-client-shortage',
@@ -14,10 +16,17 @@ export class ClientShortageComponent implements OnInit {
   clientFileId:any;
   shortageForm !: FormGroup;
   allShortage :any[]=[];
+  statusCategoryById: any;
+  statusId: any;
+  viewImg: any[] = [];
+  uploadedImg: any[] = [];
+  allClientFileAttachment: any[] = [];
+  Domain: any = environment.apiUrl;
   constructor(private _FormBuilder : FormBuilder,
               private _activatedRoute:ActivatedRoute,
               private productionRequestService:ProductionRequestsService,
-              private toastr:ToastrService) {
+              private toastr:ToastrService,
+              private _QuotationsService:QuotationsService) {
               this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
               this.clientForm=this.initClientForm();
               this.shortageForm=this.initShortageForm();
@@ -65,5 +74,45 @@ export class ClientShortageComponent implements OnInit {
     this.productionRequestService.GetClientShortage(this.clientFileId).subscribe({next:(res:any)=>{
       this.allShortage=res.data;
     }})
+  }
+  onImageSelected(event: any): void {
+    this.viewImg = []
+    this.uploadedImg = []
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      this.uploadedImg.push(event.target.files.item(0));
+      reader.onload = (event: any) => {
+        this.viewImg.push(event.target.result);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+  AddClientFileAttachment() {
+    let value: any = {};
+    value['clientFileId'] = this.clientFileId;
+    value['attachmentPath'] = this.uploadedImg[0];
+    value['statusId'] = this.statusId;
+    this._QuotationsService.AddClientFileAttachment(value).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`${res.message}`);
+        this.viewImg = []
+        this.uploadedImg = []
+        this.GetAllClientFileAttachment()
+       // this.GetShortClientFiles();
+      }, error: (err: any) => {
+        this.toastr.error(`${err.message}`);
+      }
+    })
+  }
+  GetAllClientFileAttachment() {
+    let query = {
+      clientFileId: this.clientFileId,
+      statusId: this.statusId,
+    }
+    this._QuotationsService.GetAllClientFileAttachment(query).subscribe({
+      next: (res: any) => {
+        this.allClientFileAttachment = res.data
+      }
+    })
   }
 }
