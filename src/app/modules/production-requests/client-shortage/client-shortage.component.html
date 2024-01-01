@@ -92,13 +92,15 @@
     </thead>
     <tbody>
       <!-- *ngFor="let item of allShortage" -->
-      <tr  >
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let item of allShortage" >
+        <td>{{item.user}}</td>
+        <td>{{item.notes}}</td>
+        <td>{{item.date | date}}</td>
+        <td>{{item.tarkeebDate| date}}</td>
         <td>
-
+          <button  class="btn btn-light m-0 p-2">
+            <i class='bx bx-detail'></i>
+          </button>
         </td>
         <td>
           <!-- (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()"  [cModalToggle]="modalXl.id" -->
