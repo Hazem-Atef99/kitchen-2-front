@@ -14,18 +14,21 @@ import { NgbPaginationModule, NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import {NgSelectModule} from "@ng-select/ng-select";
 import { RouterModule, Routes } from '@angular/router';
 import { ClientShortageComponent } from './client-shortage/client-shortage.component';
+import { ClientShortageDetailsComponent } from './client-shortage-details/client-shortage-details.component';
 
 const routes: Routes = [
   {path:'',component: ProductionRequestsComponent},
   {path:'add',component: FormProductionRequestsComponent},
-  {path : 'ClientShortage' , component : ClientShortageComponent}
+  {path : 'ClientShortage' , component : ClientShortageComponent},
+  {path : 'clientShortageDetial' , component:ClientShortageDetailsComponent}
 
 ];
 @NgModule({
   declarations: [
     ProductionRequestsComponent,
     FormProductionRequestsComponent,
-    ClientShortageComponent
+    ClientShortageComponent,
+    ClientShortageDetailsComponent
   ],
   imports: [
     CommonModule,
