@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class ReceptionReportComponent implements OnInit {
   query: any = {
     PageType: 0,
-    fileTypeId: null,
+    fileTypeId: 1,
   }
   allReceptionReports: any;
   clientFileId: number = 0;

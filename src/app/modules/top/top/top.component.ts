@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class TopComponent implements OnInit {
   query: any = {
     PageType: 4,
-    fileTypeId: null,
+    fileTypeId: 1,
   }
 allTopList:any []=[]
   constructor(private topService:TopService,

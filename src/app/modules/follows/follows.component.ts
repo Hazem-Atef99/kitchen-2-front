@@ -16,7 +16,7 @@ import { EMPTY } from 'rxjs';
 export class FollowsComponent implements OnInit {
   query: any = {
     PageType: 4,
-    fileTypeId: null,
+    fileTypeId: 1,
   }
   allClients:any []=[];
   allfollows :any[]=[];
