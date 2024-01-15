@@ -98,7 +98,7 @@
         <td>{{item.date | date}}</td>
         <td>{{item.tarkeebDate| date}}</td>
         <td>
-          <button routerLink="clientShortageDetial" [queryParams]="" class="btn btn-light m-0 p-2">
+          <button (click)="GetAllShortageDetails(item.id)"  cButton [cModalToggle]="modalX2.id"  class="btn btn-light m-0 p-2">
             <i class='bx bx-detail'></i>
           </button>
         </td>
@@ -113,7 +113,7 @@
           </button>
         </td>
         <td>
-          <button cButton class="btn btn-light m-0 p-2">
+          <button cButton  class="btn btn-light m-0 p-2">
             <svg cIcon name="cil-print"></svg>
           </button>
         </td>
@@ -128,6 +128,164 @@
 </c-card-body>
 </c-card>
 </c-col>
+<c-modal #modalX2 id="modalX2" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>التفاصيل</h5>
+    <button class="mx-0" [cModalToggle]="modalX2.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+        <h5>اضافه</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="clientForm">
+          <c-col class="mx-2 my-4" >
+            <div class="card">
+                <div class="card-header m-0">
+                    <h5>الزبون</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                      <div class="col-4">
+                        <label>الزبون</label>
+                        <input readonly aria-label="default input example" cFormControl
+                               formControlName="clientId" type="text"/>
+                      </div>
+                        <div class="col-4">
+                          <label>رقم الجوال</label>
+                          <input readonly aria-label="default input example" cFormControl
+                                 formControlName="phoneNumber" type="tel"/>
+                        </div>
+                        <!-- <div class="col-4">
+                          <label>تاريخ الانتاج</label>
+                          <input aria-label="default input example" cFormControl
+                                 formControlName="contractDate" type="date"/>
+                        </div> -->
+                        <div class="col-12 mt-2">
+                          <label>العنوان</label>
+                          <textarea readonly aria-label="default input example" cFormControl
+                                    formControlName="clientAdress" rows="3">
+                          </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c-col>
+        </form>
+        <form [formGroup]="detailsForm">
+          <div class="card">
+          <c-col class="mx-2 my-4">
+            <div class="card-header m-0">
+              <h5>معلومات</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>اللون</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="internalColor" type="text"/>
+              </div>
+              <div class="col-4">
+                <label>لون الدرف</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="subColor" type="text"/>
+              </div>
+              <div class="col-4">
+                <label>المركب</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="tarkeebBy" type="text"/>
+              </div>
+            </div>
+          </div>
+          </c-col>
+
+
+          <c-col class="mx-2 my-4">
+            <div class="card-header m-0">
+              <h5>التفاصيل</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>البيان</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="bayan" type="text"/>
+              </div>
+              <div class="col-2">
+                <label>الارتفاع</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="hieght" type="number"/>
+              </div>
+              <div class="col-2">
+                <label>العرض</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="width" type="number"/>
+              </div>
+              <div class="col-2">
+                <label>العدد</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="itemCount" type="number"/>
+              </div>
+              <div class="col-4">
+                <label>لون القشاط</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="qshatColor" type="text"/>
+              </div>
+              <div class="col-4">
+                <label>ملاحظات</label>
+                <input  aria-label="default input example" cFormControl
+                       formControlName="notes" type="text"/>
+              </div>
+              <div class="col-4">
+                <button class="btn btn-success my-4" (click)="AddDetail()">اضافه<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                  viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+              </svg></button>
+              </div>
+            </div>
+          </div>
+          </c-col>
+        </div>
+        </form>
+      </div>
+    </div>
+    <div class="card" *ngIf="this.clientShortageDetails.length!=0" >
+      <c-col class="mx-2 my-4">
+        <div class="card-body">
+          <table [striped]="true" cTable>
+            <thead>
+              <tr>
+                <th scope="col">البيان</th>
+                <th scope="col">الارتفاع</th>
+                <th scope="col">العرض</th>
+                <th scope="col">العدد</th>
+                <th scope="col">لون القشاط</th>
+                <th scope="col">ملاحظات</th>
+                <th scope="col">حذف</th>
+              </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor="let item of clientShortageDetails" >
+                  <td>{{item?.bayan}}</td>
+                  <td>{{item?.hieght}}</td>
+                  <td>{{item?.width}}</td>
+                  <td>{{item?.itemCount}}</td>
+                  <td>{{item?.qshatColor}}</td>
+                  <td>{{item?.notes}}</td>
+                  <td>
+                    <button (click)="deleteDetailRow()"  class="btn btn-light m-0 p-2">
+                    <i class='bx bx-trash'></i>
+                  </button></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </c-col>
+    </div>
+  </c-modal-body>
+</c-modal>
 <c-modal #modalXl id="modalXl" size="xl">
   <c-modal-header>
     <h5 cModalTitle>المرفقات</h5>

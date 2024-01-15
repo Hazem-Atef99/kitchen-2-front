@@ -5,6 +5,7 @@ import { ProductionRequestsService } from '../production-requests.service';
 import { ToastrService } from 'ngx-toastr';
 import { QuotationsService } from '../../quotations/quotations.service';
 import { environment } from 'src/environments/environment';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-client-shortage',
@@ -15,22 +16,29 @@ export class ClientShortageComponent implements OnInit {
   clientForm!:FormGroup
   clientFileId:any;
   shortageForm !: FormGroup;
+  detailsForm!:FormGroup;
   allShortage :any[]=[];
   statusCategoryById: any;
   statusId: any;
   viewImg: any[] = [];
   uploadedImg: any[] = [];
+  clientShortageDetails:any[]=[];
   allClientFileAttachment: any[] = [];
   Domain: any = environment.apiUrl;
+  clientShortageId: any;
+  itemCount:string='';
   constructor(private _FormBuilder : FormBuilder,
               private _activatedRoute:ActivatedRoute,
               private productionRequestService:ProductionRequestsService,
               private toastr:ToastrService,
-              private _QuotationsService:QuotationsService) {
+              private _QuotationsService:QuotationsService,
+              private location: Location) {
               this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
               this.clientForm=this.initClientForm();
               this.shortageForm=this.initShortageForm();
+              this.detailsForm=this.initDetailForm();
   }
+
   ngOnInit(): void {
     this.getClientinfo();
     this.GetAllShortage();
@@ -44,6 +52,20 @@ export class ClientShortageComponent implements OnInit {
         this.toastr.error(err.message)
       })})
       this.GetAllShortage();
+  }
+  initDetailForm():FormGroup{
+    return this._FormBuilder.group({
+      clientShortageId: ['', ],
+      internalColor: ['', ],
+      subColor: ['', ],
+      tarkeebBy: ['', ],
+      bayan: ['', ],
+      hieght: ['', ],
+      width: ['', ],
+      itemCount: ['', ],
+      qshatColor: ['', ],
+      notes: ['', ]
+    })
   }
   initClientForm():FormGroup{
     return this._FormBuilder.group({
@@ -70,10 +92,36 @@ export class ClientShortageComponent implements OnInit {
       })
     }})
   }
+  GetAllShortageDetails(id:any){
+    console.log("id",id);
+    this.clientShortageId=id
+    this.productionRequestService.GetClientShortagedetails(id).subscribe({next : (res:any)=>{
+      this.clientShortageDetails=res.data;
+    }})
+
+  }
   GetAllShortage(){
     this.productionRequestService.GetClientShortage(this.clientFileId).subscribe({next:(res:any)=>{
       this.allShortage=res.data;
     }})
+  }
+  deleteDetailRow(){
+
+  }
+  AddDetail(){
+     this.itemCount=this.detailsForm.get('itemCount')?.value
+      this.itemCount=this.itemCount.toString();
+    this.detailsForm.get('clientShortageId')?.patchValue(this.clientShortageId);
+    this.detailsForm.get('itemCount')?.patchValue(this.itemCount)
+    console.log(this.detailsForm.value);
+    this.productionRequestService.AddClientShortagedetails(this.detailsForm.value).subscribe({next:(res:any)=>{
+      this.toastr.success("تم اضافة التفاصيل")
+      this.GetAllShortageDetails(this.clientShortageId)
+    },
+    error:(err:any)=>{
+      this.toastr.error("حدث خطأ")
+    }
+  })
   }
   onImageSelected(event: any): void {
     this.viewImg = []

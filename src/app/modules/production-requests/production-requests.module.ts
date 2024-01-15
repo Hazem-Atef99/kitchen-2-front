@@ -20,7 +20,7 @@ const routes: Routes = [
   {path:'',component: ProductionRequestsComponent},
   {path:'add',component: FormProductionRequestsComponent},
   {path : 'ClientShortage' , component : ClientShortageComponent},
-  {path : 'clientShortageDetial' , component:ClientShortageDetailsComponent}
+  {path : 'production-requests/clientShortageDetial' , component:ClientShortageDetailsComponent}
 
 ];
 @NgModule({

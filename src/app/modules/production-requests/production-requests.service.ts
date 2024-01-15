@@ -89,4 +89,10 @@ export class ProductionRequestsService {
   GetClientShortage(clientFileId:any){
     return this._HttpClient.get(`${this.domain}ClientShortage/GetAllClientShortage?clientFileId=${clientFileId}`)
   }
+  GetClientShortagedetails(id:any){
+    return this._HttpClient.get(`${this.domain}ClientShortage/GetClientShortageDevices?clientShortageId=${id}`)
+  }
+  AddClientShortagedetails(data:any){
+    return this._HttpClient.post(`${this.domain}ClientShortage/AddClientShortageDevices`,data)
+  }
 }
