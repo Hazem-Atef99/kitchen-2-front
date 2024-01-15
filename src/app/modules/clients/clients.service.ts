@@ -21,4 +21,10 @@ export class ClientsService {
   GetClient(id :any){
     return this._HttpClient.get(`${this.domain}Client/GetAllClients?clientId=${id}`)
   }
+  AddClient(data:any){
+    return this._HttpClient.post(`${this.domain}Client/AddClient`, data)
+  }
+  UpdateClient(id:any,data:any){
+    return this._HttpClient.put(`${this.domain}Client/UpdateClient?clientId=${id}`, data)
+  }
 }
