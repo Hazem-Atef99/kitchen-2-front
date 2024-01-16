@@ -1,3 +1,4 @@
+import { ClientsRoutingModule } from './clients-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule, CardModule, FormModule, GridModule, ModalModule, TableModule, ToastModule } from '@coreui/angular';
@@ -11,11 +12,7 @@ import { ClientsService } from './clients.service';
 import { ClientsComponent } from './clients.component';
 import { FormClientsComponent } from './form-clients/form-clients.component';
 
-const routes: Routes = [
-  { path: '', component: ClientsComponent },
-  { path: 'addClient', component: FormClientsComponent },
 
-];
 
 @NgModule({
   declarations: [
@@ -24,7 +21,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    // RouterModule.forChild(routes),
     TableModule,
     CardModule,
     GridModule,
@@ -37,10 +34,10 @@ const routes: Routes = [
     NgbToast,
     ModalModule,
     ButtonModule,
+    ClientsRoutingModule,
     NgSelectModule,
   ],
   exports: [
-    FormClientsComponent
   ],
   providers: [ClientsService]
 })

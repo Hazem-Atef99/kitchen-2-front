@@ -105,8 +105,25 @@ export class ClientShortageComponent implements OnInit {
       this.allShortage=res.data;
     }})
   }
-  deleteDetailRow(){
-
+  deleteDetailRow(id:any){
+    this.productionRequestService.deleteClientShortageDetail(id).subscribe({next:(res:any)=>{
+      this.toastr.success("تم حذف التفاصيل")
+      this.GetAllShortageDetails(this.clientShortageId)
+    },
+    error:(err:any)=>{
+      this.toastr.error("حدث خطأ")
+    }
+  })
+  }
+  deleteClientShortage(id:any){
+    this.productionRequestService.deleteClientShortage(id).subscribe({next:(res:any)=>{
+      this.toastr.success("تم الحذف ")
+      this.GetAllShortage();
+    },
+    error:(err:any)=>{
+      this.toastr.error("حدث خطأ")
+    }
+  })
   }
   AddDetail(){
      this.itemCount=this.detailsForm.get('itemCount')?.value

@@ -120,7 +120,7 @@
           </button>
         </td>
         <td>
-          <button  class="btn btn-light m-0 p-2">
+          <button (click)="deleteClientShortage(item.id)" class="btn btn-light m-0 p-2">
           <i class='bx bx-trash'></i>
         </button>
       </td>
@@ -277,7 +277,7 @@
                   <td>{{item?.qshatColor}}</td>
                   <td>{{item?.notes}}</td>
                   <td>
-                    <button (click)="deleteDetailRow()"  class="btn btn-light m-0 p-2">
+                    <button (click)="deleteDetailRow(item.id)"  class="btn btn-light m-0 p-2">
                     <i class='bx bx-trash'></i>
                   </button></td>
                 </tr>

@@ -30,7 +30,6 @@ import {
   ListGroupModule,
   NavModule,
   ProgressModule,
-  SharedModule,
   SidebarModule,
   TabsModule,
   UtilitiesModule
@@ -42,7 +41,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ToastrModule } from 'ngx-toastr';
-
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -70,7 +68,6 @@ const APP_CONTAINERS = [
     ButtonGroupModule,
     ReactiveFormsModule,
     SidebarModule,
-    SharedModule,
     TabsModule,
     ListGroupModule,
     ProgressModule,

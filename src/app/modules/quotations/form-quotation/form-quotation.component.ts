@@ -27,6 +27,8 @@ export class FormQuotationComponent implements OnInit {
   unitsCounts: number = 0;
   accessoriesCount: number = 0;
   TopCount: number = 0;
+  clientsForm!:FormGroup;
+  mobile:string="";
   ListOfItems: any = [
     {
       isCount: true,
@@ -224,6 +226,7 @@ export class FormQuotationComponent implements OnInit {
     private _Router: Router
   ) {
     this.AddClientFileForm = this.initClientFileForm();
+    this.clientsForm=this.initClientForm();
     this.ListOfItems.forEach((ele: any, index: number) => {
       this.addItemsFormArray();
       this.itemsFormArray.controls[index].patchValue({
@@ -243,7 +246,31 @@ export class FormQuotationComponent implements OnInit {
       });
     }
   }
+  addClient(){
+    this.mobile=this.clientsForm.get('mobile')?.value;
+    this.mobile=this.mobile.toString();
+    this.clientsForm.get('mobile')?.patchValue(this.mobile)
 
+     this._ClientsService.AddClient(this.clientsForm.value).subscribe({next:(res:any)=>{
+       this.toastr.success("تم اضافة الزبون");
+       this.GetAllClients();
+     },error:(err=>{
+       this.toastr.error("حدث خطأ");
+     })});
+
+
+ }
+ initClientForm():FormGroup{
+  return this._FormBuilder.group({
+
+    clientName: ['',],
+    email: ['',],
+    fax: ['',],
+    mobile: ['',],
+    tel1: ['',],
+    clientAddress: ['',]
+  });
+}
   GetClientFileById(id: number) {
     this._QuotationsService.GetClientFileByIdApi(id).subscribe({
       next: (res: any) => {

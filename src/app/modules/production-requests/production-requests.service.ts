@@ -95,4 +95,10 @@ export class ProductionRequestsService {
   AddClientShortagedetails(data:any){
     return this._HttpClient.post(`${this.domain}ClientShortage/AddClientShortageDevices`,data)
   }
+  deleteClientShortage(id:any){
+    return this._HttpClient.delete(`${this.domain}ClientShortage/DeleteClientShortage?id=${id}`)
+  }
+  deleteClientShortageDetail(id:any){
+    return this._HttpClient.delete(`${this.domain}ClientShortage/DeleteClientShortageDevices?id=${id}`)
+  }
 }

@@ -10,8 +10,6 @@ import { QuotationsService } from './quotations.service';
 import { FormQuotationComponent } from './form-quotation/form-quotation.component';
 import { NgbPaginationModule, NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import {NgSelectModule} from "@ng-select/ng-select";
-import { ClientsModule } from '../clients/clients.module';
-
 const routes: Routes = [
   {path:'',component: QuotationsComponent},
   {path:'add',component: FormQuotationComponent},
@@ -25,6 +23,7 @@ const routes: Routes = [
     FormQuotationComponent
   ],
     imports: [
+        //ClientsModule,
         CommonModule,
         RouterModule.forChild(routes),
         TableModule,
@@ -40,7 +39,6 @@ const routes: Routes = [
         ModalModule,
         ButtonModule,
         NgSelectModule,
-        ClientsModule
 
     ],
   providers: [ QuotationsService]

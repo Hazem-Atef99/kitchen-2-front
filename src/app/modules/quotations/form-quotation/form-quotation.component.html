@@ -351,9 +351,54 @@
 <c-modal #modalXl id="modalXl" size="xl">
 <c-modal-header>
   <h5 cModalTitle>اضافة زبون جديد</h5>
+  <button class="btn btn-success" (click)="addClient()">
+      اضافه
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+         viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+    </svg>
+  </button>
   <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
 </c-modal-header>
 <c-modal-body>
-  <app-form-clients></app-form-clients>
+  <form [formGroup]="clientsForm">
+
+
+    <c-card class="mb-4 py-4 px-2">
+      <div class="row">
+      <div class="col-4">
+        <label>اسم العميل</label>
+        <input aria-label="default input example" cFormControl formControlName="clientName"  type="text" />
+      </div>
+
+      <div class="col-4">
+    <label> البريد الاكتروني</label>
+            <input aria-label="default input example" cFormControl formControlName="email"  type="text" />
+      </div>
+
+      <div class="col-4">
+    <label>فاكس</label>
+        <input aria-label="default input example" cFormControl formControlName="fax"  type="text" />
+      </div>
+
+      <div class="col-4">
+        <label>موبايل</label>
+        <input aria-label="default input example" cFormControl formControlName="mobile" maxlength="11" type="number" />
+      </div>
+
+      <div class="col-4">
+    <label>تليفون</label>
+        <input aria-label="default input example" cFormControl  formControlName="tel1" type="text" />
+      </div>
+      <div class="col-8">
+    <label>العنوان</label>
+        <textarea aria-label="default input example" cFormControl  formControlName="clientAddress" type="text" rows="3" >
+      </textarea>
+      </div>
+
+    </div>
+    </c-card>
+    </form>
 </c-modal-body>
 </c-modal>
