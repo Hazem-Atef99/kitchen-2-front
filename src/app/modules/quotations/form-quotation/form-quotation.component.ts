@@ -357,7 +357,7 @@ export class FormQuotationComponent implements OnInit {
 
   setPrice(e: any, i: number) {
     let price = 0
-    price = this.loadPriceOffer[this.ListOfItems[i].value]?.statuses.filter((ele: any) => ele.statusId == e.target.value)[0].price
+    price = this.loadPriceOffer[this.ListOfItems[i].value]?.statuses.filter((ele: any) => ele.statusId == e.statusId)[0].price
     this.itemsFormArray.controls[i]?.get('eachItemPrice')?.patchValue(price)
   }
 
@@ -365,6 +365,8 @@ export class FormQuotationComponent implements OnInit {
     let totPrice = 0
     totPrice = (this.itemsFormArray.controls[i]?.get('eachItemPrice')?.value * this.itemsFormArray.controls[i]?.get('itemCount')?.value)
     this.itemsFormArray.controls[i]?.get('itemPrice')?.patchValue(totPrice)
+    console.log("price",totPrice);
+
     // let count = 0
     // for (let i = 0 ; i < this.itemsFormArray.controls.length; i++){
     //   count += this.itemsFormArray.controls[i].get('itemPrice')?.value
@@ -373,7 +375,7 @@ export class FormQuotationComponent implements OnInit {
 
   setPrice1(e: any) {
     let price = 0
-    price = this.loadPriceOffer['unites']?.statuses.filter((ele: any) => ele.statusId == e.target.value)[0].price
+    price = this.loadPriceOffer['unites']?.statuses.filter((ele: any) => ele.statusId == e.statusId)[0].price
     this.items1Form.get('eachItemPrice')?.patchValue(price)
   }
 

@@ -13,7 +13,7 @@ import { FormClientsComponent } from './form-clients/form-clients.component';
 
 const routes: Routes = [
   { path: '', component: ClientsComponent },
-  { path: 'add', component: FormClientsComponent },
+  { path: 'addClient', component: FormClientsComponent },
 
 ];
 
@@ -38,6 +38,9 @@ const routes: Routes = [
     ModalModule,
     ButtonModule,
     NgSelectModule,
+  ],
+  exports: [
+    FormClientsComponent
   ],
   providers: [ClientsService]
 })
