@@ -54,46 +54,7 @@
                 </div>
             </div>
         </c-col>
-        <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
-            <div class="card">
-                <div class="card-header m-0">
-                    <h5>المجاميع</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <label>الخصم الاضافى</label>
-                            <input aria-label="default input example" cFormControl formControlName="additionaldiscount"
-                                type="number" />
-                        </div>
-                      <div class="col-4">
-                        <label>خصم الوحدات</label>
-                        <input aria-label="default input example" cFormControl formControlName="discount"
-                               type="number" />
-                      </div>
-                      <div class="col-4">
-                        <label>خصم الاكسسوارات</label>
-                        <input aria-label="default input example" cFormControl formControlName="accessoryDiscount"
-                               type="number" />
-                      </div>
-                    </div>
-                </div>
 
-                <div class="card-body">
-                    <div class="row">
-                      <div class="col-4">
-                        مجموع التوب: {{TopCount}}
-                      </div>
-                      <div class="col-4">
-                        مجموع الوحدات: {{unitsCounts}}
-                      </div>
-                      <div class="col-4">
-                        مجموع الاكسسوارات: {{accessoriesCount}}
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </c-col>
         <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
             <div class="card">
                 <div class="card-header m-0">
@@ -345,6 +306,46 @@
               </ng-container>
             </ng-container>
         </c-row>
+        <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
+          <div class="card">
+              <div class="card-header m-0">
+                  <h5>المجاميع</h5>
+              </div>
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-4">
+                          <label>الخصم الاضافى</label>
+                          <input aria-label="default input example" cFormControl formControlName="additionaldiscount"
+                              type="number" />
+                      </div>
+                    <div class="col-4">
+                      <label>خصم الوحدات</label>
+                      <input aria-label="default input example" cFormControl formControlName="discount"
+                             type="number" />
+                    </div>
+                    <div class="col-4">
+                      <label>خصم الاكسسوارات</label>
+                      <input aria-label="default input example" cFormControl formControlName="accessoryDiscount"
+                             type="number" />
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card-body">
+                  <div class="row">
+                    <div class="col-4">
+                      مجموع التوب: {{TopCount}}
+                    </div>
+                    <div class="col-4">
+                      مجموع الوحدات: {{unitsCounts}}
+                    </div>
+                    <div class="col-4">
+                      مجموع الاكسسوارات: {{accessoriesCount}}
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </c-col>
     </form>
 
 </c-card>
