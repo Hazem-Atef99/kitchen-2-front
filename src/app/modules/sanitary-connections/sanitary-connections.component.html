@@ -1,0 +1,175 @@
+<c-card class="mb-4">
+  <c-card-header class="d-flex justify-content-between align-items-center py-4">
+    <strong>توصيلات صحيه</strong>
+    <button [disabled]="!query.fileTypeId"
+      class="btn btn-success" routerLink="add">
+      اضافة
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+           viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+      </svg>
+    </button>
+    <button class="btn btn-success" routerLink="/home">رجوع</button>
+
+  </c-card-header>
+</c-card>
+<c-card class="mb-4 py-4">
+  <c-row class="p-2">
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput  (click)="filter($event.target)" type="radio" name="fileTypeId" value="null" />
+        <label cFormCheckLabel>الكل</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput [checked]="true" (click)="filter($event.target)" type="radio" name="fileTypeId" value="1" />
+        <label cFormCheckLabel>المطابخ</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="2" />
+        <label cFormCheckLabel>الابواب</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="4" />
+        <label cFormCheckLabel>خزائن الحائط</label>
+      </c-form-check>
+    </c-col>
+    <c-col>
+      <c-form-check>
+        <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="6" />
+        <label cFormCheckLabel>الاعمال الخشبية</label>
+      </c-form-check>
+    </c-col>
+  </c-row>
+</c-card>
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <table [striped]="true" cTable>
+        <thead>
+        <tr>
+          <th scope="col">المبيعات</th>
+          <th scope="col">الزبون</th>
+          <th scope="col">الملاحطات</th>
+          <th scope="col">تاريخ التركيب</th>
+          <th scope="col">تعديل</th>
+          <th scope="col">مرفقات</th>
+          <th scope="col">حذف</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of sanitaryConnections">
+          <td>{{item?.createdBy}}</td>
+          <td>{{item?.clientName}}</td>
+
+          <td>{{item?.notes}}</td>
+          <td>{{item.tarkeebDate | date}}</td>
+          <td>
+            <button routerLink="add" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }"  class="btn btn-light m-0 p-2">
+              <i class='bx bx-edit'></i>
+            </button>
+          </td>
+          <td>
+            <!-- (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" [cModalToggle]="modalXl.id" -->
+            <button (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" [cModalToggle]="modalXl.id" class="btn btn-light m-0 p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
+                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+              </svg>
+            </button>
+          </td>
+
+          <td>
+            <button  class="btn btn-light m-0 p-2">
+              <i class='bx bx-trash'></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- <ngb-pagination [collectionSize]="120" (pageChange)="filter($event)" [maxSize]="5" [rotate]="true"
+        [boundaryLinks]="true"></ngb-pagination> -->
+    </c-card-body>
+  </c-card>
+</c-col>
+<c-modal #modalXl id="modalXl" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>المرفقات</h5>
+    <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+        <h5>اضافة</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            <label>تصنيف الملف</label>
+            <ng-select [items]="statusCategoryById?.statuses"
+                       bindLabel="defaultDesc"
+                       bindValue="statusId"
+                       placeholder="اختر التصنيف"
+                       [(ngModel)]="statusId">
+            </ng-select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label> الصورة </label>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)"
+                   class="form-control">
+            <div class="row" *ngIf="viewImg[0]">
+              <div class="col-2 card-image p-0 m-2 position-relative">
+                <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="viewImg[0]" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-center mt-4">
+          <button class="btn btn-success" (click)="AddClientFileAttachment()">
+            اضافة
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card my-4">
+      <div class="card-header">
+        عرض المرفقات
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <label>تصنيف الملف</label>
+            <ng-select [items]="statusCategoryById?.statuses"
+                       bindLabel="defaultDesc"
+                       bindValue="statusId"
+                       placeholder="اختر التصنيف"
+                       [(ngModel)]="statusId"
+                       (change)="GetAllClientFileAttachment()">
+            </ng-select>
+          </div>
+          <div class="card col-12 my-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
+                  <div class="row" *ngIf="item">
+                    <div class="col-3 card-image p-0 m-2 position-relative">
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="Domain+item.attachmentPath" />
+                      <p>{{item.statusName}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </c-modal-body>
+</c-modal>

@@ -75,6 +75,12 @@ const routes: Routes = [
           canActivate:[authGuard]
       },
       {
+        path: 'sanitaryConnections',
+        loadChildren: () =>
+          import('./modules/sanitary-connections/sanitary-connections.module').then((m)=>m.SanitaryConnectionsModule),
+          canActivate:[authGuard]
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule),

@@ -74,7 +74,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'توصيلات صحية',
-    url: '/home',
+    url: '/sanitaryConnections',
     // iconComponent: { name: 'cil-speedometer' },
   },
   // {

@@ -72,19 +72,19 @@ export class HomeComponent {
     {
       icon:'11',
       name:'التقارير',
-      link:'follows'
+      link:''
 
     },
     {
       icon:'12',
       name:'توصيلات صحية',
-      link:'follows'
+      link:'sanitaryConnections'
 
     },
     {
       icon:'13',
       name:'النواقص',
-      link:'follows'
+      link:''
 
     },
   ]
