@@ -1,0 +1,64 @@
+<c-card class="mb-4">
+  <c-card-header class="d-flex justify-content-between align-items-center py-4">
+      <strong> {{userId? 'تعديل مستخدم' : 'اضافة مستخدم'}} </strong>
+      <button class="btn btn-success" (click)="AddUser()">
+          {{userId? 'تعديل' : 'إضافة'}}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+          </svg>
+      </button>
+      <button class="btn btn-success" routerLink="/users">رجوع</button>
+
+  </c-card-header>
+</c-card>
+<c-card class="mb-4 py-4">
+<form [formGroup]="userForm">
+<c-col class="mx-2 my-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-4">
+          <label>الاسم</label>
+          <input aria-label="default input example" cFormControl formControlName="userName"
+                 type="text" />
+        </div>
+        <div class="col-4">
+          <label>اسم المستخدم</label>
+          <input aria-label="default input example" cFormControl formControlName="fullName"
+                 type="text" />
+        </div>
+        <div class="col-4">
+          <label>كلمة المرور</label>
+          <input aria-label="default input example" cFormControl formControlName="password"
+                 type="text" />
+        </div>
+        <div class="col-4">
+          <label>الحاله</label>
+          <ng-select [items]="statuses"
+                     bindLabel="name"
+                     bindValue="id"
+                     placeholder="اختر الحاله"
+                     formControlName="statusId">
+          </ng-select>
+      </div>
+      <div class="col-4">
+        <label>البريد الاكتروني</label>
+        <input aria-label="default input example" cFormControl formControlName="email"
+               type="text" />
+      </div>
+      <c-row class="p-2">
+        <div class="card-header m-0">
+      </div >
+        <div  class="col-2" *ngFor="let option of roles let i= index ">
+          <input type="checkbox" #checkbox name="selectedRoles"   [checked]="isSelected(option.id)"  formControlName="selectedRoles" [value]="option.statusId" (change)="selectOption($event, option)">
+          {{ option.name }}
+        </div>
+      </c-row>
+      </div>
+    </div>
+  </div>
+</c-col>
+</form>
+</c-card>

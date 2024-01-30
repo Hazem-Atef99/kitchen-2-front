@@ -89,8 +89,13 @@
         </a>
       </li> -->
       <li>
-        <a routerLink="/" cDropdownItem>
+        <a routerLink="/users" cDropdownItem>
           <h6>المستخدمين</h6>
+        </a>
+      </li>
+      <li>
+        <a href="#" [cModalToggle]="modalXl.id" preventBackdrop cDropdownItem >
+          <h6>تغيير كلمة السر</h6>
         </a>
       </li>
       <!--<li>
@@ -167,4 +172,40 @@
     </ul>
   </c-dropdown>
 </ng-template>
+<c-modal #modalXl id="modalXl"  size="sm">
+  <c-modal-header>
+    <h5 cModalTitle>تغيير كلمة السر</h5>
+    <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+        <h5>اضافة</h5>
+      </div>
+      <form [formGroup]="changePassForm">
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-12">
+            <label>Old Password</label>
+            <input aria-label="default input example" cFormControl
+                  formControlName="oldPassword" type="text" />
+          </div>
+          <div class="col-12">
+            <label>New Password</label>
+            <input aria-label="default input example" cFormControl
+            formControlName="newPassword" type="text" />
+          </div>
+        </div>
+        <div class="col-12 text-center mt-4">
+          <button [disabled]="changePassForm.invalid" (click)="changePassword()" class="btn btn-success" >
+            save
+          </button>
+        </div>
+      </div>
+    </form>
+    </div>
+
+  </c-modal-body>
+</c-modal>
 

@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Import app component
 import { AppComponent } from './app.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 // Import containers
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
 
@@ -32,15 +32,18 @@ import {
   ProgressModule,
   SidebarModule,
   TabsModule,
+  ModalModule,
+
   UtilitiesModule
 } from '@coreui/angular';
-
+import { CommonModule } from '@angular/common';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { LoginService } from './views/pages/login/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ToastrModule } from 'ngx-toastr';
+import { PreventBackdropDirective } from './containers/default-layout/preventBackdropDirective'
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -48,9 +51,10 @@ const APP_CONTAINERS = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS],
+  declarations: [AppComponent, ...APP_CONTAINERS,PreventBackdropDirective],
   imports: [
     BrowserModule,
+    CommonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     AvatarModule,
@@ -78,6 +82,8 @@ const APP_CONTAINERS = [
     HttpClientModule,
     CoreModule,
     NgbModule,
+    ModalModule,
+    NgSelectModule,
     ToastrModule.forRoot(),
   ],
   providers: [
