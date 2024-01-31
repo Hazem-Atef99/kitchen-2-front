@@ -1,6 +1,15 @@
 <c-card class="mb-4">
   <c-card-header class="d-flex justify-content-between align-items-center py-4">
     <strong>المستخدمين</strong>
+    <div class="col-2">
+      <label>الحاله</label>
+      <ng-select [items]="statuses"
+                 bindLabel="name"
+                 bindValue="id"
+                 placeholder="اختر الحاله"
+                 (change)="filterByStatus($event)" >
+      </ng-select>
+  </div>
     <button
       class="btn btn-success" routerLink="add">
       اضافة

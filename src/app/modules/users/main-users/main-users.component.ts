@@ -9,7 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainUsersComponent implements OnInit {
   Users : any[]=[];
-
+  statuses:any=[
+    {
+      name:'غير فعال',
+      id:0
+    },
+    {
+      name:'فعال',
+      id:1
+    }
+  ]
+  statues :any;
   constructor(private usersService:UsersService,
               private toastr:ToastrService) {
 
@@ -17,8 +27,8 @@ export class MainUsersComponent implements OnInit {
   ngOnInit(): void {
     this.getAllUsers()
   }
-  getAllUsers(){
-    this.usersService.GetAllUsers().subscribe({next :(res:any)=>{
+  getAllUsers(id?:any){
+    this.usersService.GetAllUsers(id).subscribe({next :(res:any)=>{
       this.Users=res.data
     }})
   }
@@ -28,5 +38,8 @@ export class MainUsersComponent implements OnInit {
     }),error:(err:any)=>{
       this.toastr.error(err.message)
     }})
+  }
+  filterByStatus(event:any){
+    this.getAllUsers(event.id);
   }
 }
