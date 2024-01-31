@@ -17,4 +17,7 @@ export class SanitaryConnectionsService {
       return this.http.get(`${this.domain}HealthRecommendations/GetAllHealthRecommendation`)
     }
   }
+  AddSanitaryConnection(data:any){
+    return this.http.post(`${this.domain}HealthRecommendations/AddHealthRecommendation`, data);
+  }
 }
