@@ -16,6 +16,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
 
 import {
+
   AvatarModule,
   BadgeModule,
   BreadcrumbModule,
