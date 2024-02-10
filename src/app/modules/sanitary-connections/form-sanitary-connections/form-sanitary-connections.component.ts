@@ -23,6 +23,8 @@ export class FormSanitaryConnectionsComponent implements OnInit {
   points:any[]=[];
  viewImg :any[]=[];
   uploadedImg :any[]=[];
+  sanitaryConnections:any[]=[];
+  clientFileId: string | null;
   constructor(private formBuilder : FormBuilder,
               private _ClientsService:ClientsService,
               private topService:TopService,
@@ -31,31 +33,36 @@ export class FormSanitaryConnectionsComponent implements OnInit {
               private toastr:ToastrService) {
                 this.AddSanitaryConnectionsForm=this.initSanitaryConnectionsForm();
                 this.clientForm=this.initClientForm();
-                this.ID=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
-
+                this.ID=this._activatedRoute.snapshot.queryParamMap.get('ID')
+                this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
 
   }
 
   ngOnInit(): void {
     this.GetAllClients();
-
+    if (this.ID) {
+     this.GetSanitaryConnectionById(this.ID);
+    }
+    this.getPoints();
   }
 
   addSanitaryConnection(){
+    let data= new FormData()
+    data.append('clientId',this.AddSanitaryConnectionsForm.get('clientId')?.value)
+    data.append('FileNo',this.AddSanitaryConnectionsForm.get('FileNo')?.value)
+    data.append('PointId',this.AddSanitaryConnectionsForm.get('PointId')?.value)
+    data.append('Notes',this.AddSanitaryConnectionsForm.get('Notes')?.value)
+    data.append('Attachement',this.AddSanitaryConnectionsForm.get('Attachement')?.value)
+    data.append('TarkeebDate',this.handleDate(this.AddSanitaryConnectionsForm.get('TarkeebDate')?.value))
+    data.append('KitchenHeight',this.AddSanitaryConnectionsForm.get('KitchenHeight')?.value)
     if (!this.ID) {
-      let data= new FormData()
-      data.append('clientId',this.AddSanitaryConnectionsForm.get('clientId')?.value)
-      data.append('FileNo',this.AddSanitaryConnectionsForm.get('FileNo')?.value)
-      data.append('PointId',this.AddSanitaryConnectionsForm.get('PointId')?.value)
-      data.append('Notes',this.AddSanitaryConnectionsForm.get('Notes')?.value)
-      data.append('Attachement',this.AddSanitaryConnectionsForm.get('Attachement')?.value)
-      data.append('TarkeebDate',this.handleDate(this.AddSanitaryConnectionsForm.get('TarkeebDate')?.value))
-      data.append('KitchenHeight',this.AddSanitaryConnectionsForm.get('KitchenHeight')?.value)
+
       this.sanitaryConnectionService.AddSanitaryConnection(data).subscribe({next:(res:any)=>{
         this.toastr.success("تم الاضافة")
       },error:(err:any)=>{
         this.toastr.error("حدث خطأ")
       }})
+    }else{
     }
 
   }
@@ -111,6 +118,7 @@ GetAllClients() {
 }
 GetClientFileId(FileNo:any){
   this.topService.getClietFileId(this.clientId,FileNo).subscribe((res:any)=>{
+    this.GetAllSanitaryConnectionsByClientAndFileNo(this.clientId,FileNo);
     this.AddSanitaryConnectionsForm.patchValue({
       ClientFileId:res.data.clientFileId
     })
@@ -139,4 +147,34 @@ GetClientFileId(FileNo:any){
     let newDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
     return newDate;
   }
+  GetSanitaryConnectionById(id :any){
+    this.sanitaryConnectionService.GetSanitaryConnectionById(id).subscribe({next:(res:any)=>{
+      res.data
+      this.clientForm.get('clientId')?.patchValue(res.data.clientId)
+      this.AddSanitaryConnectionsForm.patchValue({
+        clientId: res.data.clientId,
+        FileNo:res.data.fileNo,
+        PointId:res.data.pointId,
+        KitchenHeight:res.data.kitchenHeight,
+        TarkeebDate:this.handleDate(res.data.tarkeebDate),
+        Attachement:res.data.attachementPath,
+        Notes:res.data.notes,
+      })
+    }})
+  }
+  GetAllSanitaryConnectionsByClientAndFileNo(clientId:any , fileNo:any){
+    this.sanitaryConnectionService.GetAllSanitaryConnectionsByClientAndFileNo(clientId , fileNo).subscribe({ next: (value: any) => {
+      this.sanitaryConnections=value.data;
+      if (this.sanitaryConnections.length==0) {
+        this.toastr.error("لا يوجد توصيلات صحيه لهذا الملف")
+      }
+    }
+   })
+  }
+  getPoints(){
+    this.sanitaryConnectionService.getPoints().subscribe((res:any)=>{
+      this.points=res.data.statuses
+    })
+  }
+
 }

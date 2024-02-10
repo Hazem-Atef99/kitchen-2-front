@@ -20,4 +20,13 @@ export class SanitaryConnectionsService {
   AddSanitaryConnection(data:any){
     return this.http.post(`${this.domain}HealthRecommendations/AddHealthRecommendation`, data);
   }
+  GetSanitaryConnectionById(id:any){
+    return this.http.get(`${this.domain}HealthRecommendations/GetHealthRecommendationById?id=${id}`)
+  }
+  GetAllSanitaryConnectionsByClientAndFileNo(clientId:any, fileNo:any){
+    return this.http.get(`${this.domain}HealthRecommendations/GetHealthRecommendationByClientAndFileNo?clientId=${clientId}&fileNo=${fileNo}`)
+  }
+  getPoints(){
+    return this.http.get(`${this.domain}StatusCategory/GetStatusCategoryById/60`)
+  }
 }

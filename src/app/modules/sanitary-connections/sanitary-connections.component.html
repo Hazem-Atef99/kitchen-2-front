@@ -71,7 +71,7 @@
           <td>{{item?.notes}}</td>
           <td>{{item.tarkeebDate | date}}</td>
           <td>
-            <button routerLink="add" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }"  class="btn btn-light m-0 p-2">
+            <button routerLink="add" [queryParams]="{clientFileId: item?.clientFileId, ID: item?.id, }"  class="btn btn-light m-0 p-2">
               <i class='bx bx-edit'></i>
             </button>
           </td>
