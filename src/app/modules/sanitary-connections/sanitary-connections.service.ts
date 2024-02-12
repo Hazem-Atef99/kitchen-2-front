@@ -29,4 +29,7 @@ export class SanitaryConnectionsService {
   getPoints(){
     return this.http.get(`${this.domain}StatusCategory/GetStatusCategoryById/60`)
   }
+  updateSanitaryConnection(id:any,data:any){
+    return this.http.put(`${this.domain}HealthRecommendations/EditHealthRecommendation?id=${id}`,data)
+  }
 }

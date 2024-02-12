@@ -63,6 +63,11 @@ export class FormSanitaryConnectionsComponent implements OnInit {
         this.toastr.error("حدث خطأ")
       }})
     }else{
+      this.sanitaryConnectionService.updateSanitaryConnection(this.ID,data).subscribe({next:(res:any)=>{
+        this.toastr.success("تم التعديل")
+      },error:(err:any)=>{
+        this.toastr.error("حدث خطأ")
+      }})
     }
 
   }
