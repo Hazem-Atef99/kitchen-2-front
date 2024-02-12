@@ -23,28 +23,29 @@ export class FormUsersComponent implements OnInit {
       id:1
     }
   ]
-  roles:any=[
-    {
-      name:'يمكنه عرض جميع ملفات الزبائن',
-      id:1
-    },
-    {
-      name:'مسئول التصميم',
-      id:2
-    },
-    {
-      name:'مسئول القياس',
-      id:3
-    },
-    {
-      name:'المبيعات',
-      id:4
-    },
-    {
-      name:'المصنع',
-      id:5
-    }
-  ]
+  // roles:any=[
+  //   {
+  //     name:'يمكنه عرض جميع ملفات الزبائن',
+  //     id:1
+  //   },
+  //   {
+  //     name:'مسئول التصميم',
+  //     id:2
+  //   },
+  //   {
+  //     name:'مسئول القياس',
+  //     id:3
+  //   },
+  //   {
+  //     name:'المبيعات',
+  //     id:4
+  //   },
+  //   {
+  //     name:'المصنع',
+  //     id:5
+  //   }
+  // ]
+  roles :any []=[];
   dataToPatch: any[]=[];
   constructor(private _activatedRoute:ActivatedRoute,
               private formBuilder:FormBuilder,
@@ -55,6 +56,7 @@ export class FormUsersComponent implements OnInit {
   ngOnInit(): void {
     this.userForm=this.initUserForm();
     this.getUser();
+    this.getRoles();
   }
   getUser(){
     this.userService.GetUser(this.userId).subscribe({next:(res:any)=>{
@@ -123,5 +125,10 @@ export class FormUsersComponent implements OnInit {
   }
   }
   console.log(this.selectedOptions);
+  }
+  getRoles(){
+    this.userService.getRoles().subscribe({next:(res:any)=>{
+      this.roles=res.data;
+    }})
   }
 }

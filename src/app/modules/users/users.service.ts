@@ -8,7 +8,7 @@ export class UsersService {
   domain: string = env.apiUrl;
   constructor(private http :HttpClient) { }
   GetAllUsers(status?:any){
-    if (status) {
+    if (status||status==0) {
       return this.http.get(`${this.domain}Users/GetAllUsers?status =${status}`)
     }else{
       return this.http.get(`${this.domain}Users/GetAllUsers`)
@@ -29,4 +29,8 @@ export class UsersService {
   setNewPassword(data:any){
     return this.http.put(`${this.domain}Users/SetNewPassword`,data)
   }
+  getRoles(){
+    return this.http.get(`${this.domain}RoleTypes/GetAllRoleTypes`);
+  }
+
 }

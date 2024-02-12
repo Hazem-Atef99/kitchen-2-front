@@ -28,6 +28,8 @@ export class MainUsersComponent implements OnInit {
     this.getAllUsers()
   }
   getAllUsers(id?:any){
+    console.log('statues id',id);
+
     this.usersService.GetAllUsers(id).subscribe({next :(res:any)=>{
       this.Users=res.data
     }})
