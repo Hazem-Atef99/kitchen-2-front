@@ -27,4 +27,7 @@ export class ClientsService {
   UpdateClient(id:any,data:any){
     return this._HttpClient.put(`${this.domain}Client/UpdateClient?clientId=${id}`, data)
   }
+  GetClientByName(name:any){
+    return this._HttpClient.get<any[]>(`${this.domain}Client/GetClientByName?name=${name}`)
+  }
 }

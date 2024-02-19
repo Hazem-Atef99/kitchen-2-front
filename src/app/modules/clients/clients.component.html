@@ -15,7 +15,7 @@
 <c-card class="mb-4 py-4 px-2">
   <c-row class="my-4">
     <c-col md="4">
-      <input aria-label="default input example" cFormControl placeholder="اسم العميل" type="text" />
+      <input aria-label="default input example" cFormControl placeholder="اسم العميل" type="text" [(ngModel)]="clientName" />
     </c-col>
     <c-col md="4">
       <input aria-label="default input example" cFormControl placeholder="رقم الهاتف" type="text" />
@@ -31,7 +31,7 @@
   </c-row>
   <c-row>
     <c-col>
-      <button class="btn btn-success">
+      <button class="btn btn-success" (click)="getclientbyName()">
         <span style="color: #fff;">بحث</span>
       </button>
     </c-col>
