@@ -148,7 +148,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success" (click)="AddClientFileFollowUp()">
+          <button class="btn btn-success" [cModalToggle]="modalXl2.id" (click)="AddClientFileFollowUp()">
             اضافة
           </button>
         </div>
@@ -212,7 +212,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success" (click)="AddClientFileAttachment()">
+          <button [cModalToggle]="modalXl.id" class="btn btn-success" (click)="AddClientFileAttachment()">
             اضافة
           </button>
         </div>
@@ -280,7 +280,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success" (click)="AddFinalStatusList()">
+          <button [cModalToggle]="modalXl3.id" class="btn btn-success" (click)="AddFinalStatusList()">
             اضافة
           </button>
         </div>
@@ -497,7 +497,7 @@
         </div>
       </div>
       <div class="col-12 text-center mt-4">
-        <button class="btn btn-success" (click)="AddNotice()">
+        <button class="btn btn-success" [cModalToggle]="modalXl4.id" (click)="AddNotice()">
           اضافة
         </button>
       </div>

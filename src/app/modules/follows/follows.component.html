@@ -157,7 +157,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success" (click)="AddClientFileAttachment()">
+          <button class="btn btn-success" [cModalToggle]="modalXl.id" (click)="AddClientFileAttachment()">
             اضافة
           </button>
         </div>
