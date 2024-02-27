@@ -22,6 +22,7 @@ export class SanitaryConnectionsComponent implements OnInit {
   statusCategoryById: any;
   statusId: number = 0;
   Domain: any = environment.apiUrl;
+  visible=false;
   constructor(private sanitaryConnectionService:SanitaryConnectionsService,
               private toastr:ToastrService,
               private _QuotationsService:QuotationsService) {
@@ -55,8 +56,10 @@ export class SanitaryConnectionsComponent implements OnInit {
         this.uploadedImg = []
         this.GetAllClientFileAttachment()
         this.GetAllSanitaryConnections();
+        this.visible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.visible=true
       }
     })
   }
