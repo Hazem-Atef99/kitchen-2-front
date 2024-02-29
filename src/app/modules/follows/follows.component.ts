@@ -29,6 +29,7 @@ export class FollowsComponent implements OnInit {
   allClientFileAttachment: any[] = [];
   FilterForm!:FormGroup
   clientId: any;
+  visible=false;
   constructor(private followsService:FollowsService,
               private _QuotationsService:QuotationsService,
               private toastr:ToastrService,
@@ -165,8 +166,10 @@ return this._FormBuilder.group({
         this.uploadedImg = []
         this.GetAllClientFileAttachment()
        // this.GetShortClientFiles();
+       this.visible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.visible=true;
       }
     })
   }

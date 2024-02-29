@@ -188,10 +188,10 @@ export class ProductionRequestsComponent implements OnInit{
         this.uploadedImg = []
         this.GetAllFinalStatusClientFile()
         this.GetShortClientFiles();
-        this.attachmentsvisible=false;
+        this.statusvisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
-        this.attachmentsvisible=true;
+        this.statusvisible=true;
 
       }
     })
@@ -263,10 +263,10 @@ export class ProductionRequestsComponent implements OnInit{
         this.toastr.success(`${res.message}`);
         this.GetShortClientFiles();
         location.reload()
-        this.attachmentsvisible=false;
+        this.requestvisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
-        this.attachmentsvisible=true;
+        this.requestvisible=true;
       }
     })
   }

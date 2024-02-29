@@ -25,6 +25,8 @@ export class ReceptionReportComponent implements OnInit {
   LoadFinalStatusList: any[] = [];
   Note: String = '';
   AllFinalStatusClientFile: any[] = [];
+  attatchmentvisible=false;
+  statuesvisible=false;
   constructor(private recptionReportService:ReceptionReportService,
               private _QuotationsService:QuotationsService,
               private toastr: ToastrService,) { }
@@ -79,8 +81,10 @@ export class ReceptionReportComponent implements OnInit {
         this.uploadedImg = []
         this.GetAllClientFileAttachment()
        // this.GetShortClientFiles();
+      this.attatchmentvisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.attatchmentvisible=true;
       }
     })
   }
@@ -113,8 +117,10 @@ export class ReceptionReportComponent implements OnInit {
         this.uploadedImg = []
         this.GetAllFinalStatusClientFile()
         this.getReceptionRports()
+        this.statuesvisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.statuesvisible=true;
       }
     })
   }

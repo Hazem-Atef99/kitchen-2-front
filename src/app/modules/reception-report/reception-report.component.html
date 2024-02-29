@@ -96,7 +96,7 @@
           <td>1</td>
           <td>
             <!-- (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()"  [cModalToggle]="modalXl.id" -->
-            <button (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()"  [cModalToggle]="modalXl.id" class="btn btn-light m-0 p-2">
+            <button (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()"  (click)="attatchmentvisible=true" class="btn btn-light m-0 p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
                 <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -112,7 +112,7 @@
             </button>
             <td>
             <!-- (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" -->
-            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" class="btn btn-light m-0 p-2">
+            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="statuesvisible=true" class="btn btn-light m-0 p-2">
               {{item.finalStatus? item.finalStatus : 'لم يتم اضافة حالة'}}
             </button>
           </td>
@@ -253,10 +253,10 @@
     </div>
   </c-modal-body>
 </c-modal> -->
-<c-modal #modalXl id="modalXl" size="xl">
+<c-modal #modalXl [visible]="attatchmentvisible" id="modalXl" size="xl">
   <c-modal-header>
     <h5 cModalTitle>المرفقات</h5>
-    <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
+    <button class="mx-0" (click)="attatchmentvisible=false" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -286,7 +286,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success" [cModalToggle]="modalXl.id" (click)="AddClientFileAttachment()">
+          <button class="btn btn-success"  (click)="AddClientFileAttachment()">
             اضافة
           </button>
         </div>
@@ -327,10 +327,10 @@
     </div>
   </c-modal-body>
 </c-modal>
- <c-modal #modalXl3 id="modalXl3" size="xl">
+ <c-modal #modalXl3 [visible]="statuesvisible" id="modalXl3" size="xl">
   <c-modal-header>
     <h5 cModalTitle>الحالة النهائية</h5>
-    <button class="mx-0" [cModalToggle]="modalXl3.id" cButtonClose></button>
+    <button class="mx-0" (click)="statuesvisible=false" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -354,7 +354,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success" [cModalToggle]="modalXl3.id" (click)="AddFinalStatusList()">
+          <button class="btn btn-success"  (click)="AddFinalStatusList()">
             اضافة
           </button>
         </div>
