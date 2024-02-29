@@ -43,7 +43,10 @@ export class ProductionRequestsComponent implements OnInit{
     fileTypeId: 1,
   }
   AddReceiveNotice!: FormGroup;
-
+  followsVisible=false;
+  attachmentsvisible=false;
+  statusvisible=false;
+  requestvisible=false;
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
@@ -166,8 +169,10 @@ export class ProductionRequestsComponent implements OnInit{
         this.uploadedImg = []
         this.GetAllClientFileAttachment()
         this.GetShortClientFiles();
+        this.attachmentsvisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.attachmentsvisible=true;
       }
     })
   }
@@ -183,8 +188,11 @@ export class ProductionRequestsComponent implements OnInit{
         this.uploadedImg = []
         this.GetAllFinalStatusClientFile()
         this.GetShortClientFiles();
+        this.attachmentsvisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.attachmentsvisible=true;
+
       }
     })
   }
@@ -234,8 +242,10 @@ export class ProductionRequestsComponent implements OnInit{
         this.Note = ''
         this.GetShortClientFiles();
         this.GetAllFollowUp();
+        this.followsVisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.followsVisible=true;
       }
     })
   }
@@ -253,8 +263,10 @@ export class ProductionRequestsComponent implements OnInit{
         this.toastr.success(`${res.message}`);
         this.GetShortClientFiles();
         location.reload()
+        this.attachmentsvisible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.attachmentsvisible=true;
       }
     })
   }

@@ -72,7 +72,7 @@
           <td>{{item.creationDate | date}}</td>
           <td>{{item?.fileTypeName}}</td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" [cModalToggle]="modalXl.id" class="btn btn-light m-0 p-2">
+            <button (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" (click)="attachmentsvisible=true" class="btn btn-light m-0 p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
                 <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -81,12 +81,12 @@
             </button>
           </td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" class="btn btn-light m-0 p-2">
+            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="statusvisible=true" class="btn btn-light m-0 p-2">
               {{item.finalStatusName? item.finalStatusName : 'لم يتم اضافة حالة'}}
             </button>
           </td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetAllClientNotice(item)" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
+            <button (click)="clientFileId = item?.clientFileId;GetAllClientNotice(item)" (click)="requestvisible=true" class="btn btn-light m-0 p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
                 <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -120,10 +120,10 @@
 
 
 <!-- AddClientFileFollowUp -->
-<c-modal #modalXl2 id="modalXl2" size="xl">
+<c-modal #modalXl2 [visible]="followsVisible" id="modalXl2" size="xl">
   <c-modal-header>
     <h5 cModalTitle>المتابعات</h5>
-    <button class="mx-0" [cModalToggle]="modalXl2.id" cButtonClose></button>
+    <button class="mx-0" (click)="followsVisible=false" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -179,10 +179,10 @@
     </div>
   </c-modal-body>
 </c-modal>
-<c-modal #modalXl id="modalXl" size="xl">
+<c-modal #modalXl [visible]="attachmentsvisible" id="modalXl" size="xl">
   <c-modal-header>
     <h5 cModalTitle>المرفقات</h5>
-    <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
+    <button class="mx-0" (click)="attachmentsvisible=false" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -212,7 +212,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button [cModalToggle]="modalXl.id" class="btn btn-success" (click)="AddClientFileAttachment()">
+          <button  class="btn btn-success" (click)="AddClientFileAttachment()">
             اضافة
           </button>
         </div>
@@ -253,10 +253,10 @@
     </div>
   </c-modal-body>
 </c-modal>
-<c-modal #modalXl3 id="modalXl3" size="xl">
+<c-modal #modalXl3 [visible]="attachmentsvisible" id="modalXl3" size="xl">
   <c-modal-header>
     <h5 cModalTitle>الحالة النهائية</h5>
-    <button class="mx-0" [cModalToggle]="modalXl3.id" cButtonClose></button>
+    <button class="mx-0" (click)="attachmentsvisible=false" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -280,7 +280,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button [cModalToggle]="modalXl3.id" class="btn btn-success" (click)="AddFinalStatusList()">
+          <button  class="btn btn-success" (click)="AddFinalStatusList()">
             اضافة
           </button>
         </div>
@@ -320,10 +320,10 @@
     </div>
   </c-modal-body>
 </c-modal>
-<c-modal #modalXl4 id="modalXl4" size="xl">
+<c-modal #modalXl4 [visible]="requestvisible" id="modalXl4" size="xl">
   <c-modal-header>
     <h5 cModalTitle>محضر الاستلام</h5>
-    <button class="mx-0" [cModalToggle]="modalXl4.id" cButtonClose></button>
+    <button class="mx-0" (click)="requestvisible=false" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div [formGroup]="AddReceiveNotice">
@@ -497,7 +497,7 @@
         </div>
       </div>
       <div class="col-12 text-center mt-4">
-        <button class="btn btn-success" [cModalToggle]="modalXl4.id" (click)="AddNotice()">
+        <button class="btn btn-success"  (click)="AddNotice()">
           اضافة
         </button>
       </div>

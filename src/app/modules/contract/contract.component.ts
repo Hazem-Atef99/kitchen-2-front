@@ -42,7 +42,7 @@ export class ContractComponent implements OnInit {
     fileTypeId: 1,
   }
   AddReceiveNotice!: FormGroup;
-
+  visible=false;
   constructor(
     private _contractService: ContractService,
     private _FormBuilder: FormBuilder,
@@ -180,8 +180,10 @@ export class ContractComponent implements OnInit {
         this.uploadedImg = []
         this.GetAllFinalStatusClientFile()
         this.GetShortClientFiles();
+        this.visible=false;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.visible=true;
       }
     })
   }

@@ -65,7 +65,7 @@
           <td>{{item.creationDate | date}}</td>
           <td>{{item?.fileTypeName}}</td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" class="btn btn-light m-0 p-2">
+            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="visible=true" class="btn btn-light m-0 p-2">
               {{item.finalStatusName? item.finalStatusName : 'لم يتم اضافة حالة'}}
             </button>
           </td>
@@ -223,10 +223,10 @@
     </div>
   </c-modal-body>
 </c-modal>
-<c-modal #modalXl3 id="modalXl3" size="xl">
+<c-modal #modalXl3 [visible]="visible" id="modalXl3" size="xl">
   <c-modal-header>
     <h5 cModalTitle>الحالة النهائية</h5>
-    <button class="mx-0" [cModalToggle]="modalXl3.id" cButtonClose></button>
+    <button class="mx-0" (click)="visible=false" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -250,7 +250,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success" [cModalToggle]="modalXl3.id" (click)="AddFinalStatusList()">
+          <button class="btn btn-success"  (click)="AddFinalStatusList()">
             اضافة
           </button>
         </div>
