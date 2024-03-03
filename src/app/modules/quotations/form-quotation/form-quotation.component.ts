@@ -29,6 +29,7 @@ export class FormQuotationComponent implements OnInit {
   TopCount: number = 0;
   clientsForm!:FormGroup;
   mobile:string="";
+  clientFormvisible=false;
   ListOfItems: any = [
     {
       isCount: true,
@@ -178,18 +179,18 @@ export class FormQuotationComponent implements OnInit {
       name: 'المطابخ',
       id: 1
     },
-    {
-      name: 'الابواب',
-      id: 2
-    },
-    {
-      name: 'خزائن الحائط',
-      id: 4
-    },
-    {
-      name: 'الاعمال الخشبية',
-      id: 6
-    },
+    // {
+    //   name: 'الابواب',
+    //   id: 2
+    // },
+    // {
+    //   name: 'خزائن الحائط',
+    //   id: 4
+    // },
+    // {
+    //   name: 'الاعمال الخشبية',
+    //   id: 6
+    // },
   ]
   loadPriceOffer: any;
   UnitsItemsbyCategory: any;
@@ -254,8 +255,10 @@ export class FormQuotationComponent implements OnInit {
      this._ClientsService.AddClient(this.clientsForm.value).subscribe({next:(res:any)=>{
        this.toastr.success("تم اضافة الزبون");
        this.GetAllClients();
+       this.clientFormvisible=false;
      },error:(err=>{
        this.toastr.error("حدث خطأ");
+       this.clientFormvisible=true;
      })});
 
 
@@ -263,12 +266,12 @@ export class FormQuotationComponent implements OnInit {
  initClientForm():FormGroup{
   return this._FormBuilder.group({
 
-    clientName: ['',],
-    email: ['',],
+    clientName: ['',Validators.required],
+    email: ['',Validators.required],
     fax: ['',],
-    mobile: ['',],
+    mobile: ['',Validators.required],
     tel1: ['',],
-    clientAddress: ['',]
+    clientAddress: ['',Validators.required]
   });
 }
   GetClientFileById(id: number) {

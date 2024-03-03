@@ -37,11 +37,12 @@
                                        bindLabel="clientName"
                                        bindValue="clientId"
                                        placeholder="اختر الزبون"
-                                       formControlName="clientId">
+                                       formControlName="clientId"
+                                       [readonly]="clientFileId||clientFileId==0?true:false">
                             </ng-select>
                         </div>
                         <div class="col-4 my-4">
-                          <button class="btn btn-success" [cModalToggle]="modalXl.id">
+                          <button class="btn btn-success" (click)="clientFormvisible=true">
                             اضافة زبون جديد
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                                 viewBox="0 0 16 16">
@@ -349,10 +350,10 @@
     </form>
 
 </c-card>
-<c-modal #modalXl id="modalXl" size="xl">
+<c-modal #modalXl [visible]="clientFormvisible" id="modalXl" size="xl">
 <c-modal-header>
   <h5 cModalTitle>اضافة زبون جديد</h5>
-  <button class="btn btn-success" (click)="addClient()">
+  <button class="btn btn-success" [disabled]="clientsForm.invalid" (click)="addClient()">
       اضافه
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
          viewBox="0 0 16 16">
@@ -360,7 +361,7 @@
             d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
     </svg>
   </button>
-  <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
+  <button class="mx-0" (click)="clientFormvisible=false" cButtonClose></button>
 </c-modal-header>
 <c-modal-body>
   <form [formGroup]="clientsForm">
