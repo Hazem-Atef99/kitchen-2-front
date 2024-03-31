@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
     private _LoginService: LoginService,
     private fb: FormBuilder,
     private _Router: Router,
+    private toastr:ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
       },error:(err:any) =>{
         this.loading = false;
         this.errorsLogin = err.errors;
+        this.toastr.error(this.errorsLogin);
       }
     })
   }
