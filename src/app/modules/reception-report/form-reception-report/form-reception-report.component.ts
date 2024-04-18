@@ -21,6 +21,18 @@ export class FormReceptionReportComponent {
   allClients: DataClients[] = [];
   selectedOptions: any[] = [];
   dataToPatch:any[]=[];
+
+  AMorPM=[
+    {
+      name:'AM',
+      id:1
+    },
+    {
+      name:'PM',
+      id:2
+    }
+
+  ];
   clientFileTypes: any = [
     {
       name: 'المطابخ',
@@ -44,7 +56,7 @@ export class FormReceptionReportComponent {
   MyDevices: any[]=[];
   users: any;
   Alldevices: any;
-
+  actionByHour=0;
   constructor(private _FormBuilder: FormBuilder,
               private recptionReportService:ReceptionReportService,
               private _ClientsService: ClientsService,
@@ -74,7 +86,17 @@ export class FormReceptionReportComponent {
       });
     }
   }
+  getActionByHour(){
+    this.actionByHour=parseInt(this.AddClientFileForm.get('actionByHour')?.value);
+  }
+  change(event:any){
+    this.AMorPM=event;
+    console.log(event);
+    //this.actionByHour=parseInt(this.AddClientFileForm.get('actionByHour')?.value);
+    this.actionByHour=event==2?this.actionByHour+12:this.actionByHour;
+    console.log('action by hour',parseInt(this.AddClientFileForm.get('actionByHour')?.value));
 
+  }
   AddClientFile(){
     let val1, val2
     val1 = this.AddClientFileForm.controls['measurmentId']?.value
@@ -105,11 +127,13 @@ export class FormReceptionReportComponent {
     })
     console.log(this.AddClientFileForm.value);
 
+    this.AddClientFileForm.get('actionByHour')?.patchValue(this.actionByHour);
     this.recptionReportService.AddUpdatereceptionReport(this.AddClientFileForm.value).subscribe(res=>{
 this.toastr.success("added")
 this.getReceptionReportById(this.clientFileId)
     },err=>{
       this.toastr.error("not")
+      this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AMorPM')?.value==2?this.actionByHour-12:this.actionByHour);
     })
 
 
@@ -170,7 +194,8 @@ this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
       kitchenLocation: [null, [Validators.required]],
       devices: this._FormBuilder.array([]),
       selectedDevice:[null, [Validators.required]],
-      salesId:[null,Validators.required]
+      salesId:[null,Validators.required],
+      AMorPM:['AM',Validators.required]
 
 })
 }

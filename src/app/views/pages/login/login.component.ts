@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       },error:(err:any) =>{
         this.loading = false;
-        this.errorsLogin = err.errors;
-        this.toastr.error(this.errorsLogin);
+        this.errorsLogin = err.message;
+        this.toastr.error("Username or password is not correct");
       }
     })
   }

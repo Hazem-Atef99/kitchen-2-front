@@ -16,19 +16,19 @@
 </c-card>
 <c-card class="mb-4 py-4">
   <c-row class="p-2">
-    <c-col>
+    <!-- <c-col>
       <c-form-check>
         <input cFormCheckInput  (click)="filter($event.target)" type="radio" name="fileTypeId" value="null" />
         <label cFormCheckLabel>الكل</label>
       </c-form-check>
-    </c-col>
+    </c-col> -->
     <c-col>
       <c-form-check>
         <input cFormCheckInput [checked]="true" (click)="filter($event.target)" type="radio" name="fileTypeId" value="1" />
         <label cFormCheckLabel>المطابخ</label>
       </c-form-check>
     </c-col>
-    <c-col>
+    <!-- <c-col>
       <c-form-check>
         <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="2" />
         <label cFormCheckLabel>الابواب</label>
@@ -45,7 +45,7 @@
         <input cFormCheckInput (click)="filter($event.target)" type="radio" name="fileTypeId" value="6" />
         <label cFormCheckLabel>الاعمال الخشبية</label>
       </c-form-check>
-    </c-col>
+    </c-col> -->
   </c-row>
 </c-card>
 <c-col xs="12">

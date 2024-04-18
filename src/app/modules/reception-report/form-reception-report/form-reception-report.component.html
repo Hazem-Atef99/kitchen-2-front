@@ -129,10 +129,19 @@
                 <input aria-label="default input example" cFormControl
                        formControlName="designerDate" type="date"/>
               </div>
-              <div class="col-2">
+              <div class="col-2 row">
                 <label>موعد القياس : الساعه</label>
-                <input aria-label="default input example" cFormControl formControlName="actionByHour"
-                    type="number" />
+                <div class="col-6 p-0">
+                  <input aria-label="default input example" cFormControl formControlName="actionByHour"(ngModelChange)="getActionByHour()"
+                      type="number" />
+                </div>
+                <div class="col-6 p-0">
+                  <ng-select [readonly]="!actionByHour" [items]="AMorPM" bindLabel="name" bindValue="id" formControlName="AMorPM" (ngModelChange)="change($event)">
+
+                </ng-select>
+                </div>
+
+
             </div>
             <!-- <div class="col-2">
               <label>الدقيقه</label>

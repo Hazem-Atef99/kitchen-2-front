@@ -27,18 +27,18 @@ export class ContractFormComponent implements OnInit {
       name: 'المطابخ',
       id: 1
     },
-    {
-      name: 'الابواب',
-      id: 2
-    },
-    {
-      name: 'خزائن الحائط',
-      id: 4
-    },
-    {
-      name: 'الاعمال الخشبية',
-      id: 6
-    },
+    // {
+    //   name: 'الابواب',
+    //   id: 2
+    // },
+    // {
+    //   name: 'خزائن الحائط',
+    //   id: 4
+    // },
+    // {
+    //   name: 'الاعمال الخشبية',
+    //   id: 6
+    // },
   ]
   loadPriceOffer: any;
   loadPriceOfferList: any[] = [];
