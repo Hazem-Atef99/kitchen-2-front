@@ -470,10 +470,17 @@
 <!--                      <input aria-label="default input example" cFormControl-->
 <!--                             type="number" formControlName="actionByHour"/>-->
 <!--                    </div>-->
-                    <div class="d-flex">
+                    <div class="d-flex col-6">
                       <label>الساعة</label>
                       <input aria-label="default input example" cFormControl
                              type="number" formControlName="actionByHour"/>
+                    </div>
+                    <div class="col-6">
+                      <ng-select [items]="AmOrPm"
+                             bindLabel="name"
+                             bindValue="id"
+                             formControlName="AmORPm">
+                  </ng-select>
                     </div>
                   </div>
                 </div>
@@ -492,12 +499,12 @@
               <div class="row mb-4 ms-2">
                 <label class="col-2">الأجهزة الموجودة</label>
                 <ng-select [items]="DevicesData"
-                           class="col-4"
-                           bindLabel="name"
-                           bindValue="id"
-                           placeholder="اختر الجهاز"
-                           formControlName="selectedDevice">
-                </ng-select>
+                class="col-4"
+                bindLabel="defaultDesc"
+                bindValue="statusId"
+                placeholder="اختر الجهاز"
+                formControlName="selectedDevice">
+     </ng-select>
                 <div class="col-2 text-center">
                   <button class="btn btn-success" (click)="AddDevice()">
                     اضافة
@@ -523,7 +530,7 @@
                                 <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
                               </svg>
                             </div>
-                            <p class="text-center mt-2">{{item.name}}</p>
+                            <p class="text-center mt-2">{{item.name?item.name:item.defaultDesc}}</p>
                           </div>
                         </div>
                       </div>

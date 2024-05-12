@@ -11,26 +11,26 @@ export class ProductionRequestsService {
 
   constructor(private _HttpClient: HttpClient) { }
 
-  GetShortClientFiles(query:any): Observable<any> {
-    let value:any = {}
+  GetShortClientFiles(query: any): Observable<any> {
+    let value: any = {}
     for (const key in query) {
       if (query[key] != null) {
         value[key] = query[key]
       }
     }
-    return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles` , {params:value})
+    return this._HttpClient.get(`${this.domain}ClientFile/GetShortClientFiles`, { params: value })
   }
-  AddClientFile(body:FormGroup): Observable<any> {
-    return this._HttpClient.post(`${this.domain}ClientFile/AddClientFile`,body)
+  AddClientFile(body: FormGroup): Observable<any> {
+    return this._HttpClient.post(`${this.domain}ClientFile/AddClientFile`, body)
   }
-  EditClientFile(body:FormGroup, id: number): Observable<any> {
-    return this._HttpClient.post(`${this.domain}ClientFile/UpdateClientFile/${id}`,body)
+  EditClientFile(body: FormGroup, id: number): Observable<any> {
+    return this._HttpClient.post(`${this.domain}ClientFile/UpdateClientFile/${id}`, body)
   }
-  AddProductionRequests(body:FormGroup): Observable<any> {
-    return this._HttpClient.post(`${this.domain}ClientFile/AddProductionRequests`,body)
+  AddProductionRequests(body: FormGroup): Observable<any> {
+    return this._HttpClient.post(`${this.domain}ClientFile/AddProductionRequests`, body)
   }
-  EditProductionRequests(body:FormGroup, id: number): Observable<any> {
-    return this._HttpClient.put(`${this.domain}ClientFile/EditProductionRequests/${id}`,body)
+  EditProductionRequests(body: FormGroup, id: number): Observable<any> {
+    return this._HttpClient.put(`${this.domain}ClientFile/EditProductionRequests/${id}`, body)
   }
   GetStatusCategoryById(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)
@@ -47,58 +47,61 @@ export class ProductionRequestsService {
   GetUnitsItemsbyCategory(): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetUnitsItemsbyCategory`)
   }
-  AddClientFileAttachment(value:any): Observable<any> {
+  AddClientFileAttachment(value: any): Observable<any> {
     const formData = new FormData();
     for (const key in value) {
       if (value[key]) {
         formData.append(key, value[key])
       }
     }
-    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
+    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileAttachment?clientFileId=${value.clientFileId}`, formData)
   }
-  AddFinalStatusListApi(value:any): Observable<any> {
-    return this._HttpClient.put(`${this.domain}ClientFile/ChangeFinalStatusClientFile`,value)
+  AddFinalStatusListApi(value: any): Observable<any> {
+    return this._HttpClient.put(`${this.domain}ClientFile/ChangeFinalStatusClientFile`, value)
   }
-  GetAllClientFileAttachment(data:any): Observable<any> {
-    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllClientFileAttachment`, {params: data})
+  GetAllClientFileAttachment(data: any): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllClientFileAttachment`, { params: data })
   }
-  AddClientFileFollowUp(value:any): Observable<any> {
+  AddClientFileFollowUp(value: any): Observable<any> {
     const formData = new FormData();
     for (const key in value) {
       if (value[key]) {
         formData.append(key, value[key])
       }
     }
-    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileFollowUp?clientFileId=${value.clientFileId}`,formData)
+    return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileFollowUp?clientFileId=${value.clientFileId}`, formData)
   }
-  AddNotices(value:any): Observable<any> {
-    return this._HttpClient.put(`${this.domain}ClientFile/AddPreparingReception?clientFileId=${value.clientFileId}`,value)
+  AddNotices(value: any): Observable<any> {
+    return this._HttpClient.put(`${this.domain}ClientFile/AddPreparingReception?clientFileId=${value.clientFileId}`, value)
   }
-  GetAllFollowUp(clientFileId:number): Observable<any> {
+  GetAllFollowUp(clientFileId: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFileAttachment/GetAllFollowUp?clientFileId=${clientFileId}`)
   }
-  AllFinalStatusClientFile(clientFileId:number): Observable<any> {
+  AllFinalStatusClientFile(clientFileId: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFile/GetAllFinalStatusClientFile?clientFileId=${clientFileId}`)
   }
-  LoadFinalStatusList(itemType :number): Observable<any> {
+  LoadFinalStatusList(itemType: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/LoadFinalStatusList/${itemType}`)
   }
-  AddShortage(data:any){
+  AddShortage(data: any) {
     return this._HttpClient.post(`${this.domain}ClientShortage/AddClientShortage`, data);
   }
-  GetClientShortage(clientFileId:any){
+  GetClientShortage(clientFileId: any) {
     return this._HttpClient.get(`${this.domain}ClientShortage/GetAllClientShortage?clientFileId=${clientFileId}`)
   }
-  GetClientShortagedetails(id:any){
+  GetClientShortagedetails(id: any) {
     return this._HttpClient.get(`${this.domain}ClientShortage/GetClientShortageDevices?clientShortageId=${id}`)
   }
-  AddClientShortagedetails(data:any){
-    return this._HttpClient.post(`${this.domain}ClientShortage/AddClientShortageDevices`,data)
+  AddClientShortagedetails(data: any) {
+    return this._HttpClient.post(`${this.domain}ClientShortage/AddClientShortageDevices`, data)
   }
-  deleteClientShortage(id:any){
+  deleteClientShortage(id: any) {
     return this._HttpClient.delete(`${this.domain}ClientShortage/DeleteClientShortage?id=${id}`)
   }
-  deleteClientShortageDetail(id:any){
+  deleteClientShortageDetail(id: any) {
     return this._HttpClient.delete(`${this.domain}ClientShortage/DeleteClientShortageDevices?id=${id}`)
+  }
+  getReciveNotce(id: any) {
+    return this._HttpClient.get(`${this.domain}ClientFile/GetPreparingReception?clientFileId=${id}`);
   }
 }

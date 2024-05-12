@@ -21,18 +21,10 @@ export class FormReceptionReportComponent {
   allClients: DataClients[] = [];
   selectedOptions: any[] = [];
   dataToPatch:any[]=[];
-
-  AMorPM=[
-    {
-      name:'AM',
-      id:1
-    },
-    {
-      name:'PM',
-      id:2
-    }
-
-  ];
+  AmOrPm:any=[
+    {name:"AM" , id:0},
+    {name:"PM" , id:1}
+  ]
   clientFileTypes: any = [
     {
       name: 'المطابخ',
@@ -56,7 +48,6 @@ export class FormReceptionReportComponent {
   MyDevices: any[]=[];
   users: any;
   Alldevices: any;
-  actionByHour=0;
   constructor(private _FormBuilder: FormBuilder,
               private recptionReportService:ReceptionReportService,
               private _ClientsService: ClientsService,
@@ -68,6 +59,7 @@ export class FormReceptionReportComponent {
     this.clientForm=this.initClientForm()
   }
   ngOnInit(): void {
+   // this.AddClientFileForm.get('AmORPm')?.patchValue(0);
     let fileTypeId: any = this._activatedRoute.snapshot.queryParamMap.get('fileTypeId')
     console.log(this.clientFileId);
 
@@ -86,18 +78,11 @@ export class FormReceptionReportComponent {
       });
     }
   }
-  getActionByHour(){
-    this.actionByHour=parseInt(this.AddClientFileForm.get('actionByHour')?.value);
-  }
-  change(event:any){
-    this.AMorPM=event;
-    console.log(event);
-    //this.actionByHour=parseInt(this.AddClientFileForm.get('actionByHour')?.value);
-    this.actionByHour=event==2?this.actionByHour+12:this.actionByHour;
-    console.log('action by hour',parseInt(this.AddClientFileForm.get('actionByHour')?.value));
 
-  }
   AddClientFile(){
+    this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AmORPm')?.value==0?this.AddClientFileForm.get('actionByHour')?.value:this.AddClientFileForm.get('actionByHour')?.value+12)
+    let measermentID=this.AddClientFileForm.get('measurmentid')?.value
+    this.AddClientFileForm.get('measurmentid')?.patchValue(measermentID.toString());
     let val1, val2
     val1 = this.AddClientFileForm.controls['measurmentId']?.value
     val2 = val1.toString()
@@ -127,13 +112,13 @@ export class FormReceptionReportComponent {
     })
     console.log(this.AddClientFileForm.value);
 
-    this.AddClientFileForm.get('actionByHour')?.patchValue(this.actionByHour);
     this.recptionReportService.AddUpdatereceptionReport(this.AddClientFileForm.value).subscribe(res=>{
 this.toastr.success("added")
 this.getReceptionReportById(this.clientFileId)
     },err=>{
       this.toastr.error("not")
-      this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AMorPM')?.value==2?this.actionByHour-12:this.actionByHour);
+      this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AmORPm')?.value==0?this.AddClientFileForm.get('actionByHour')?.value:this.AddClientFileForm.get('actionByHour')?.value-12)
+
     })
 
 
@@ -194,8 +179,8 @@ this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
       kitchenLocation: [null, [Validators.required]],
       devices: this._FormBuilder.array([]),
       selectedDevice:[null, [Validators.required]],
-      salesId:[null,Validators.required],
-      AMorPM:['AM',Validators.required]
+      salesId:[null,[Validators.required]],
+      AmORPm:[0,[Validators.required]]
 
 })
 }
@@ -266,7 +251,7 @@ getReceptionReportById(clientFileId:any){
 
     this.AddClientFileForm.patchValue({
       // clientId:receptionReport
-      actionByHour:receptionReport.actionByHour,
+      actionByHour:res.data.actionByHour>12?res.data.actionByHour-12:res.data.actionByHour,
       designerId:receptionReport.designerId,
       designerDate:this.handleDate(receptionReport.designerDate),
       measurmentId:receptionReport.measurmentid,
@@ -276,7 +261,7 @@ getReceptionReportById(clientFileId:any){
       fileDate:this.handleDate(receptionReport.fileDate),
       kitchenModelId:receptionReport.kitchecnModelId,
       clientNeed:receptionReport.clientNeed,
-
+      AmORPm:res.data.actionByHour>12?1:0,
 
     })
     this.clientForm.patchValue({

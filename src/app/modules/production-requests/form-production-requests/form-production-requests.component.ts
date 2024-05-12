@@ -93,15 +93,17 @@ export class FormProductionRequestsComponent {
   setClient(e: any){
     if (this.fileTypeId) {
       let client ;
-      client = this.allClients.filter((ele)=> ele.clientId == e)[0]
+      client = e;
+      console.log("client",client);
+      console.log("clients",this.allClients)
       this.AddProductionRequestsForm.patchValue({
         phoneNumber: client.mobile,
-        address: client.email,
+        address: client.clientAddress,
       })
     } else {
       this.AddProductionRequestsForm.patchValue({
         phoneNumber: e.mobile,
-        address: e.email,
+        address: e.clientAddress,
       })
     }
 

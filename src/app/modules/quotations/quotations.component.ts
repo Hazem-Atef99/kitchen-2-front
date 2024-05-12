@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import value from "*.json";
 import {environment} from "../../../environments/environment";
+import { ContractService } from '../contract/contract.service';
+import { ProductionRequestsService } from '../production-requests/production-requests.service';
 
 @Component({
   selector: 'app-quotations',
@@ -19,11 +21,10 @@ export class QuotationsComponent implements OnInit {
   statusCategoryById2: any;
   allUsersData: any;
   cities: any;
-  DevicesData: any= [
-    {name: 'ثلاجة',id: 1 },
-    {name: 'غسالة',id: 2 },
-    {name: 'ثلاجة',id: 3 },
-    {name: 'بوتجاز',id: 4 },
+  DevicesData: any[]= []
+  AmOrPm:any=[
+    {name:"AM" , id:0},
+    {name:"PM" , id:1}
   ]
   clientData: any;
   selectedCity: any;
@@ -43,11 +44,13 @@ export class QuotationsComponent implements OnInit {
     fileTypeId: 1,
   }
   AddReceiveNotice!: FormGroup;
-
+  dataToPatch:any[]=[];
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
     private toastr: ToastrService,
+    private _productionRequestsService:ProductionRequestsService,
+    private _ConttactService:ContractService
   ) {
     this.AddReceiveNotice = this.initReceiveNoticeForm();
   }
@@ -66,6 +69,7 @@ export class QuotationsComponent implements OnInit {
       kitchenLocation: [null, [Validators.required]],///
       salesId: [null, [Validators.required]],//
       selectedDevice: [null, [Validators.required]],//
+      AmORPm:[0,[Validators.required]],
       devices: [[], [Validators.required]]
     })
   }
@@ -89,7 +93,58 @@ export class QuotationsComponent implements OnInit {
     this.GetStatusCategoryById()
     console.log(this.device)
   }
+  getDevices(){
+    this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
+      this.DevicesData=res.data.statuses
+      console.log(this.DevicesData);
 
+    })
+  }
+  getReciveNotice(id:any){
+    this._productionRequestsService.getReciveNotce(id).subscribe({
+      next:(res:any)=>{
+          console.log(res.data);
+
+        this.dataToPatch = res.data.devices;
+        this.dataToPatch.forEach(device=>{
+          this.MyDevices.push({id:device.id,name:device.name})
+          this.devices?.value.push(
+            {deviceId:device.id })
+        })
+        //statusCategoryById2.log("dataToPatchk",this.MyDevices);
+        this.AddReceiveNotice.patchValue({
+          salesId : res.data.salesId,
+          fileDate:this.dateformat(res.data.fileDate),
+          kitchenLocation:res.data.kitchenLocation,
+          kitchenModelId:res.data.kitchecnModelId,
+          measurmentid:res.data.measurmentid,
+          measurmentDate:this.dateformat(res.data.measurmentDate),
+          designerId:res.data.designerId,
+          designerDate:this.dateformat(res.data.designerDate),
+          actionByHour:res.data.actionByHour>12?res.data.actionByHour-12:res.data.actionByHour,
+          AmORPm:res.data.actionByHour>12?1:0,
+          clientNeed:res.data.clientNeed
+
+        })
+
+
+      },
+
+    })
+    this.getDevices()
+  }
+  dateformat(indate :any){
+    let year, month, day;
+    let contractDate = new Date(indate).toLocaleString().split(',')[0]
+    year = contractDate.split('/')[2]
+    month = contractDate.split('/')[0]
+    day = contractDate.split('/')[1]
+    let newContractDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
+
+    console.log(newContractDate);
+
+    return newContractDate;
+  }
   GetShortClientFiles() {
     this._QuotationsService.GetShortClientFiles(this.query).subscribe({
       next: (res: any) => {
@@ -200,13 +255,16 @@ export class QuotationsComponent implements OnInit {
   }
   GetAllClientNotice(data: any) {
     this.clientData = data.client
+    console.log('Data',data);
+
     this.GetAllUsers()
     this.GetStatusCategoryById2()
+    this.getReciveNotice(data.clientFileId)
   }
 
   AddDevice() {
     this.MyDevices.push(
-      this.DevicesData.filter((ele: any) => ele.id === this.AddReceiveNotice.get('selectedDevice')?.value)[0]
+      this.DevicesData.filter((ele: any) => ele.statusId === this.AddReceiveNotice.get('selectedDevice')?.value)[0]
     )
     console.log(this.MyDevices)
     this.devices?.value.push(
@@ -244,15 +302,23 @@ export class QuotationsComponent implements OnInit {
     return this.devices?.get('deviceId')?.value
   }
   AddNotice() {
+    this.AddReceiveNotice.get('actionByHour')?.patchValue(this.AddReceiveNotice.get('AmORPm')?.value==0?this.AddReceiveNotice.get('actionByHour')?.value:this.AddReceiveNotice.get('actionByHour')?.value+12)
+    let measermentID=this.AddReceiveNotice.get('measurmentid')?.value
+    this.AddReceiveNotice.get('measurmentid')?.patchValue(measermentID.toString());
+
     let value: any = this.AddReceiveNotice.value;
+
     value['clientFileId'] = this.clientFileId
+    console.log("test",value)
     this._QuotationsService.AddNotices(value).subscribe({
       next: (res: any) => {
         this.toastr.success(`${res.message}`);
         this.GetShortClientFiles();
-        location.reload()
+        //location.reload()
+        this.AddReceiveNotice.reset();
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
+        this.AddReceiveNotice.get('actionByHour')?.patchValue(this.AddReceiveNotice.get('AmORPm')?.value==0?this.AddReceiveNotice.get('actionByHour')?.value:this.AddReceiveNotice.get('actionByHour')?.value-12)
       }
     })
   }
