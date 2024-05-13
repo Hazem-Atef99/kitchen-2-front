@@ -247,7 +247,7 @@ export class FormProductionRequestsComponent {
       this._productionRequestsService.EditProductionRequests(this.AddProductionRequestsForm.value,  this.clientFileId).subscribe({
         next: (res: any) => {
           this.toastr.success(`${res.message}`);
-          // this._Router.navigateByUrl('/production-requests')
+          this._Router.navigateByUrl('/production-requests')
         }, error: (err: any) => {
           this.toastr.error(`${err.message}`);
         }

@@ -71,7 +71,7 @@
             <ng-container formArrayName="items">
               <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
                 <ng-container [formGroupName]="i">
-                  <div class="col-md-4 mb-3">
+                  <div class="col-md-4 mb-3" *ngIf="loadPriceOfferList[i]?.defaultDesc!='Color'" >
                     <label>{{loadPriceOfferList[i]?.defaultDesc}}</label>
                     <ng-select [items]="loadPriceOffer[loadPriceOfferList[i]?.key]?.statuses"
                                bindLabel="description"
@@ -80,6 +80,10 @@
                                formControlName="itemId">
                     </ng-select>
                   </div>
+                    <div class="col-md-4 mb-3" *ngIf="loadPriceOfferList[i]?.defaultDesc=='Color'" >
+                      <label>{{loadPriceOfferList[i]?.defaultDesc}}</label>
+                      <input type="text" class="form-control" formControlName="itemId" name="color">
+                    </div>
                 </ng-container>
               </ng-container>
             </ng-container>

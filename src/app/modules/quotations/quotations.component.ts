@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {QuotationsService} from './quotations.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import value from "*.json";
 import {environment} from "../../../environments/environment";
@@ -45,6 +45,8 @@ export class QuotationsComponent implements OnInit {
   }
   AddReceiveNotice!: FormGroup;
   dataToPatch:any[]=[];
+  selectedOptions: any[] = [];
+  Alldevices: any;
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
@@ -132,6 +134,24 @@ export class QuotationsComponent implements OnInit {
 
     })
     this.getDevices()
+  }
+  selectOption(event:any,option:any){
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      // Add the option to the selectedOptions array
+      if (this.selectedOptions.indexOf(option.statusId) === -1) {
+        this.selectedOptions.push(option.statusId);
+      }
+    } else {
+      // Remove the option from the selectedOptions array
+      const index = this.selectedOptions.indexOf(option.statusId);
+      if (index !== -1) {
+        this.selectedOptions.splice(index, 1);
+
+  }
+  }
+  console.log(this.selectedOptions);
   }
   dateformat(indate :any){
     let year, month, day;
@@ -224,6 +244,9 @@ export class QuotationsComponent implements OnInit {
       }
     })
   }
+  isSelected(statusId: number): boolean {
+    return this.selectedOptions.includes(statusId);
+  }
   AddFinalStatusList() {
     let value: any = {};
     value['clientFileId'] = this.clientFileId;
@@ -310,6 +333,16 @@ export class QuotationsComponent implements OnInit {
 
     value['clientFileId'] = this.clientFileId
     console.log("test",value)
+    const devicesArray = this.AddReceiveNotice.get('devices') as FormArray;
+
+    this.selectedOptions.forEach(device=>{
+
+      devicesArray.push(
+        this._FormBuilder.group({
+          deviceId: [device, Validators.required],
+        })
+      )
+    })
     this._QuotationsService.AddNotices(value).subscribe({
       next: (res: any) => {
         this.toastr.success(`${res.message}`);

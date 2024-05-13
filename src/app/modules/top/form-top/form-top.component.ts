@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientsService } from '../../clients/clients.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Clients } from '../../clients/modal/clients';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TopService } from '../top.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -32,7 +32,8 @@ export class FormTopComponent implements OnInit {
               private _FormBuilder: FormBuilder,
               private _activatedRoute:ActivatedRoute,
               private toastr: ToastrService,
-              private topService:TopService ){
+              private topService:TopService ,
+              private _Router:Router){
     this.clientForm=this.initClientForm()
     this.AddTopForm=this.initTopForm()
     this.deviceForm=this.initDeciveForm()
@@ -61,12 +62,14 @@ export class FormTopComponent implements OnInit {
     if (this.detailId) {
       this.topService.UpdateTop(this.detailId,formData).subscribe(res=>{
         this.toastr.success("added")
+        this._Router.navigateByUrl('/top')
       },err=>{
         this.toastr.error("not")
       })
     }else{
       this.topService.AddTop(formData).subscribe(res=>{
         this.toastr.success("added")
+        this._Router.navigateByUrl('/top')
       },err=>{
         this.toastr.error("not")
       })

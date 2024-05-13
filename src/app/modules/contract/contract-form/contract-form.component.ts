@@ -1,3 +1,4 @@
+import { AccordionModule } from '@coreui/angular';
 import {Component, OnInit, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ContractService} from '../contract.service';
@@ -145,6 +146,13 @@ export class ContractFormComponent implements OnInit {
 
   }
   addContract() {
+    for (let i = 0; i < this.AddClientFileForm.value.items.length; i++) {
+
+      if (this.AddClientFileForm.value.items[i].itemId==null){
+          this.AddClientFileForm.value.items.shift(this.AddClientFileForm.value.items[i].itemId)
+      }
+    }
+
     if (!this.clientFileId) {
       this._contractService.AddContract(this.AddClientFileForm.value).subscribe({
         next: (res: any) => {
@@ -158,9 +166,10 @@ export class ContractFormComponent implements OnInit {
       this._contractService.EditClientFile(this.AddClientFileForm.value, this.clientFileId).subscribe({
         next: (res: any) => {
           this.toastr.success(`${res.message}`);
-          // this._Router.navigateByUrl('/contract')
+           this._Router.navigateByUrl('/contract')
         }, error: (err: any) => {
           this.toastr.error(`${err.message}`);
+         // this._Router.navigateByUrl('/contract')
         }
       })
     }

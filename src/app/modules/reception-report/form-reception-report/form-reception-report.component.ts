@@ -4,7 +4,7 @@ import { Clients, DataClients } from '../../clients/modal/clients';
 import { ClientsService } from '../../clients/clients.service';
 import { ToastrService } from 'ngx-toastr';
 import { ContractService } from '../../contract/contract.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReceptionReportService } from '../reception-report.service';
 import { take } from 'rxjs';
 
@@ -52,6 +52,7 @@ export class FormReceptionReportComponent {
               private recptionReportService:ReceptionReportService,
               private _ClientsService: ClientsService,
               private toastr: ToastrService,
+              private _Router:Router,
               private _activatedRoute: ActivatedRoute,
               private _ConttactService:ContractService) {
                 this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
@@ -115,10 +116,10 @@ export class FormReceptionReportComponent {
     this.recptionReportService.AddUpdatereceptionReport(this.AddClientFileForm.value).subscribe(res=>{
 this.toastr.success("added")
 this.getReceptionReportById(this.clientFileId)
+this._Router.navigateByUrl('/reception-report')
     },err=>{
       this.toastr.error("not")
       this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AmORPm')?.value==0?this.AddClientFileForm.get('actionByHour')?.value:this.AddClientFileForm.get('actionByHour')?.value-12)
-
     })
 
 
@@ -223,7 +224,7 @@ AddNotice() {
     next: (res: any) => {
       this.toastr.success(`${res.message}`);
 
-      location.reload()
+     // location.reload()
     }, error: (err: any) => {
       this.toastr.error(`${err.message}`);
     }

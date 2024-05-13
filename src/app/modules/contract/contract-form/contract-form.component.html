@@ -133,7 +133,7 @@
               <ng-container formArrayName="items">
                 <ng-container *ngFor="let item of itemsFormArray.controls;let i = index">
                   <ng-container [formGroupName]="i">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3" >
                       <label>{{loadPriceOfferList[i]?.defaultDesc}}</label>
                       <ng-select [items]="loadPriceOffer[loadPriceOfferList[i]?.key]?.statuses"
                                  bindLabel="description"

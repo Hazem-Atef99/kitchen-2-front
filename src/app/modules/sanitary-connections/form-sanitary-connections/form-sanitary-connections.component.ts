@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientsService } from '../../clients/clients.service';
 import { TopService } from '../../top/top.service';
 import { Clients } from '../../clients/modal/clients';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../users/users.service';
 import { SanitaryConnectionsService } from '../sanitary-connections.service';
 import { ToastrService } from 'ngx-toastr';
@@ -29,6 +29,7 @@ export class FormSanitaryConnectionsComponent implements OnInit {
               private _ClientsService:ClientsService,
               private topService:TopService,
               private _activatedRoute:ActivatedRoute,
+              private _Router:Router,
               private sanitaryConnectionService:SanitaryConnectionsService,
               private toastr:ToastrService) {
                 this.AddSanitaryConnectionsForm=this.initSanitaryConnectionsForm();
@@ -59,12 +60,15 @@ export class FormSanitaryConnectionsComponent implements OnInit {
 
       this.sanitaryConnectionService.AddSanitaryConnection(data).subscribe({next:(res:any)=>{
         this.toastr.success("تم الاضافة")
+        this._Router.navigateByUrl('/reception-report')
       },error:(err:any)=>{
         this.toastr.error("حدث خطأ")
       }})
     }else{
       this.sanitaryConnectionService.updateSanitaryConnection(this.ID,data).subscribe({next:(res:any)=>{
         this.toastr.success("تم التعديل")
+        this._Router.navigateByUrl('/reception-report')
+
       },error:(err:any)=>{
         this.toastr.error("حدث خطأ")
       }})
