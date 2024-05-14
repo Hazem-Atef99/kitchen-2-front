@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {QuotationsService} from '../quotations/quotations.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import value from "*.json";
 import {environment} from "../../../environments/environment";
@@ -49,6 +49,8 @@ export class ProductionRequestsComponent implements OnInit{
   statusvisible=false;
   requestvisible=false;
   dataToPatch:any[]=[];
+  selectedOptions: any[] = [];
+  Alldevices: any;
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
@@ -66,7 +68,7 @@ export class ProductionRequestsComponent implements OnInit{
       clientNeed: [null, [Validators.required]],
       designerId: [null, [Validators.required]],///
       designerDate: [null, [Validators.required]],///
-      measurmentid: [null, [Validators.required]],////
+      measurmentId: [null, [Validators.required]],////
       //measurmentId: [null, [Validators.required]],////
       measurmentDate: [null, [Validators.required]],////
       kitchenModelId: [null, [Validators.required]],////
@@ -74,7 +76,7 @@ export class ProductionRequestsComponent implements OnInit{
       salesId: [null, [Validators.required]],//
       selectedDevice: [null, [Validators.required]],
       AmORPm:[0,[Validators.required]],//
-      devices: [[], [Validators.required]]
+      devices: this._FormBuilder.array([]),
     })
   }
   initFilterForm(): FormGroup {
@@ -95,7 +97,7 @@ export class ProductionRequestsComponent implements OnInit{
   ngOnInit(): void {
     this.GetShortClientFiles();
     this.GetStatusCategoryById()
-
+    this.getDevices()
   }
   getDevices(){
     this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
@@ -107,21 +109,19 @@ export class ProductionRequestsComponent implements OnInit{
   getReciveNotice(id:any){
     this._productionRequestsService.getReciveNotce(id).subscribe({
       next:(res:any)=>{
-          console.log(res.data.kitchenModelId);
+          console.log(res.data);
 
-        this.dataToPatch = res.data.devices;
-        this.dataToPatch.forEach(device=>{
-          this.MyDevices.push({id:device.id,name:device.name})
-          this.devices?.value.push(
-            {deviceId:device.id })
-        })
+          this.dataToPatch = res.data.devices; // Replace this with actual data
+          this.dataToPatch.forEach(device=>{
+            this.selectedOptions.push(device.id)
+          })
         //statusCategoryById2.log("dataToPatchk",this.MyDevices);
         this.AddReceiveNotice.patchValue({
           salesId : res.data.salesId,
           fileDate:this.dateformat(res.data.fileDate),
           kitchenLocation:res.data.kitchenLocation,
           kitchenModelId:res.data.kitchecnModelId,
-          measurmentid:res.data.measurmentid,
+          measurmentId:res.data.measurmentid,
           measurmentDate:this.dateformat(res.data.measurmentDate),
           designerId:res.data.designerId,
           designerDate:this.dateformat(res.data.designerDate),
@@ -135,7 +135,25 @@ export class ProductionRequestsComponent implements OnInit{
       },
 
     })
-    this.getDevices()
+
+  }
+  selectOption(event:any,option:any){
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      // Add the option to the selectedOptions array
+      if (this.selectedOptions.indexOf(option.statusId) === -1) {
+        this.selectedOptions.push(option.statusId);
+      }
+    } else {
+      // Remove the option from the selectedOptions array
+      const index = this.selectedOptions.indexOf(option.statusId);
+      if (index !== -1) {
+        this.selectedOptions.splice(index, 1);
+
+  }
+  }
+  console.log(this.selectedOptions);
   }
   dateformat(indate :any){
     let year, month, day;
@@ -192,7 +210,7 @@ export class ProductionRequestsComponent implements OnInit{
   }
   setMeasurement() {
     let val1, val2
-    val1 = this.AddReceiveNotice.get('measurementId')?.value
+    val1 = this.AddReceiveNotice.get('measurmentId')?.value
     val2 = val1.toString()
     console.log(val2)
     this.AddReceiveNotice.patchValue({
@@ -231,6 +249,9 @@ export class ProductionRequestsComponent implements OnInit{
         this.attachmentsvisible=true;
       }
     })
+  }
+  isSelected(statusId: number): boolean {
+    return this.selectedOptions.includes(statusId);
   }
   AddFinalStatusList() {
     let value: any = {};
@@ -271,21 +292,7 @@ export class ProductionRequestsComponent implements OnInit{
     this.getReciveNotice(data.clientFileId)
   }
 
-  AddDevice() {
-    this.MyDevices.push(
-      this.DevicesData.filter((ele: any) => ele.statusId === this.AddReceiveNotice.get('selectedDevice')?.value)[0]
-    )
-    console.log(this.MyDevices)
-    this.devices?.value.push(
-      {deviceId: this.AddReceiveNotice.get('selectedDevice')?.value}
-    )
-  }
-  DeleteDevice(i: number) {
-    this.MyDevices.splice(i, 1);
-    this.devices?.get('deviceId')?.value.splice(i, 1);
-    console.log(this.MyDevices)
-    console.log(this.device)
-  }
+
   AddClientFileFollowUp() {
     let value: any = {};
     value['clientFileId'] = this.clientFileId;
@@ -314,23 +321,32 @@ export class ProductionRequestsComponent implements OnInit{
   }
   AddNotice() {
     this.AddReceiveNotice.get('actionByHour')?.patchValue(this.AddReceiveNotice.get('AmORPm')?.value==0?this.AddReceiveNotice.get('actionByHour')?.value:this.AddReceiveNotice.get('actionByHour')?.value+12)
-    let measermentID=this.AddReceiveNotice.get('measurmentid')?.value
-    this.AddReceiveNotice.get('measurmentid')?.patchValue(measermentID.toString());
+    let measermentID=this.AddReceiveNotice.get('measurmentId')?.value
+    this.AddReceiveNotice.get('measurmentId')?.patchValue(measermentID.toString());
+    const devicesArray = this.AddReceiveNotice.get('devices') as FormArray;
 
+    this.selectedOptions.forEach(device=>{
+
+      devicesArray.push(
+        this._FormBuilder.group({
+          deviceId: [device, Validators.required],
+        })
+      )
+    })
     let value: any = this.AddReceiveNotice.value;
+
     value['clientFileId'] = this.clientFileId
+    console.log("test",value)
+
     this._QuotationsService.AddNotices(value).subscribe({
       next: (res: any) => {
         this.toastr.success(`${res.message}`);
         this.GetShortClientFiles();
         //location.reload()
-        this.requestvisible=false;
-        this.AddReceiveNotice.reset();
+        //this.AddReceiveNotice.reset();
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
-        this.requestvisible=true;
         this.AddReceiveNotice.get('actionByHour')?.patchValue(this.AddReceiveNotice.get('AmORPm')?.value==0?this.AddReceiveNotice.get('actionByHour')?.value:this.AddReceiveNotice.get('actionByHour')?.value-12)
-
       }
     })
   }
