@@ -24,7 +24,7 @@ export class QuotationsService {
     return this._HttpClient.post(`${this.domain}ClientFile/AddClientFile`,body)
   }
   EditClientFile(body:FormGroup, id: number): Observable<any> {
-    return this._HttpClient.post(`${this.domain}ClientFile/UpdateClientFile/${id}`,body)
+    return this._HttpClient.put(`${this.domain}ClientFile/UpdateClientFile/${id}`,body)
   }
   GetStatusCategoryById(id: number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/GetStatusCategoryById/${id}`)
