@@ -324,7 +324,7 @@
           </div>
         </div>
         <div class="col-12 text-center mt-4">
-          <button class="btn btn-success"  (click)="AddFinalStatusList()">
+          <button class="btn btn-success" [cModalToggle]="modalXl3.id"  (click)="AddFinalStatusList()">
             اضافة
           </button>
         </div>
@@ -434,10 +434,11 @@
                   </ng-select>
                 </div>
                 <div class="col-6">
+                  <!-- (change)="setMeasurement()" -->
                   <label>مسئول القياس</label>
                   <ng-select [items]="allUsersData"
                              bindLabel="userName"
-                             (change)="setMeasurement()"
+
                              bindValue="id"
                              placeholder="اختر مسئول القياس"
                              formControlName="measurmentId">

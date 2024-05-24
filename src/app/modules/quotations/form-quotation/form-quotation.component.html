@@ -69,7 +69,7 @@
                                     <ng-container [formGroupName]="i">
                                         <div class="col-md-6 mb-3">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-8">
                                                     <label>{{ListOfItems[i].name}}</label>
                                                     <ng-select [items]="loadPriceOffer[ListOfItems[i].value]?.statuses"
                                                                bindLabel="description"
@@ -79,13 +79,13 @@
                                                                formControlName="itemId">
                                                     </ng-select>
                                                 </div>
-                                                <div class="col-3" *ngIf="ListOfItems[i].isCount">
+                                                <div class="col-2" *ngIf="ListOfItems[i].isCount">
                                                     <label>العدد</label>
                                                     <input  aria-label="default input example" cFormControl
                                                         formControlName="itemCount" type="number" (keyup)="getPrice(i)"
                                                     />
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <label>السعر</label>
                                                     <input [style]="item.get('eachItemPrice')?.value > 0? 'opacity: 50%; pointer-events: none' : ''"
                                                        aria-label="default input example" cFormControl

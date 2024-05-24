@@ -60,14 +60,14 @@ export class FormSanitaryConnectionsComponent implements OnInit {
 
       this.sanitaryConnectionService.AddSanitaryConnection(data).subscribe({next:(res:any)=>{
         this.toastr.success("تم الاضافة")
-        this._Router.navigateByUrl('/reception-report')
+        this._Router.navigateByUrl('/sanitaryConnections')
       },error:(err:any)=>{
         this.toastr.error("حدث خطأ")
       }})
     }else{
       this.sanitaryConnectionService.updateSanitaryConnection(this.ID,data).subscribe({next:(res:any)=>{
         this.toastr.success("تم التعديل")
-        this._Router.navigateByUrl('/reception-report')
+        this._Router.navigateByUrl('/sanitaryConnections')
 
       },error:(err:any)=>{
         this.toastr.error("حدث خطأ")

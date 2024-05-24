@@ -176,11 +176,10 @@ export class ContractFormComponent implements OnInit {
   }
   setClient(e: any){
     if (this.fileTypeId) {
-      let client ;
-      client = this.allClients.filter((ele)=> ele.clientId == e)[0]
+
       this.AddClientFileForm.patchValue({
-        phoneNumber: client.mobile,
-        address: client.email,
+        phoneNumber: e.mobile,
+        address: e.email,
       })
     } else {
       this.AddClientFileForm.patchValue({

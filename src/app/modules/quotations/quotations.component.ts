@@ -117,7 +117,7 @@ export class QuotationsComponent implements OnInit {
           fileDate:this.dateformat(res.data.fileDate),
           kitchenLocation:res.data.kitchenLocation,
           kitchenModelId:res.data.kitchecnModelId,
-          measurmentId:res.data.measurmentid,
+          measurmentId:parseInt(res.data.measurmentid),
           measurmentDate:this.dateformat(res.data.measurmentDate),
           designerId:res.data.designerId,
           designerDate:this.dateformat(res.data.designerDate),
@@ -338,8 +338,10 @@ export class QuotationsComponent implements OnInit {
 
     this._QuotationsService.AddNotices(value).subscribe({
       next: (res: any) => {
+
         this.toastr.success(`${res.message}`);
         this.GetShortClientFiles();
+        this.AddReceiveNotice.get('measurmentId')?.patchValue(parseInt(measermentID));
         //location.reload()
         //this.AddReceiveNotice.reset();
       }, error: (err: any) => {

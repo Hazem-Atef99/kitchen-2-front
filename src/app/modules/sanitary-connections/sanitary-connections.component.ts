@@ -56,7 +56,7 @@ export class SanitaryConnectionsComponent implements OnInit {
         this.uploadedImg = []
         this.GetAllClientFileAttachment()
         this.GetAllSanitaryConnections();
-        this.visible=false;
+        this.visible=true;
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
         this.visible=true
