@@ -76,4 +76,7 @@ export class ContractService {
   LoadFinalStatusList(itemType :number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/LoadFinalStatusList/${itemType}`)
   }
+  GetFinalStatusOfRole(RoleId:any){
+    return this._HttpClient.get(`${this.domain}RoleTypes/GetFinalStatusOfRole?roleId=${RoleId}`)
+  }
 }

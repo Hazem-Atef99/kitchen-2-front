@@ -98,6 +98,11 @@
           <h6>تغيير كلمة السر</h6>
         </a>
       </li>
+      <li>
+        <a href="#" [cModalToggle]="modalXl2.id" preventBackdrop cDropdownItem >
+          <h6>الصلاحيات</h6>
+        </a>
+      </li>
       <!--<li>
         <a routerLink="./" cDropdownItem>
           <svg cIcon class="me-2" name="cilEnvelopeOpen"></svg>
@@ -199,6 +204,54 @@
         </div>
         <div class="col-12 text-center mt-4">
           <button [disabled]="changePassForm.invalid" (click)="changePassword()" class="btn btn-success" >
+            save
+          </button>
+        </div>
+      </div>
+    </form>
+    </div>
+
+  </c-modal-body>
+</c-modal>
+
+<c-modal #modalXl2 id="modalXl2"  size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>الصلاحيات</h5>
+    <button class="mx-0" [cModalToggle]="modalXl2.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="card">
+      <div class="card-header">
+        <h5>اضافة</h5>
+      </div>
+      <form [formGroup]="powersForm">
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-12">
+
+              <label> نوع المستخدم</label>
+              <ng-select [items]="allUsersData"
+                         bindLabel="name"
+                         bindValue="id"
+                         placeholder="اختر نوع المستخدم"
+                         formControlName="UserId"
+                         (ngModelChange)="getPowersForRole()">
+              </ng-select>
+
+          </div>
+          <div class="col-12 row">
+            <div class="card-header m-0">
+              <h5>الاجهزه</h5>
+          </div >
+            <div  class="col-4" *ngFor="let option of Powers let i= index ">
+              <input type="checkbox" #checkbox name="selectedPower"   [checked]="isSelected(option.statusId)"  formControlName="selectedPower" [value]="option.statusId" (change)="selectOption($event, option)" (change)="selectOption($event, option)">
+              {{ option.defaultDesc }}
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-center mt-4">
+          <button (click)="AddPowers()" class="btn btn-success" >
             save
           </button>
         </div>
