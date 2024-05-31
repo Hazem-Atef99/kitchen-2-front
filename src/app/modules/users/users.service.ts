@@ -35,5 +35,10 @@ export class UsersService {
   UpdatePowersForRole(RoleId:any,body :any){
     return this.http.put(`${this.domain}RoleTypes/UpdateRoleStatus?roleId=${RoleId}`,body)
   }
-
+  GetAllPermission(){
+    return this.http.get(`${this.domain}RoleTypes/GetAllPermissions`)
+  }
+  GetPermissionsOfRole(id:any){
+    return this.http.get(`${this.domain}RoleTypes/GetPermissionsOfRole/${id}`)
+  }
 }

@@ -242,12 +242,29 @@
           </div>
           <div class="col-12 row">
             <div class="card-header m-0">
-              <h5>الاجهزه</h5>
+              <h5>الصلاحيات</h5>
           </div >
             <div  class="col-4" *ngFor="let option of Powers let i= index ">
               <input type="checkbox" #checkbox name="selectedPower"   [checked]="isSelected(option.statusId)"  formControlName="selectedPower" [value]="option.statusId" (change)="selectOption($event, option)" (change)="selectOption($event, option)">
               {{ option.defaultDesc }}
             </div>
+          </div>
+          <div class="col-12 row">
+            <div class="card-header m-0">
+              <h5>الشاشات والازرار</h5>
+          </div >
+          <!-- [checked]="isSelectedPage(option.id)" -->
+          <div class="col-6" *ngFor="let option of Permissions let i = index">
+            <input type="checkbox" #checkbox name="selectedPagePower" [checked]="isSelectedPage(option.id)"  formControlName="selectedPagePower" [value]="option.id" (change)="selectpageOption($event, option)">
+            {{ option.description }}
+            <!-- [checked]="isSelectedbutton(pageOrButton.id)" -->
+            <div *ngIf="isSelectedPage(option.id)" >
+                <div class="ml-3 mt-2" *ngFor="let pageOrButton of option.pagesAndButtons; let j = index">
+                  <input type="checkbox" #checkbox name="selectedPagePower" [checked]="isSelectedbutton(pageOrButton.id)"  formControlName="selectedPagePower" [value]="pageOrButton.id" (change)="selectpageOption($event, pageOrButton)">
+                  {{ pageOrButton.description }}
+                </div>
+              </div>
+        </div>
           </div>
         </div>
         <div class="col-12 text-center mt-4">

@@ -2,8 +2,8 @@
     <div class="row text-center">
 
         <!-- Team item -->
-        <ng-container *ngFor="let category of listOfCategories">
-            <div class="col-xl-3 col-sm-6 mb-5" [routerLink]="'/'+category.link" style="cursor: pointer;">
+        <ng-container *ngFor="let category of listOfCategories" >
+            <div  *ngIf="isAuthurized(category.description)" class="col-xl-3 col-sm-6 mb-5" [routerLink]="'/'+category.link" style="cursor: pointer;">
                 <div class=" bg-hover rounded py-3 px-2">
                     <div class="rounded-circle mb-3 img-thumbnail shadow-sm bg-icon">
                         <img [src]="'assets/img/categories/'+category.icon+'.png'" alt="" srcset="">

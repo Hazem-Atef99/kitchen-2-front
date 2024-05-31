@@ -19,8 +19,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
   powersForm!:FormGroup;
   allUsersData: any;
   Powers: any[]= [];
+  Permissions:any[]=[];
   selectedOptions: any[] = [];
+  selectedPageOpions:any[]=[];
   dataToPatch:any[]=[];
+  pagesRoleToPatch:any[]=[];
   public newMessages = new Array(4)
   public newTasks = new Array(5)
   public newNotifications = new Array(5)
@@ -45,6 +48,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.powersForm=this.initPowersForm();
     this.GetAllUsers();
     this.getpowers();
+    this.getAllPermission();
   }
   initChangePassForm():FormGroup{
     return this.formBuilder.group({
@@ -56,6 +60,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
     return this.formBuilder.group({
       UserId:[null,[Validators.required]],
       selectedPower: [null, [Validators.required]],
+      selectedChildPower:[null,[Validators.required]],
+      selectedPagePower:[null,[Validators.required]],
       Powers: this.formBuilder.array([]),
     })
   }
@@ -71,6 +77,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   AddPowers(){
     //const PowersArray = this.powersForm.get('Powers') as FormArray;
     console.log(this.selectedOptions);
+    console.log(this.selectedPageOpions);
 
 
     console.log(this.powersForm.value)
@@ -98,19 +105,48 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
     })
   }
+  getAllPermission(){
+    this.userService.GetAllPermission().subscribe((res:any)=>{
+      this.Permissions=res.data
+    })
+  }
+//   Touched(parentId: number): boolean {
+//     return this.selectedPageOpions.includes(parentId);
+// }
   isSelected(statusId: number): boolean {
     return this.selectedOptions.includes(statusId);
+  }
+  isSelectedPage(id:number) : boolean {
+    let result = this.selectedPageOpions.includes(id)
+    return result;
+  }
+  isSelectedbutton(id:number) : boolean {
+    let result = this.selectedPageOpions.includes(id)
+    return result;
+  }
+  selectpageOption(event :any,option:any){
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      if (this.selectedPageOpions.indexOf(option.id)=== -1) {
+        this.selectedPageOpions.push(option.id)
+      }
+    }else{
+        const index = this.selectedPageOpions.indexOf(option.id);
+        if (index!== -1) {
+          this.selectedPageOpions.splice(index,1);
+        }
+      }
+
+
   }
   selectOption(event:any,option:any){
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      // Add the option to the selectedOptions array
       if (this.selectedOptions.indexOf(option.statusId) === -1) {
         this.selectedOptions.push(option.statusId);
       }
     } else {
-      // Remove the option from the selectedOptions array
       const index = this.selectedOptions.indexOf(option.statusId);
       if (index !== -1) {
         this.selectedOptions.splice(index, 1);
@@ -125,9 +161,22 @@ export class DefaultHeaderComponent extends HeaderComponent {
         this.dataToPatch=res.data;
         this.dataToPatch.forEach(Power=>{
           this.selectedOptions.push(Power.statusId)
+          this.GetPermissionsOfRole(this.powersForm.get('UserId')?.value)
         })
 
       }
     })
+  }
+  GetPermissionsOfRole(id : any){
+    this.userService.GetPermissionsOfRole(id).subscribe({
+      next: (res:any) => {
+        this.pagesRoleToPatch=res.data;
+        this.pagesRoleToPatch.forEach(power=>{
+          this.selectedPageOpions.push(power.id)
+        })
+      }
+    })
+    console.log("GetPermissionsOfRole",this.selectedPageOpions);
+
   }
 }
