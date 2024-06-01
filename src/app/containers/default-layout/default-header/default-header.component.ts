@@ -78,10 +78,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
     //const PowersArray = this.powersForm.get('Powers') as FormArray;
     console.log(this.selectedOptions);
     console.log(this.selectedPageOpions);
-
+    let body={
+      roleId: parseInt(this.powersForm.get('UserId')?.value),
+  roleCalims: this.selectedPageOpions,
+  statusIds: this.selectedOptions
+    }
 
     console.log(this.powersForm.value)
-    this.userService.UpdatePowersForRole(this.powersForm.get('UserId')?.value,this.selectedOptions).subscribe({
+    this.userService.UpdatePowersForRole(body).subscribe({
       next:(res:any)=>{
         this.toastr.success("تم تعديل الصلاحيات")
       },
