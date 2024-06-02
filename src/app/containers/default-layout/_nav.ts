@@ -10,7 +10,6 @@ export const navItems: INavData[] = [
   {
     name: 'العملاء',
     description: "",
-
     url: '/clients',
     // iconComponent: { name: 'cil-speedometer' },
   },
