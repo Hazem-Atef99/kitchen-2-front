@@ -159,7 +159,7 @@ return this._FormBuilder.group({
     value['clientFileId'] = this.clientFileId;
     value['attachmentPath'] = this.uploadedImg[0];
     value['statusId'] = this.statusId;
-    this._QuotationsService.AddClientFileAttachment(value).subscribe({
+    this.followsService.AddFollowAttachment(this.clientFileId,value).subscribe({
       next: (res: any) => {
         this.toastr.success(`${res.message}`);
         this.viewImg = []
@@ -178,7 +178,7 @@ return this._FormBuilder.group({
       clientFileId: this.clientFileId,
       statusId: this.statusId,
     }
-    this._QuotationsService.GetAllClientFileAttachment(query).subscribe({
+    this.followsService.GetAllFollows(this.clientFileId).subscribe({
       next: (res: any) => {
         this.allClientFileAttachment = res.data
       }
