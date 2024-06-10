@@ -33,7 +33,7 @@ export class UsersService {
     return this.http.get(`${this.domain}RoleTypes/GetAllRoleTypes`);
   }
   UpdatePowersForRole(body :any){
-    return this.http.put(`${this.domain}RoleTypes//AddPermissionToRole`,body)
+    return this.http.put(`${this.domain}RoleTypes/AddPermissionToRole`,body)
   }
 
   GetAllPermission(){

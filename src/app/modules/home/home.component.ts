@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UsersService } from '../users/users.service';
+import { ContractService } from '../contract/contract.service';
 
 @Component({
   selector: 'app-home',
@@ -105,11 +106,16 @@ export class HomeComponent {
   ]
 pagesToShow :any[]=[];
 pagesDescrptions :any[]=[];
-  constructor(private _userService:UsersService) {
+selectedPageOpions: any[] = [];
+  dataToPatch: any[] = [];
+  pagesRoleToPatch: any[] = [];
+  constructor(private _userService:UsersService,
+              private _ConttactService:ContractService) {
 
   }
   ngOnInit(): void {
     this.getPages();
+    this.GetPermissionsOfRole(1);
   }
   getPages(){
     this._userService.GetPermissionsOfRole(1).subscribe({
@@ -118,19 +124,31 @@ pagesDescrptions :any[]=[];
         this.pagesToShow = this.pagesToShow.filter(item=>item.isMainPage===true)
      for (let i = 0; i < this.pagesToShow.length; i++) {
       this.pagesDescrptions[i] = this.pagesToShow[i].description;
-
      }
     }}
-
     )
-
-
-
     console.log(this.pagesDescrptions);
+  }
+
+  GetPermissionsOfRole(id: any) {
+    this._userService.GetPermissionsOfRole(id).subscribe({
+      next: (res: any) => {
+        this.pagesRoleToPatch = res.data;
+        this.pagesRoleToPatch.forEach(power => {
+          this.selectedPageOpions.push(power.id)
+        })
+      }
+    })
+    this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
+    console.log("GetPermissionsOfRole", this.selectedPageOpions);
+    //localStorage.setItem("PermissionsOfRole",this.selectedPageOpions.toString())
 
   }
   isAuthurized(desc : string) : boolean {
     return this.pagesDescrptions.includes(desc)
   }
+  removeDuplicates(arr: any[]):any[]{
 
+    return [...new Set(arr)]
+  }
 }

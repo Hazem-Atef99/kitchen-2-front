@@ -77,9 +77,15 @@ export class DefaultHeaderComponent extends HeaderComponent {
       })
     }
   }
+  removeDuplicates(arr: any[]):any[]{
+
+    return [...new Set(arr)]
+  }
   AddPowers() {
     //const PowersArray = this.powersForm.get('Powers') as FormArray;
     console.log(this.selectedOptions);
+    console.log(this.selectedPageOpions);
+    this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
     console.log(this.selectedPageOpions);
     let user = this.allUsersData.filter((U: any) => U.id == parseInt(this.powersForm.get('UserId')?.value));
     let body = {
@@ -137,6 +143,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
     if (isChecked) {
       if (this.selectedPageOpions.indexOf(option.id) === -1) {
         this.selectedPageOpions.push(option.id)
+        this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
       }
     } else {
       const index = this.selectedPageOpions.indexOf(option.id);
@@ -167,13 +174,15 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this._ConttactService.GetFinalStatusOfRole(this.powersForm.get('UserId')?.value).subscribe({
       next: (res: any) => {
         this.dataToPatch = res.data;
+
         this.dataToPatch.forEach(Power => {
           this.selectedOptions.push(Power.statusId)
-          this.GetPermissionsOfRole(this.powersForm.get('UserId')?.value)
-        })
 
+        })
+        this.GetPermissionsOfRole(this.powersForm.get('UserId')?.value)
       }
     })
+
   }
   GetPermissionsOfRole(id: any) {
     this.userService.GetPermissionsOfRole(id).subscribe({
@@ -184,6 +193,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
         })
       }
     })
+    this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
     console.log("GetPermissionsOfRole", this.selectedPageOpions);
 
   }

@@ -54,9 +54,13 @@ this.FollowId=this._activatedRoute.snapshot.queryParamMap.get('FollowId')
   }
   addFollow(){
     // this.addFollowForm.get('Id')?.patchValue(this.clientFileId)
-    this.addFollowForm.get('Attachment')?.patchValue(this.uploadedImg[0])
-    console.log('Attachment',this.addFollowForm.get('Attachment')?.value);
-
+    // this.addFollowForm.get('Attachment')?.patchValue(this.uploadedImg[0])
+    // console.log('Attachment',this.addFollowForm.get('Attachment')?.value);
+    let formadata=new FormData();
+    formadata.append('Attachment',this.uploadedImg[0]);
+    formadata.append('Note',this.addFollowForm.get('Note')?.value);
+    formadata.append('ClientId',this.clientForm.get('clientId')?.value);
+    formadata.append('FileNo',this.addFollowForm.get('FileNo')?.value);
     this.followService.AddFollow(this.addFollowForm.value).subscribe({next:(res:any)=>{
       this.toastr.success('Added')
       this.GetFollows();

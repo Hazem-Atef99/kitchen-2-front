@@ -259,8 +259,8 @@
             {{ option.description }}
             <!-- [checked]="isSelectedbutton(pageOrButton.id)" -->
             <div *ngIf="isSelectedPage(option.id)" >
-                <div class="ml-3 mt-2" *ngFor="let pageOrButton of option.pagesAndButtons; let j = index">
-                  <input type="checkbox" #checkbox name="selectedPagePower" [checked]="isSelectedbutton(pageOrButton.id)"  formControlName="selectedPagePower" [value]="pageOrButton.id" (change)="selectpageOption($event, pageOrButton)">
+                <div  *ngFor="let pageOrButton of option.pagesAndButtons; let j = index">
+                  <input type="checkbox" #checkbox name="selectedPagePower" [checked]="isSelectedPage(pageOrButton.id)"  formControlName="selectedPagePower" [value]="pageOrButton.id" (change)="selectpageOption($event, pageOrButton)">
                   {{ pageOrButton.description }}
                 </div>
               </div>
