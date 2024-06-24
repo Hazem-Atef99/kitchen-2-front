@@ -42,4 +42,10 @@ export class UsersService {
   GetPermissionsOfRole(id:any){
     return this.http.get(`${this.domain}RoleTypes/GetPermissionsOfRole/${id}`)
   }
+  GetNotifications(){
+    return this.http.get(`${this.domain}Notifications/GetReminders`)
+  }
+  readNotification(body:any){
+    return this.http.get(`${this.domain}Notifications/UpdateReminders`,body)
+  }
 }

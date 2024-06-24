@@ -28,7 +28,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public newMessages = new Array(4)
   public newTasks = new Array(5)
   public newNotifications = new Array(5)
-
+  notifications:any[]=[];
+  ids:number[]=[];
   constructor(private classToggler: ClassToggleService,
     private router: Router,
     private userService: UsersService,
@@ -50,6 +51,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.GetAllUsers();
     this.getpowers();
     this.getAllPermission();
+    this.getNitifications();
   }
   initChangePassForm(): FormGroup {
     return this.formBuilder.group({
@@ -109,6 +111,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.userService.getRoles().subscribe({
       next: (res: any) => {
         this.allUsersData = res.data
+        console.log(this.allUsersData);
+
       }
     })
   }
@@ -187,7 +191,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   GetPermissionsOfRole(id: any) {
     this.userService.GetPermissionsOfRole(id).subscribe({
       next: (res: any) => {
-        this.pagesRoleToPatch = res.data;
+        this.pagesRoleToPatch = res.data.filter((x:any)=>x.selected==true);
         this.pagesRoleToPatch.forEach(power => {
           this.selectedPageOpions.push(power.id)
         })
@@ -196,5 +200,20 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
     console.log("GetPermissionsOfRole", this.selectedPageOpions);
 
+  }
+  getNitifications(){
+    this.userService.GetNotifications().subscribe({
+      next:(res:any)=>{
+        this.notifications=res
+      }
+    })
+  }
+  readNotification(id:number){
+    this.ids.push(id);
+    console.log(this.ids);
+    this.userService.readNotification(this.ids).subscribe({next:(res:any)=>{
+      console.log(this.ids);
+
+    }})
   }
 }

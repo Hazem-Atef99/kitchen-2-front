@@ -35,7 +35,8 @@ import {
   TabsModule,
   ModalModule,
 
-  UtilitiesModule
+  UtilitiesModule,
+  SpinnerModule
 } from '@coreui/angular';
 import { CommonModule } from '@angular/common';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
@@ -83,6 +84,7 @@ const APP_CONTAINERS = [
     HttpClientModule,
     CoreModule,
     NgbModule,
+    SpinnerModule,
     ModalModule,
     NgSelectModule,
     ToastrModule.forRoot(),

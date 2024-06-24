@@ -1,0 +1,37 @@
+/* notification-area.component.scss */
+.notification-area {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #121111;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+
+  .notification {
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #0c0c0c;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .notification-content {
+      .notification-title {
+        width:200px;
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+      }
+      .notification-body {
+        color: #666;
+      }
+    }
+  }
+}
+ li:hover  {
+  background-color: #343471; /* Example hover background color */
+}
+.limit{
+  width:200px;
+  word-wrap: break-word;
+}

@@ -47,6 +47,7 @@
     </c-header-nav> -->
     <c-header-nav class="ms-3">
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+      <ng-container *ngTemplateOutlet="notificationDropdown"></ng-container>
     </c-header-nav>
 
   </c-container>
@@ -170,10 +171,46 @@
       <li (click)="logOut()" class="my-2" style="cursor: pointer;">
         <a cDropdownItem>
           <svg cIcon class="me-2" name="cilLockLocked"></svg>
-          Lock Account
+          تسجيل الخروج
         </a>
       </li>
       <li></li>
+    </ul>
+  </c-dropdown>
+</ng-template>
+<ng-template #notificationDropdown>
+  <c-dropdown alignment="center" variant="nav-item">
+    <button
+      cButton
+      color=""
+      [caret]="false"
+      cDropdownToggle
+      class="py-0"
+    >
+      <c-avatar
+        cTextColor="primary"
+        shape="rounded-1"
+        size="md"
+
+        status="success"
+      >
+      </c-avatar>
+      <svg cIcon name="cil-bell" size="xl" title="bell"></svg>
+    </button>
+    <ul cDropdownMenu style="width: 250px; " class="pt-0 pr-5">
+      <li style="border: 1px solid black; cursor: default;" *ngFor="let notification of notifications">
+        <div (click)="readNotification(notification.id)" cDropdownItem class="notification-area">
+          <!-- *ngFor="let notification of notifications" -->
+           <div  class="notification">
+            <div class="notification-content">
+              <p class="notification-title" style="width:200px;
+              word-wrap: break-word;
+              word-break: break-word;
+              white-space: normal;" > {{notification.notes}} </p>
+            </div>
+          </div>
+         </div>
+      </li>
     </ul>
   </c-dropdown>
 </ng-template>
