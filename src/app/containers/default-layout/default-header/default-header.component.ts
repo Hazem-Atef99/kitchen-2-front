@@ -30,6 +30,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public newNotifications = new Array(5)
   notifications:any[]=[];
   ids:number[]=[];
+  dataToPop:any[]=[];
+  unselectedButtons:any[]=[];
   constructor(private classToggler: ClassToggleService,
     private router: Router,
     private userService: UsersService,
@@ -138,17 +140,29 @@ export class DefaultHeaderComponent extends HeaderComponent {
     let result = this.selectedPageOpions.includes(id)
     return result;
   }
-  isSelectedbutton(id: number): boolean {
-    let result = this.selectedPageOpions.includes(id)
-    return result;
-  }
+  // isSelectedbutton(id: number): boolean {
+  //   let result = this.selectedPageOpions.includes(id)
+  //   return result;
+  // }
   selectpageOption(event: any, option: any) {
     const isChecked = event.target.checked;
     if (isChecked) {
       if (this.selectedPageOpions.indexOf(option.id) === -1) {
         this.selectedPageOpions.push(option.id)
         this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
+        if (option.parentScreenId!==null){
+          this.dataToPop = this.dataToPatch.filter(x=>x.parentScreenId === option.parentScreenId)
+          this.dataToPop.forEach(element => {
+          this.unselectedButtons.push(element.id)
+          }
+        )}
       }
+        this.unselectedButtons.forEach(element => {
+          let exists = this.isSelectedPage(element)
+          if (exists) {
+            this.selectedPageOpions.filter(x=>x!==element)
+          }
+        });
     } else {
       const index = this.selectedPageOpions.indexOf(option.id);
       if (index !== -1) {
@@ -160,7 +174,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
   selectOption(event: any, option: any) {
     const isChecked = event.target.checked;
-
     if (isChecked) {
       if (this.selectedOptions.indexOf(option.statusId) === -1) {
         this.selectedOptions.push(option.statusId);
