@@ -295,7 +295,7 @@
             <input type="checkbox" #checkbox name="selectedPagePower" [checked]="isSelectedPage(option.id)"  formControlName="selectedPagePower" [value]="option.id" (change)="selectpageOption($event, option)">
             {{ option.description }}
             <!-- [checked]="isSelectedbutton(pageOrButton.id)" -->
-            <div *ngIf="isSelectedPage(option.id)" >
+            <div *ngIf="isSelectedPage(option.id) && selectedPageOpions.length>0" >
                 <div  *ngFor="let pageOrButton of option.pagesAndButtons; let j = index">
                   <input type="checkbox" #checkbox name="selectedChildPower" [checked]="isSelectedPage(pageOrButton.id)"  formControlName="selectedChildPower" [value]="pageOrButton.id" (change)="selectpageOption($event, pageOrButton)">
                   {{ pageOrButton.description }}

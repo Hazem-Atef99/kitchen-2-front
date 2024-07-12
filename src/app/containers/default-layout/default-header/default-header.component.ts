@@ -12,6 +12,7 @@ import { UsersService } from 'src/app/modules/users/users.service';
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
+  styleUrls:['./default-header.component.scss']
 })
 export class DefaultHeaderComponent extends HeaderComponent {
 
@@ -207,6 +208,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
         this.pagesRoleToPatch = res.data.filter((x:any)=>x.selected==true);
         this.pagesRoleToPatch.forEach(power => {
           this.selectedPageOpions.push(power.id)
+          power.pagesAndButtons.forEach((element:any) => {
+            this.selectedPageOpions.push(element.id)
+          });
         })
       }
     })
