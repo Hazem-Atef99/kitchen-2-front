@@ -3,7 +3,7 @@ import { LoginService } from './login.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
+import { jwtDecode } from 'jwt-decode';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -34,9 +34,11 @@ export class LoginComponent implements OnInit {
     this._LoginService.Login(this.loginForm.value).subscribe({
       next:(res:any)=>{
         localStorage.setItem('TOKEN_KITCHEN2', res.data.token);
-        // const userinfo =this.getUserInfo(res.data.token);
-        // console.log("userinfo",userinfo);
-        //localStorage.setItem("UserId",userinfo)
+        const userinfo =this.getUserInfo(res.data.token);
+        console.log("userinfo",userinfo);
+        localStorage.setItem("RoleId",userinfo?.Roles.toString()?userinfo.Roles.toString():'');
+
+
         this._Router.navigateByUrl('/');
         this.loading = false;
       },error:(err:any) =>{
@@ -46,33 +48,33 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-  // decodeToken(token: string): TokenPayload | null {
-  //   try {
-  //     const decodedToken = jwtDecode<TokenPayload>(token);
-  //     return decodedToken;
-  //   } catch (error) {
-  //     console.error('Error decoding token', error);
-  //     return null;
-  //   }
-  // }
+  decodeToken(token: string): TokenPayload | null {
+    try {
+      const decodedToken = jwtDecode<TokenPayload>(token);
+      return decodedToken;
+    } catch (error) {
+      console.error('Error decoding token', error);
+      return null;
+    }
+  }
 
   // Example method to get user info from the token
-  // getUserInfo(token: string) {
-  //   const decodedToken = this.decodeToken(token);
-  //   if (decodedToken) {
-  //     return {
-  //       userId: decodedToken.userId,
-  //       roles: decodedToken.roles,
+  getUserInfo(token: string) {
+    const decodedToken = this.decodeToken(token);
+    if (decodedToken) {
+      return {
 
-  //     };
-  //   }
-  //   return null;
-  // }
+        Roles: decodedToken.Roles,
+
+      };
+    }
+    return null;
+  }
 }
 interface TokenPayload {
   // Define the structure of your token payload here
   userId: string;
-  roles: string[];
+  Roles: string[];
   exp: number;
   // Add any other fields you expect in the payload
 }

@@ -40,7 +40,7 @@ export class UsersService {
     return this.http.get(`${this.domain}RoleTypes/GetAllPermissions`)
   }
   GetPermissionsOfRole(id:any){
-    return this.http.get(`${this.domain}RoleTypes/GetPermissionsOfRole/${id}`)
+    return this.http.get(`${this.domain}RoleTypes/GetPermissionsOfRole/${localStorage.getItem('RoleId')}`)
   }
   GetNotifications(){
     return this.http.get(`${this.domain}Notifications/GetReminders`)
