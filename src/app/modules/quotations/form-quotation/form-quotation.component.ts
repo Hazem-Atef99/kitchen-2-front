@@ -348,9 +348,9 @@ export class FormQuotationComponent implements OnInit {
       clientId: [null, [Validators.required]],
       deviceNotes: ['', [Validators.required]],
       fileTypeId: [null, [Validators.required]],
-      additionaldiscount: [null, [Validators.required]],
-      discount: [null, [Validators.required]],
-      accessoryDiscount: [null, [Validators.required]],
+      additionaldiscount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
+      discount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
+      accessoryDiscount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
       items: this._FormBuilder.array([]),
       items1: this._FormBuilder.group({
         itemId: [null, [Validators.required]],
@@ -359,7 +359,7 @@ export class FormQuotationComponent implements OnInit {
         itemPrice: [null],
         eachItemPrice: [null],
         notes: [null],
-        categoryId: null
+        categoryId: [null, [Validators.required]]
       }),
       items2: this._FormBuilder.group({
         itemId: [null, [Validators.required]],
@@ -368,7 +368,7 @@ export class FormQuotationComponent implements OnInit {
         itemPrice: [null],
         eachItemPrice: [null],
         notes: [null],
-        categoryId: null
+        categoryId: [null, [Validators.required]]
       })
     })
   }

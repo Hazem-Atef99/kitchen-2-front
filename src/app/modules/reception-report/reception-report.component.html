@@ -1,7 +1,7 @@
 <c-card class="mb-4">
   <c-card-header class="d-flex justify-content-between align-items-center py-4">
     <strong>محضر استقبال</strong>
-    <button [disabled]="!query.fileTypeId"
+    <button [disabled]="!query.fileTypeId" *ngIf="isAuthorized(302)"
       class="btn btn-success" routerLink="add" [queryParams]="{fileTypeId: query.fileTypeId}">
       اضافة
       <i class='bx bx-plus'></i>
@@ -107,18 +107,18 @@
           <td></td>
           <td>
 
-           <button cButton class="btn btn-light m-0 p-2">
+           <button cButton class="btn btn-light m-0 p-2" [disabled]="!isAuthorized(305)">
               <svg cIcon name="cil-print"></svg>
             </button>
             <td>
             <!-- (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" -->
-            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="statuesvisible=true" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(306)" (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="statuesvisible=true" class="btn btn-light m-0 p-2">
               {{item.finalStatus? item.finalStatus : 'لم يتم اضافة حالة'}}
             </button>
           </td>
           <td>
             <!-- [cModalToggle]="modalXl4.id" -->
-          <button routerLink="add" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }"  class="btn btn-light m-0 p-2">
+          <button routerLink="add" [disabled]="!isAuthorized(304)" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }"  class="btn btn-light m-0 p-2">
             <i class='bx bx-edit'></i>
           </button>
         </td>

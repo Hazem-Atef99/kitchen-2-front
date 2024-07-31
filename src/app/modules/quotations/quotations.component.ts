@@ -6,6 +6,7 @@ import value from "*.json";
 import {environment} from "../../../environments/environment";
 import { ContractService } from '../contract/contract.service';
 import { ProductionRequestsService } from '../production-requests/production-requests.service';
+import { UsersService } from '../users/users.service';
 
 @Component({
   selector: 'app-quotations',
@@ -47,12 +48,16 @@ export class QuotationsComponent implements OnInit {
   dataToPatch:any[]=[];
   selectedOptions: any[] = [];
   Alldevices: any;
+  pagesRoleToPatch:any[]=[];
+  selectedPageOpions:any[]=[];
+  buttons: any[]=[];
   constructor(
     private _QuotationsService: QuotationsService,
     private _FormBuilder: FormBuilder,
     private toastr: ToastrService,
     private _productionRequestsService:ProductionRequestsService,
-    private _ConttactService:ContractService
+    private _ConttactService:ContractService,
+    private userService:UsersService
   ) {
     this.AddReceiveNotice = this.initReceiveNoticeForm();
   }
@@ -91,7 +96,8 @@ export class QuotationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetShortClientFiles();
-    this.GetStatusCategoryById()
+    this.GetStatusCategoryById();
+    this.GetPermissionsOfRole(1);
     this.getDevices()
     console.log(this.device)
   }
@@ -375,5 +381,28 @@ export class QuotationsComponent implements OnInit {
         this.LoadFinalStatusList = res.data.statuses
       }
     })
+  }
+  GetPermissionsOfRole(id: any) {
+    this.userService.GetPermissionsOfRole(id).subscribe({
+      next: (res: any) => {
+        this.pagesRoleToPatch = res.data;
+        this.pagesRoleToPatch.forEach(power => {
+          this.selectedPageOpions.push(power.id)
+          power.pagesAndButtons.forEach((element:any )=> {
+            this.buttons.push(element.id)
+          });
+        })
+      }
+    })
+    this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
+    console.log("GetPermissionsOfRole", this.selectedPageOpions);
+    console.log("buttons", this.buttons);
+  }
+  removeDuplicates(arr: any[]):any[]{
+
+    return [...new Set(arr)]
+  }
+  isAuthorized(permissionId:number) : boolean{
+    return this.buttons.includes(permissionId)
   }
 }

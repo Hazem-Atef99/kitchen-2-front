@@ -88,7 +88,7 @@
                                                 <div class="col-2">
                                                     <label>السعر</label>
                                                     <input [style]="item.get('eachItemPrice')?.value > 0? 'opacity: 50%; pointer-events: none' : ''"
-                                                       aria-label="default input example" cFormControl
+                                                       aria-label="default input example" cFormControl [readOnly]="itemsFormArray.get('itemId')==null"
                                                         formControlName="itemPrice" type="number"
                                                     />
                                                 </div>
@@ -120,7 +120,7 @@
                                     <div class="card-header d-flex justify-content-between">
                                         <h5>الوحدات</h5>
 <!--                                        <button [disabled]="myViewArray1.length == 0" class="btn btn-success" (click)="addUnitItem()">-->
-                                        <button class="btn btn-success" (click)="addUnitItem()">
+                                        <button class="btn btn-success" [disabled]="!AddClientFileForm.get('items1')?.valid" (click)="addUnitItem()">
                                           اضافة
                                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                                                viewBox="0 0 16 16">
@@ -221,7 +221,7 @@
                         <div class="card-header d-flex justify-content-between">
                           <h5>الاكسسوارات</h5>
 <!--                          <button [disabled]="myViewArray2.length == 0" class="btn btn-success" (click)="addAccessoriesItem()">-->
-                          <button  class="btn btn-success" (click)="addAccessoriesItem()">
+                          <button  class="btn btn-success"  [disabled]="!AddClientFileForm.get('items2')?.valid" (click)="addAccessoriesItem()">
                             اضافة
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                                  viewBox="0 0 16 16">
@@ -316,19 +316,35 @@
                   <div class="row">
                       <div class="col-4">
                           <label>الخصم الاضافى</label>
-                          <input aria-label="default input example" cFormControl formControlName="additionaldiscount"
+                          <input [pattern]="'^[0-9]+([.]\d+)?$'" aria-label="default input example" cFormControl formControlName="additionaldiscount"
                               type="number" />
+                              <div *ngIf="AddClientFileForm.get('additionaldiscount')?.invalid && (AddClientFileForm.get('additionaldiscount')?.dirty || AddClientFileForm.get('additionaldiscount')?.touched)">
+                                <div style="color: red;" *ngIf="AddClientFileForm.get('additionaldiscount')?.errors">
+                                  لا يمكن أن يكون الخصم قيمه سالبه من فضلك ادخل قيمه صحيحه
+                                </div>
+                              </div>
                       </div>
                     <div class="col-4">
                       <label>خصم الوحدات</label>
-                      <input aria-label="default input example" cFormControl formControlName="discount"
+                      <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="discount"
                              type="number" />
+                             <div *ngIf="AddClientFileForm.get('discount')?.invalid && (AddClientFileForm.get('discount')?.dirty || AddClientFileForm.get('discount')?.touched)">
+                              <div style="color: red;" *ngIf="AddClientFileForm.get('discount')?.errors">
+                                لا يمكن أن يكون الخصم قيمه سالبه من فضلك ادخل قيمه صحيحه
+                              </div>
+                            </div>
                     </div>
                     <div class="col-4">
                       <label>خصم الاكسسوارات</label>
-                      <input aria-label="default input example" cFormControl formControlName="accessoryDiscount"
+                      <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="accessoryDiscount"
                              type="number" />
+
+                    <div *ngIf="AddClientFileForm.get('accessoryDiscount')?.invalid && (AddClientFileForm.get('accessoryDiscount')?.dirty || AddClientFileForm.get('accessoryDiscount')?.touched)">
+                      <div style="color: red;" *ngIf="AddClientFileForm.get('accessoryDiscount')?.errors">
+                        لا يمكن أن يكون الخصم قيمه سالبه من فضلك ادخل قيمه صحيحه
+                      </div>
                     </div>
+                  </div>
                   </div>
               </div>
 

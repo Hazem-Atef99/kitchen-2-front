@@ -3,6 +3,7 @@ import { QuotationsService } from '../quotations/quotations.service';
 import { ReceptionReportService } from './reception-report.service';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { UsersService } from '../users/users.service';
 
 @Component({
   selector: 'app-reception-report',
@@ -27,12 +28,17 @@ export class ReceptionReportComponent implements OnInit {
   AllFinalStatusClientFile: any[] = [];
   attatchmentvisible=false;
   statuesvisible=false;
+  pagesRoleToPatch: any[] = [];
+  selectedPageOpions: any[] = [];
+  buttons: any[] = [];
   constructor(private recptionReportService:ReceptionReportService,
               private _QuotationsService:QuotationsService,
-              private toastr: ToastrService,) { }
+              private toastr: ToastrService,
+              private userService:UsersService) { }
   ngOnInit(): void {
     this.getReceptionRports()
     this.GetStatusCategoryById()
+    this.GetPermissionsOfRole(1)
   }
   filter(event: any) {
     console.log(event.value);
@@ -133,5 +139,28 @@ export class ReceptionReportComponent implements OnInit {
 
       }
     })
+  }
+  GetPermissionsOfRole(id: any) {
+    this.userService.GetPermissionsOfRole(id).subscribe({
+      next: (res: any) => {
+        this.pagesRoleToPatch = res.data;
+        this.pagesRoleToPatch.forEach(power => {
+          this.selectedPageOpions.push(power.id)
+          power.pagesAndButtons.forEach((element:any )=> {
+            this.buttons.push(element.id)
+          });
+        })
+      }
+    })
+    this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
+    console.log("GetPermissionsOfRole", this.selectedPageOpions);
+    console.log("buttons", this.buttons);
+  }
+  removeDuplicates(arr: any[]):any[]{
+
+    return [...new Set(arr)]
+  }
+  isAuthorized(permissionId:number) : boolean{
+    return this.buttons.includes(permissionId)
   }
 }

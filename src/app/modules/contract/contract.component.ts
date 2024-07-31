@@ -3,6 +3,7 @@ import {ContractService} from './contract.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {environment} from "../../../environments/environment";
+import { UsersService } from '../users/users.service';
 
 @Component({
   selector: 'app-contract',
@@ -43,10 +44,14 @@ export class ContractComponent implements OnInit {
   }
   AddReceiveNotice!: FormGroup;
   visible=false;
+  pagesRoleToPatch: any[] = [];
+  selectedPageOpions: any[] = [];
+  buttons: any[] =[];
   constructor(
     private _contractService: ContractService,
     private _FormBuilder: FormBuilder,
     private toastr: ToastrService,
+    private userService:UsersService
   ) {
     this.AddReceiveNotice = this.initReceiveNoticeForm();
   }
@@ -86,6 +91,7 @@ export class ContractComponent implements OnInit {
   ngOnInit(): void {
     this.GetShortClientFiles();
     this.GetStatusCategoryById()
+    this.GetPermissionsOfRole(1);
     console.log(this.device)
   }
 
@@ -282,5 +288,28 @@ export class ContractComponent implements OnInit {
         this.LoadFinalStatusList = res.data.statuses
       }
     })
+  }
+  GetPermissionsOfRole(id: any) {
+    this.userService.GetPermissionsOfRole(id).subscribe({
+      next: (res: any) => {
+        this.pagesRoleToPatch = res.data;
+        this.pagesRoleToPatch.forEach(power => {
+          this.selectedPageOpions.push(power.id)
+          power.pagesAndButtons.forEach((element:any )=> {
+            this.buttons.push(element.id)
+          });
+        })
+      }
+    })
+    this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
+    console.log("GetPermissionsOfRole", this.selectedPageOpions);
+    console.log("buttons", this.buttons);
+  }
+  removeDuplicates(arr: any[]):any[]{
+
+    return [...new Set(arr)]
+  }
+  isAuthorized(permissionId:number) : boolean{
+    return this.buttons.includes(permissionId)
   }
 }

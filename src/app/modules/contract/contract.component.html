@@ -1,7 +1,7 @@
 <c-card class="mb-4">
   <c-card-header class="d-flex justify-content-between align-items-center py-4">
     <strong>العقود</strong>
-    <button [disabled]="!query.fileTypeId"
+    <button [disabled]="!query.fileTypeId" *ngIf="isAuthorized(346)"
       class="btn btn-success" routerLink="add" [queryParams]="{fileTypeId: query.fileTypeId}">
       اضافة
       <i class='bx bx-plus'></i>
@@ -65,12 +65,12 @@
           <td>{{item.creationDate | date}}</td>
           <td>{{item?.fileTypeName}}</td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="visible=true" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(352)" (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="visible=true" class="btn btn-light m-0 p-2">
               {{item.finalStatusName? item.finalStatusName : 'لم يتم اضافة حالة'}}
             </button>
           </td>
           <td>
-            <button routerLink="add" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(348)" routerLink="add" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
               <i class='bx bx-edit'></i>
             </button>
           </td>

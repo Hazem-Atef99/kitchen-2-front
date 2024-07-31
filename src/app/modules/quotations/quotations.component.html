@@ -1,7 +1,7 @@
 <c-card class="mb-4">
   <c-card-header class="d-flex justify-content-between align-items-center py-4">
     <strong>عروض الأسعار</strong>
-    <button [disabled]="!query.fileTypeId"
+    <button [disabled]="!query.fileTypeId" *ngIf="isAuthorized(271)"
       class="btn btn-success" routerLink="add" [queryParams]="{fileTypeId: query.fileTypeId}">
       اضافة
       <i class='bx bx-plus'></i>
@@ -113,7 +113,7 @@
             </button>
           </td> -->
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetAllFollowUp()" [cModalToggle]="modalXl2.id" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(284)" (click)="clientFileId = item?.clientFileId;GetAllFollowUp()" [cModalToggle]="modalXl2.id" class="btn btn-light m-0 p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
                 <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
                 <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
@@ -121,7 +121,7 @@
             </button>
           </td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" [cModalToggle]="modalXl.id" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(280)" (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" [cModalToggle]="modalXl.id" class="btn btn-light m-0 p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
                 <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -130,12 +130,12 @@
             </button>
           </td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(288)" (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" [cModalToggle]="modalXl3.id" class="btn btn-light m-0 p-2">
               {{item.finalStatusName? item.finalStatusName : 'لم يتم اضافة حالة'}}
             </button>
           </td>
           <td>
-            <button (click)="clientFileId = item?.clientFileId;GetAllClientNotice(item)" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(276)" (click)="clientFileId = item?.clientFileId;GetAllClientNotice(item)" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
                 <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -144,7 +144,7 @@
             </button>
           </td>
           <td>
-            <button routerLink="add" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
+            <button routerLink="add" [disabled]="!isAuthorized(273)" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
               <i class='bx bx-edit'></i>
             </button>
           </td>
@@ -191,7 +191,7 @@
             <textarea type="text"  class="form-control" name="Note" id="Note" [(ngModel)]="Note"></textarea>
           </div>
         </div>
-        <div class="col-12 text-center mt-4">
+        <div class="col-12 text-center mt-4" *ngIf="isAuthorized(285)" >
           <button class="btn btn-success"  (click)="AddClientFileFollowUp()">
             اضافة
           </button>
@@ -255,7 +255,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 text-center mt-4">
+        <div class="col-12 text-center mt-4" *ngIf="isAuthorized(281)" >
           <button class="btn btn-success"  (click)="AddClientFileAttachment()">
             اضافة
           </button>
@@ -323,7 +323,7 @@
             <textarea type="text"  class="form-control" name="Note" id="Note" [(ngModel)]="Note"></textarea>
           </div>
         </div>
-        <div class="col-12 text-center mt-4">
+        <div class="col-12 text-center mt-4" *ngIf="isAuthorized(289)" >
           <button class="btn btn-success" [cModalToggle]="modalXl3.id"  (click)="AddFinalStatusList()">
             اضافة
           </button>
@@ -529,7 +529,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 text-center mt-4">
+      <div class="col-12 text-center mt-4" *ngIf="isAuthorized(277)" >
         <button class="btn btn-success"  (click)="AddNotice()">
           اضافة
         </button>

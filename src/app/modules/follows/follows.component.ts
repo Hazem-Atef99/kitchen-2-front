@@ -7,6 +7,7 @@ import { ClientsService } from '../clients/clients.service';
 import { Clients } from '../clients/modal/clients';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EMPTY } from 'rxjs';
+import { UsersService } from '../users/users.service';
 
 @Component({
   selector: 'app-follows',
@@ -30,16 +31,21 @@ export class FollowsComponent implements OnInit {
   FilterForm!:FormGroup
   clientId: any;
   visible=false;
+  pagesRoleToPatch: any[] = [];
+  selectedPageOpions: any[] = [];
+  buttons: any[] =[];
   constructor(private followsService:FollowsService,
               private _QuotationsService:QuotationsService,
               private toastr:ToastrService,
               private _ClientsService : ClientsService,
-              private _FormBuilder : FormBuilder) {
+              private _FormBuilder : FormBuilder,
+              private userService : UsersService) {
                 this.FilterForm=this.initFormFilter();
 
   }
   ngOnInit(): void {
    // this.GetAllFollowUp();
+   this.GetPermissionsOfRole(1)
     console.log(this.handleDate(Date.now()));
 
   }
@@ -183,5 +189,28 @@ return this._FormBuilder.group({
         this.allClientFileAttachment = res.data
       }
     })
+  }
+  GetPermissionsOfRole(id: any) {
+    this.userService.GetPermissionsOfRole(id).subscribe({
+      next: (res: any) => {
+        this.pagesRoleToPatch = res.data;
+        this.pagesRoleToPatch.forEach(power => {
+          this.selectedPageOpions.push(power.id)
+          power.pagesAndButtons.forEach((element:any )=> {
+            this.buttons.push(element.id)
+          });
+        })
+      }
+    })
+    this.selectedPageOpions=this.removeDuplicates(this.selectedPageOpions)
+    console.log("GetPermissionsOfRole", this.selectedPageOpions);
+    console.log("buttons", this.buttons);
+  }
+  removeDuplicates(arr: any[]):any[]{
+
+    return [...new Set(arr)]
+  }
+  isAuthorized(permissionId:number) : boolean{
+    return this.buttons.includes(permissionId)
   }
 }
