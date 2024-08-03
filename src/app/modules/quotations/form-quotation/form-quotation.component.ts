@@ -193,7 +193,7 @@ export class FormQuotationComponent implements OnInit {
     // },
   ]
   loadPriceOffer: any;
-  UnitsItemsbyCategory: any;
+  UnitsItemsbyCategory: any=[];
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
@@ -313,8 +313,8 @@ export class FormQuotationComponent implements OnInit {
               itemPrice: ele.itemPrice,
               notes: ele.notes,
               categoryId: ele.parentCategoryId,
-              unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
-              unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
+              unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+
             })
           } else if (ele.itemTypeId == 3) {
             this.myArrayAsForm2.push(
@@ -333,14 +333,17 @@ export class FormQuotationComponent implements OnInit {
               itemTypeId: 3,
               itemPrice: ele.itemPrice,
               notes: ele.notes,
-              categoryId: ele.parentCategoryId,
-              unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+              categoryId: ele.categoryId,
+              unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+              unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
             })
           }
         })
         this.countTotal()
       }
     })
+    console.log('My Array2',this.myArray2);
+    console.log('My Array1',this.myArray1);
   }
 
   initClientFileForm(): FormGroup {
@@ -437,8 +440,8 @@ export class FormQuotationComponent implements OnInit {
       eachItemPrice: this.items1Form.get('eachItemPrice')?.value,
       notes: this.items1Form.get('notes')?.value,
       categoryId: this.items1Form.get('categoryId')?.value,
-      unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.items1Form.get('itemId')?.value,)[0]?.description,
-      unit2: this.UnitsItemsbyCategory?.statuses.filter((item: any) => item.statusId == this.items1Form.get('categoryId')?.value,)[0]?.description,
+      unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.items1Form.get('itemId')?.value)[0]?.description,
+      unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == this.items1Form.get('categoryId')?.value)[0]?.description,
     })
   }
 
@@ -504,9 +507,17 @@ export class FormQuotationComponent implements OnInit {
   GetUnitsItemsbyCategory() {
     this._QuotationsService.GetUnitsItemsbyCategory().subscribe({
       next: (res: any) => {
-        this.UnitsItemsbyCategory = res.data
+        this.UnitsItemsbyCategory = res.data.statuses.map((status: any) => ({
+          ...status,
+          description: `${status.defaultDesc} ${status.description}`
+        }));
+        console.log(this.UnitsItemsbyCategory);
       }
+
+
+
     })
+
   }
 
   GetAllClients() {

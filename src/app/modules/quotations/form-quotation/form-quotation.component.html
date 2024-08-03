@@ -144,7 +144,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <label>الوحدة</label>
-                                                <ng-select [items]="UnitsItemsbyCategory?.statuses"
+                                                <ng-select [items]="UnitsItemsbyCategory"
                                                            bindLabel="description"
                                                            bindValue="statusId"
                                                            placeholder="اختر الوحدة"
@@ -188,7 +188,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr *ngFor="let units of myArray1; index as i">
+                                                    <tr *ngFor="let units of myArray2; index as i">
                                                       <td>{{units.unit}}</td>
                                                       <td>{{units.unit2}}</td>
                                                       <td>{{units.itemCount}}</td>
@@ -282,7 +282,7 @@
                                   </tr>
                                   </thead>
                                   <tbody>
-                                  <tr *ngFor="let units of myArray2; index as i">
+                                  <tr *ngFor="let units of myArray1; index as i">
                                     <td>{{units.unit}}</td>
 <!--                                    <td>{{units.unit2}}</td>-->
                                     <td>{{units.itemCount}}</td>
