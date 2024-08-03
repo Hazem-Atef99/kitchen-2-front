@@ -69,7 +69,7 @@ export class FormQuotationComponent implements OnInit {
       name: 'تصفيح الجدران من التوب',
       value: 'platingTopWall',
       itemTypeId: 4,
-      id: 227
+      id: 277
     },
     {
       isCount: false,
