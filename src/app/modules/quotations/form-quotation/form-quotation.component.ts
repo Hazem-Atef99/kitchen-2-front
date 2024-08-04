@@ -203,17 +203,21 @@ export class FormQuotationComponent implements OnInit {
   countTotal() {
     let count = 0;
     for (let i = 0; i < this.itemsFormArray.controls.length; i++) {
-      count += this.itemsFormArray.controls[i]?.get('itemPrice')?.value
+      count += (this.itemsFormArray.controls[i]?.get('itemCount')?.value!=0?
+       this.itemsFormArray.controls[i]?.get('itemPrice')?.value*this.itemsFormArray.controls[i]?.get('itemCount')?.value:
+       this.itemsFormArray.controls[i]?.get('itemCount')?.value )
     }
     this.TopCount = count
     let count1 = 0;
     for (let i = 0; i < this.myArrayAsForm1.length; i++) {
-      count1 += this.myArrayAsForm1[i]?.get('itemPrice')?.value
+      count1 += (this.myArrayAsForm1[i]?.get('itemCount')?.value!=0? this.myArrayAsForm1[i]?.get('itemPrice')?.value
+      *this.myArrayAsForm1[i]?.get('itemCount')?.value:this.myArrayAsForm1[i]?.get('itemPrice')?.value)
     }
     this.unitsCounts = count1
     let count2 = 0;
     for (let i = 0; i < this.myArrayAsForm2.length; i++) {
-      count2 += this.myArrayAsForm2[i]?.get('itemPrice')?.value
+      count2 +=(this.myArrayAsForm2[i]?.get('itemCount')?.value!=0? this.myArrayAsForm2[i]?.get('itemPrice')?.value
+      *this.myArrayAsForm2[i]?.get('itemCount')?.value:this.myArrayAsForm2[i]?.get('itemPrice')?.value)
     }
     this.accessoriesCount = count2
   }
@@ -296,6 +300,27 @@ export class FormQuotationComponent implements OnInit {
               itemTypeId: 4,
             })
           } else if (ele.itemTypeId == 1) {
+            this.myArrayAsForm2.push(
+              this._FormBuilder.group({
+                itemId: ele.itemId,
+                itemCount: ele.itemCount,
+                itemTypeId: 1,
+                itemPrice: ele.itemPrice,
+                notes: ele.notes,
+                categoryId: ele.parentCategoryId
+              })
+            )
+            this.myArray2.push({
+              itemId: ele.itemId,
+              itemCount: ele.itemCount,
+              itemTypeId: 1,
+              itemPrice: ele.itemPrice,
+              notes: ele.notes,
+              categoryId: ele.parentCategoryId,
+              unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+
+            })
+          } else if (ele.itemTypeId == 3) {
             this.myArrayAsForm1.push(
               this._FormBuilder.group({
                 itemId: ele.itemId,
@@ -307,27 +332,6 @@ export class FormQuotationComponent implements OnInit {
               })
             )
             this.myArray1.push({
-              itemId: ele.itemId,
-              itemCount: ele.itemCount,
-              itemTypeId: 3,
-              itemPrice: ele.itemPrice,
-              notes: ele.notes,
-              categoryId: ele.parentCategoryId,
-              unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
-
-            })
-          } else if (ele.itemTypeId == 3) {
-            this.myArrayAsForm2.push(
-              this._FormBuilder.group({
-                itemId: ele.itemId,
-                itemCount: ele.itemCount,
-                itemTypeId: 3,
-                itemPrice: ele.itemPrice,
-                notes: ele.notes,
-                categoryId: ele.parentCategoryId
-              })
-            )
-            this.myArray2.push({
               itemId: ele.itemId,
               itemCount: ele.itemCount,
               itemTypeId: 3,
@@ -419,6 +423,7 @@ export class FormQuotationComponent implements OnInit {
   }
 
   setPrice2(e: any) {
+
     let price = 0
     price = this.loadPriceOffer['accessories']?.statuses.filter((ele: any) => ele.statusId == e.target.value)[0].price
     this.items2Form.get('eachItemPrice')?.patchValue(price)

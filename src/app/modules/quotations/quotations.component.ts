@@ -241,6 +241,9 @@ export class QuotationsComponent implements OnInit {
         this.toastr.success(`${res.message}`);
         this.viewImg = []
         this.uploadedImg = []
+        value['clientFileId'] = "";
+        value['statusId'] = "";
+
         this.GetAllClientFileAttachment()
         this.GetShortClientFiles();
       }, error: (err: any) => {
@@ -258,10 +261,14 @@ export class QuotationsComponent implements OnInit {
     value['notes'] = this.Note;
     this._QuotationsService.AddFinalStatusListApi(value).subscribe({
       next: (res: any) => {
+        value['clientFileId'] = ""
+        value['finalStatusId'] = ""
+        value['notes'] = ""
         this.toastr.success(`${res.message}`);
         this.viewImg = []
         this.uploadedImg = []
-        this.GetAllFinalStatusClientFile()
+
+           this.GetAllFinalStatusClientFile()
         this.GetShortClientFiles();
       }, error: (err: any) => {
         this.toastr.error(`${err.message}`);
@@ -366,6 +373,8 @@ export class QuotationsComponent implements OnInit {
     })
   }
   GetAllFinalStatusClientFile() {
+    this.statusId=0;
+        this.Note="";
     this._QuotationsService.AllFinalStatusClientFile(this.clientFileId).subscribe({
       next: (res: any) => {
         console.log(res)
