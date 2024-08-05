@@ -109,6 +109,7 @@ export class QuotationsComponent implements OnInit {
     })
   }
   getReciveNotice(id:any){
+    this.selectedOptions=[];
     this._productionRequestsService.getReciveNotce(id).subscribe({
       next:(res:any)=>{
           console.log(res.data);

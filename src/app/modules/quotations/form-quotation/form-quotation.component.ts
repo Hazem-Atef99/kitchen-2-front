@@ -340,6 +340,7 @@ export class FormQuotationComponent implements OnInit {
               categoryId: ele.categoryId,
               unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
               unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
+              unitName:ele.unit
             })
           }
         })

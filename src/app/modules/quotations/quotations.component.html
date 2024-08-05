@@ -514,10 +514,13 @@
                 <div class="card-header m-0">
                   <h5>الاجهزه</h5>
               </div >
-                <div  class="col-2" *ngFor="let option of DevicesData let i= index ">
+
+                <div  class="col-2" *ngFor="let option of DevicesData  let i= index ">
                   <input type="checkbox" #checkbox name="selectedDevice"   [checked]="isSelected(option.statusId)"  formControlName="selectedDevice" [value]="option.statusId" (change)="selectOption($event, option)" (change)="selectOption($event, option)">
                   {{ option.defaultDesc }}
-                </div>
+
+              </div>
+
               </div>
 
             </c-col>
