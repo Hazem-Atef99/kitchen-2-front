@@ -300,7 +300,7 @@ export class FormQuotationComponent implements OnInit {
               itemTypeId: 4,
             })
           } else if (ele.itemTypeId == 1) {
-            this.myArrayAsForm2.push(
+            this.myArrayAsForm1.push(
               this._FormBuilder.group({
                 itemId: ele.itemId,
                 itemCount: ele.itemCount,
@@ -310,18 +310,20 @@ export class FormQuotationComponent implements OnInit {
                 categoryId: ele.parentCategoryId
               })
             )
-            this.myArray2.push({
+            this.myArray1.push({
               itemId: ele.itemId,
               itemCount: ele.itemCount,
               itemTypeId: 1,
               itemPrice: ele.itemPrice,
               notes: ele.notes,
               categoryId: ele.parentCategoryId,
-              unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
 
+              unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
+              unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
+              unitName:ele.unit
             })
           } else if (ele.itemTypeId == 3) {
-            this.myArrayAsForm1.push(
+            this.myArrayAsForm2.push(
               this._FormBuilder.group({
                 itemId: ele.itemId,
                 itemCount: ele.itemCount,
@@ -331,16 +333,14 @@ export class FormQuotationComponent implements OnInit {
                 categoryId: ele.parentCategoryId
               })
             )
-            this.myArray1.push({
+            this.myArray2.push({
               itemId: ele.itemId,
               itemCount: ele.itemCount,
               itemTypeId: 3,
               itemPrice: ele.itemPrice,
               notes: ele.notes,
               categoryId: ele.categoryId,
-              unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
-              unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
-              unitName:ele.unit
+              unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
             })
           }
         })

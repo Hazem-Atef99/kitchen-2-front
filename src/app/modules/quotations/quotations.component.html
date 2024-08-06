@@ -144,7 +144,7 @@
             </button>
           </td>
           <td>
-            <button routerLink="add" [disabled]="!isAuthorized(273)" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }" [cModalToggle]="modalXl4.id" class="btn btn-light m-0 p-2">
+            <button routerLink="add" [disabled]="!isAuthorized(273)" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }"  class="btn btn-light m-0 p-2">
               <i class='bx bx-edit'></i>
             </button>
           </td>
@@ -516,7 +516,7 @@
               </div >
 
                 <div  class="col-2" *ngFor="let option of DevicesData  let i= index ">
-                  <input type="checkbox" #checkbox name="selectedDevice"   [checked]="isSelected(option.statusId)"  formControlName="selectedDevice" [value]="option.statusId" (change)="selectOption($event, option)" (change)="selectOption($event, option)">
+                  <input type="checkbox" #checkbox name="selectedDevice"   [checked]="isSelected(option.statusId)"  formControlName="selectedDevice" [value]="option.statusId" (change)="selectOption($event, option)">
                   {{ option.defaultDesc }}
 
               </div>
@@ -533,7 +533,7 @@
         </div>
       </div>
       <div class="col-12 text-center mt-4" *ngIf="isAuthorized(277)" >
-        <button class="btn btn-success"  (click)="AddNotice()">
+        <button class="btn btn-success"   (click)="AddNotice()" [cModalToggle]="modalXl4.id">
           اضافة
         </button>
       </div>

@@ -109,15 +109,19 @@ export class QuotationsComponent implements OnInit {
     })
   }
   getReciveNotice(id:any){
-    this.selectedOptions=[];
+
     this._productionRequestsService.getReciveNotce(id).subscribe({
       next:(res:any)=>{
           console.log(res.data);
 
-          this.dataToPatch = res.data.devices; // Replace this with actual data
-          this.dataToPatch.forEach(device=>{
-            this.selectedOptions.push(device.id)
-          })
+          this.dataToPatch = res.data==null?[]:res.data.devices;
+          this.selectedOptions=[]; // Replace this with actual data
+          if(this.dataToPatch.length!=0){
+            this.dataToPatch.forEach(device=>{
+              this.selectedOptions.push(device.id)
+            })
+          }
+
         //statusCategoryById2.log("dataToPatchk",this.MyDevices);
         this.AddReceiveNotice.patchValue({
           salesId : res.data.salesId,

@@ -125,7 +125,7 @@
     <div class="card">
         <div class="card-header m-0 d-flex justify-content-between align-items-center py-4">
             <h5>الأجهزه</h5>
-            <button class="btn btn-success" (click)="addDevice()">
+            <button class="btn btn-success" [disabled]="!deviceForm.valid" (click)="addDevice()">
               حفظ
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                   viewBox="0 0 16 16">

@@ -48,7 +48,8 @@ export class FormTopComponent implements OnInit {
   addTop(){
 
     let formData = new FormData();
-    formData.append('ClientFileId',this.AddTopForm.get('ClientFileId')?.value)
+    formData.append('FileNo',this.AddTopForm.get('FileNo')?.value)
+    formData.append('ClientId',this.clientForm.get('clientId')?.value)
     formData.append('TypeId',this.AddTopForm.get('TypeId')?.value)
     formData.append('TopColor',this.AddTopForm.get('TopColor')?.value)
     formData.append('PanelTypeId',this.AddTopForm.get('PanelTypeId')?.value)
