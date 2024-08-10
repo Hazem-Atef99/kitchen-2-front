@@ -210,14 +210,12 @@ export class FormQuotationComponent implements OnInit {
     this.TopCount = count
     let count1 = 0;
     for (let i = 0; i < this.myArrayAsForm1.length; i++) {
-      count1 += (this.myArrayAsForm1[i]?.get('itemCount')?.value!=0? this.myArrayAsForm1[i]?.get('itemPrice')?.value
-      *this.myArrayAsForm1[i]?.get('itemCount')?.value:this.myArrayAsForm1[i]?.get('itemPrice')?.value)
+      count1 +=  this.myArrayAsForm1[i]?.get('itemPrice')?.value
     }
     this.unitsCounts = count1
     let count2 = 0;
     for (let i = 0; i < this.myArrayAsForm2.length; i++) {
-      count2 +=(this.myArrayAsForm2[i]?.get('itemCount')?.value!=0? this.myArrayAsForm2[i]?.get('itemPrice')?.value
-      *this.myArrayAsForm2[i]?.get('itemCount')?.value:this.myArrayAsForm2[i]?.get('itemPrice')?.value)
+      count2 += this.myArrayAsForm2[i]?.get('itemPrice')?.value
     }
     this.accessoriesCount = count2
   }
@@ -319,8 +317,8 @@ export class FormQuotationComponent implements OnInit {
               categoryId: ele.parentCategoryId,
 
               unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
-              unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == ele.categoryId,)[0]?.description,
-              unitName:ele.unit
+             // unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == ele.categoryId)[0]?.description,
+               unitName:ele.categoryDesc
             })
           } else if (ele.itemTypeId == 3) {
             this.myArrayAsForm2.push(
@@ -447,7 +445,7 @@ export class FormQuotationComponent implements OnInit {
       notes: this.items1Form.get('notes')?.value,
       categoryId: this.items1Form.get('categoryId')?.value,
       unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.items1Form.get('itemId')?.value)[0]?.description,
-      unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == this.items1Form.get('categoryId')?.value)[0]?.description,
+      unitName: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == this.items1Form.get('categoryId')?.value)[0]?.description,
     })
   }
 

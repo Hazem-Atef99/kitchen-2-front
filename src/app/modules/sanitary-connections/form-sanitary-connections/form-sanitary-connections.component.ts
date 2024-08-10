@@ -56,23 +56,16 @@ export class FormSanitaryConnectionsComponent implements OnInit {
     data.append('Attachement',this.AddSanitaryConnectionsForm.get('Attachement')?.value)
     data.append('TarkeebDate',this.handleDate(this.AddSanitaryConnectionsForm.get('TarkeebDate')?.value))
     data.append('KitchenHeight',this.AddSanitaryConnectionsForm.get('KitchenHeight')?.value)
-    if (!this.ID) {
+
 
       this.sanitaryConnectionService.AddSanitaryConnection(data).subscribe({next:(res:any)=>{
         this.toastr.success("تم الاضافة")
-        this._Router.navigateByUrl('/sanitaryConnections')
+        //this._Router.navigateByUrl('/sanitaryConnections')
+        this.GetAllSanitaryConnectionsByClientAndFileNo(this.AddSanitaryConnectionsForm.get('clientId')?.value,this.AddSanitaryConnectionsForm.get('FileNo')?.value)
       },error:(err:any)=>{
         this.toastr.error("حدث خطأ")
       }})
-    }else{
-      this.sanitaryConnectionService.updateSanitaryConnection(this.ID,data).subscribe({next:(res:any)=>{
-        this.toastr.success("تم التعديل")
-        this._Router.navigateByUrl('/sanitaryConnections')
 
-      },error:(err:any)=>{
-        this.toastr.error("حدث خطأ")
-      }})
-    }
 
   }
   initSanitaryConnectionsForm():FormGroup{
@@ -160,15 +153,15 @@ GetClientFileId(FileNo:any){
     this.sanitaryConnectionService.GetSanitaryConnectionById(id).subscribe({next:(res:any)=>{
       res.data
       this.clientForm.get('clientId')?.patchValue(res.data.clientId)
-      this.AddSanitaryConnectionsForm.patchValue({
-        clientId: res.data.clientId,
-        FileNo:res.data.fileNo,
-        PointId:res.data.pointId,
-        KitchenHeight:res.data.kitchenHeight,
-        TarkeebDate:this.handleDate(res.data.tarkeebDate),
-        Attachement:res.data.attachementPath,
-        Notes:res.data.notes,
-      })
+      // this.AddSanitaryConnectionsForm.patchValue({
+      //   clientId: res.data.clientId,
+      //   FileNo:res.data.fileNo,
+      //   PointId:res.data.pointId,
+      //   KitchenHeight:res.data.kitchenHeight,
+      //   TarkeebDate:this.handleDate(res.data.tarkeebDate),
+      //   Attachement:res.data.attachementPath,
+      //   Notes:res.data.notes,
+      // })
     }})
   }
   GetAllSanitaryConnectionsByClientAndFileNo(clientId:any , fileNo:any){
