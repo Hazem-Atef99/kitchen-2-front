@@ -313,8 +313,8 @@ export class QuotationsComponent implements OnInit {
 
   AddClientFileFollowUp() {
     let value: any = {};
-    value['clientFileId'] = this.clientFileId;
-    value['attachment'] = this.uploadedImg[0];
+    value['Id'] = this.clientFileId;
+    value['Attachment'] = this.uploadedImg[0];
     value['Note'] = this.Note;
     this._QuotationsService.AddClientFileFollowUp(value).subscribe({
       next: (res: any) => {

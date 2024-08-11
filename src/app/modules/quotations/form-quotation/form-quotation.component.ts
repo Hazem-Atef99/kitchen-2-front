@@ -203,9 +203,8 @@ export class FormQuotationComponent implements OnInit {
   countTotal() {
     let count = 0;
     for (let i = 0; i < this.itemsFormArray.controls.length; i++) {
-      count += (this.itemsFormArray.controls[i]?.get('itemCount')?.value!=0?
-       this.itemsFormArray.controls[i]?.get('itemPrice')?.value*this.itemsFormArray.controls[i]?.get('itemCount')?.value:
-       this.itemsFormArray.controls[i]?.get('itemCount')?.value )
+      count += this.itemsFormArray.controls[i]?.get('itemPrice')?.value
+
     }
     this.TopCount = count
     let count1 = 0;
