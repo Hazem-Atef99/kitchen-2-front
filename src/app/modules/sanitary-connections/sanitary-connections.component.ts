@@ -60,6 +60,7 @@ export class SanitaryConnectionsComponent implements OnInit {
         this.toastr.success(`${res.message}`);
         this.viewImg = []
         this.uploadedImg = []
+        value['statusId'] = ''
         this.GetAllClientFileAttachment()
         this.GetAllSanitaryConnections();
         this.visible=true;
