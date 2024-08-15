@@ -100,8 +100,8 @@ export class ClientPaymentComponent {
       paymentDate:this.clientForm.get('paymentDate')?.value,
       paidTypeId:this.clientForm.get('paidTypeId')?.value,
       notes:this.clientForm.get('notes')?.value,
-      checkNo:this.payType==1?this.clientForm.get('checkNo')?.value:EMPTY,
-      checkDate:this.payType==1?this.clientForm.get('checkDate')?.value:EMPTY
+      checkNo:this.payType==1?this.clientForm.get('checkNo')?.value:null,
+      checkDate:this.payType==1?this.clientForm.get('checkDate')?.value:null
     }
 this._ClientPaymentService.AddClientPayment(data).subscribe(res=>{
   this.toastr.success('تم اضافة المستند')
