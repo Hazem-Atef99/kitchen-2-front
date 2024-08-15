@@ -139,9 +139,11 @@ GetFileNo(clientId:any){
 }
 GetClientFileId(FileNo:any){
 this.topService.getClietFileId(this.clientId,FileNo).subscribe((res:any)=>{
+
   this.AddTopForm.patchValue({
     ClientFileId:res.data.clientFileId
   })
+  //this.GetTopById(this.detailId)
 })
 }
 
