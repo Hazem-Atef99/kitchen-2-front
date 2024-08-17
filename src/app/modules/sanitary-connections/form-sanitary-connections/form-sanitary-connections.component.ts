@@ -153,22 +153,22 @@ GetClientFileId(FileNo:any){
     this.sanitaryConnectionService.GetSanitaryConnectionById(id).subscribe({next:(res:any)=>{
       res.data
       this.clientForm.get('clientId')?.patchValue(res.data.clientId)
-      // this.AddSanitaryConnectionsForm.patchValue({
-      //   clientId: res.data.clientId,
-      //   FileNo:res.data.fileNo,
-      //   PointId:res.data.pointId,
-      //   KitchenHeight:res.data.kitchenHeight,
-      //   TarkeebDate:this.handleDate(res.data.tarkeebDate),
-      //   Attachement:res.data.attachementPath,
-      //   Notes:res.data.notes,
-      // })
+      this.AddSanitaryConnectionsForm.patchValue({
+        clientId: res.data.clientId,
+        FileNo:res.data.fileNo,
+        PointId:res.data.pointId,
+        KitchenHeight:res.data.kitchenHeight,
+        TarkeebDate:this.handleDate(res.data.tarkeebDate),
+        Attachement:res.data.attachementPath,
+        Notes:res.data.notes,
+      })
     }})
   }
   GetAllSanitaryConnectionsByClientAndFileNo(clientId:any , fileNo:any){
     this.sanitaryConnectionService.GetAllSanitaryConnectionsByClientAndFileNo(clientId , fileNo).subscribe({ next: (value: any) => {
       this.sanitaryConnections=value.data;
       if (this.sanitaryConnections.length==0) {
-        this.toastr.error("لا يوجد توصيلات صحيه لهذا الملف")
+       // this.toastr.error("لا يوجد توصيلات صحيه لهذا الملف")
       }
     }
    })

@@ -47,15 +47,27 @@ export class FormTopComponent implements OnInit {
   }
   addTop(){
     console.log(this.AddTopForm.value);
+    let data={
+      fileNo :this.AddTopForm.get('FileNo')?.value,
+      clientId :this.clientForm.get('clientId')?.value,
+      typeId :this.AddTopForm.get('TypeId')?.value,
+      topColor :this.AddTopForm.get('TopColor')?.value,
+      panelTypeId :this.AddTopForm.get('PanelTypeId')?.value,
+      topHieght :this.AddTopForm.get('TopHieght')?.value,
+      sinkHoleId :this.AddTopForm.get('SinkHoleId')?.value,
+      notes :this.AddTopForm.get('Notes')?.value,
+
+
+    }
     if (this.detailId) {
-      this.topService.UpdateTop(this.detailId,this.AddTopForm.value).subscribe(res=>{
+      this.topService.UpdateTop(this.detailId,data).subscribe(res=>{
         this.toastr.success("added")
         this._Router.navigateByUrl('/top')
       },err=>{
         this.toastr.error("not")
       })
     }else{
-      this.topService.AddTop(this.AddTopForm.value).subscribe(res=>{
+      this.topService.AddTop(data).subscribe(res=>{
         this.toastr.success("added")
         this._Router.navigateByUrl('/top')
       },err=>{

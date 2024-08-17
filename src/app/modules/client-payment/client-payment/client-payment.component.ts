@@ -103,11 +103,26 @@ export class ClientPaymentComponent {
       checkNo:this.payType==1?this.clientForm.get('checkNo')?.value:null,
       checkDate:this.payType==1?this.clientForm.get('checkDate')?.value:null
     }
-this._ClientPaymentService.AddClientPayment(data).subscribe(res=>{
-  this.toastr.success('تم اضافة المستند')
-},err=>{
-  this.toastr.error('حدث خطأ ما')
-})
+    this._ClientPaymentService.AddClientPayment(data).subscribe(
+      //next:
+       (res: any) => {
+        if (res.message) {
+          this.toastr.error(res.message)
+        }else{
+          this.toastr.success('تم اضافة المستند');
+          console.log('Response:', res);
+        }
+
+      },
+       (err: any) => {
+        console.log('Error:', err);
+        if (err.message) {
+          this.toastr.error(err.message);
+        } else {
+          this.toastr.error('An unknown error occurred.');
+        }
+      }
+    );
   }
 
 }
