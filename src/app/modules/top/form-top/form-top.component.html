@@ -120,7 +120,7 @@
     </c-col>
   </form>
 </c-card>
-<c-card class="mb-4 py-4">
+<c-card class="mb-4 py-4" *ngIf="detailId" >
   <c-col class="mx-2 my-4" >
     <div class="card">
         <div class="card-header m-0 d-flex justify-content-between align-items-center py-4">
@@ -139,23 +139,23 @@
             <div class="row">
               <div class="col-4">
                 <label>الطول</label>
-                <input aria-label="default input example" cFormControl formControlName="length"
+                <input aria-label="default input example" cFormControl formControlName="Length"
                     type="number" />
             </div>
             <div class="col-4">
               <label>العرض</label>
-              <input aria-label="default input example" cFormControl formControlName="width"
+              <input aria-label="default input example" cFormControl formControlName="Width"
                   type="number" />
           </div>
           <div class="col-4">
             <label>الارتفاع</label>
-            <input aria-label="default input example" cFormControl formControlName="height"
+            <input aria-label="default input example" cFormControl formControlName="Height"
                 type="number" />
         </div>
         <div class="col-8 mt-2">
           <label>الملاحظات</label>
           <textarea  aria-label="default input example" cFormControl
-                    formControlName="notes" rows="3">
+                    formControlName="Notes" rows="3">
           </textarea>
         </div>
         <div class="col-md-4 mt-3">

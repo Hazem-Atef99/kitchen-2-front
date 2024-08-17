@@ -175,8 +175,11 @@ export class ContractFormComponent implements OnInit {
     }
   }
   setClient(e: any){
-    if (this.fileTypeId) {
 
+
+    if (this.clientFileId) {
+
+      console.log(e);
       this.AddClientFileForm.patchValue({
         phoneNumber: e.mobile,
         address: e.email,
@@ -220,6 +223,8 @@ export class ContractFormComponent implements OnInit {
           invoiceDate: newInvoiceDate,
           withTax: data.withTax,
           notes: data.notes,
+          phoneNumber:data.client.mobile,
+          address:data.client.email
         });
         // console.log(this.newLoadPriceOffer)
         data.withTax == 1 ? this.checkValue = true : this.checkValue = false

@@ -27,7 +27,7 @@ export class FormTopComponent implements OnInit {
   viewImageContent:any[] = [];
   viewUploadedImageContent:any[] = [];
   ShowImage: any;
-  detailId: string | null;
+  detailId: any ;
   constructor(private _ClientsService:ClientsService,
               private _FormBuilder: FormBuilder,
               private _activatedRoute:ActivatedRoute,
@@ -46,29 +46,16 @@ export class FormTopComponent implements OnInit {
     this.GetTopById(this.detailId)
   }
   addTop(){
-
-    let formData = new FormData();
-    formData.append('FileNo',this.AddTopForm.get('FileNo')?.value)
-    formData.append('ClientId',this.clientForm.get('clientId')?.value)
-    formData.append('TypeId',this.AddTopForm.get('TypeId')?.value)
-    formData.append('TopColor',this.AddTopForm.get('TopColor')?.value)
-    formData.append('PanelTypeId',this.AddTopForm.get('PanelTypeId')?.value)
-    formData.append('TopHieght',this.AddTopForm.get('TopHieght')?.value)
-    formData.append('SinkHoleId',this.AddTopForm.get('SinkHoleId')?.value)
-    this.AddedDevices.forEach(device=>{
-      formData.append('devices',JSON.stringify(device))
-    })
-
     console.log(this.AddTopForm.value);
     if (this.detailId) {
-      this.topService.UpdateTop(this.detailId,formData).subscribe(res=>{
+      this.topService.UpdateTop(this.detailId,this.AddTopForm.value).subscribe(res=>{
         this.toastr.success("added")
         this._Router.navigateByUrl('/top')
       },err=>{
         this.toastr.error("not")
       })
     }else{
-      this.topService.AddTop(formData).subscribe(res=>{
+      this.topService.AddTop(this.AddTopForm.value).subscribe(res=>{
         this.toastr.success("added")
         this._Router.navigateByUrl('/top')
       },err=>{
@@ -102,11 +89,11 @@ this.GetFileNo(this.clientId);
 }
 initDeciveForm():FormGroup{
   return this._FormBuilder.group({
-    width:['', [Validators.required]],
-    height:['', [Validators.required]],
-    length:['', [Validators.required]],
-    notes:['', [Validators.required]],
-    attachmentPath:['', [Validators.required]],
+    Width:['', [Validators.required]],
+    Height:['', [Validators.required]],
+    Length:['', [Validators.required]],
+    Notes:['', [Validators.required]],
+    AttachmentPath:['', [Validators.required]],
 
   })
 }
@@ -120,7 +107,6 @@ initTopForm(){
     TopHieght:['',[Validators.required]],
     SinkHoleId:['',[Validators.required]],
     Notes:['',[Validators.required]],
-    devices: this._FormBuilder.array([]),
   })
 }
 GetAllClients() {
@@ -153,6 +139,17 @@ LoadClientFileTopPage(){
 }
 addDevice(){
 this.AddedDevices.push(this.deviceForm.value)
+let data = new FormData();
+data.append('ClientFileTopId',this.detailId?.toString());
+data.append('Width',this.deviceForm.get('Width')?.value);
+data.append('Height',this.deviceForm.get('Height')?.value);
+data.append('Length',this.deviceForm.get('Length')?.value);
+data.append('Notes',this.deviceForm.get('Notes')?.value);
+data.append('AttachmentPath',this.deviceForm.get('AttachmentPath')?.value);
+this.topService.AddTopDevices(data).subscribe((res:any)=>{
+console.log(res.errors);
+this.GetTopById(this.detailId)
+})
 console.log(this.AddedDevices);
 this.deviceForm.reset()
 this.uploadedImg = []
@@ -166,7 +163,7 @@ onImageSelected(event: any): void {
   this.viewImg = []
   this.uploadedImg = []
   if (event.target.files && event.target.files[0]) {
-    this.deviceForm.get('attachmentPath')?.patchValue(event.target.files[0])
+    this.deviceForm.get('AttachmentPath')?.patchValue(event.target.files[0])
     const reader = new FileReader();
     this.uploadedImg.push(event.target.files.item(0));
     reader.onload = (event: any) => {
@@ -176,7 +173,7 @@ onImageSelected(event: any): void {
   }
 }
 Getimage(index:any){
-  let image =this.AddedDevices[index].attachmentPath
+  let image =this.AddedDevices[index].AttachmentPath
 
 const reader = new FileReader();
     this.viewUploadedImageContent.push(image);

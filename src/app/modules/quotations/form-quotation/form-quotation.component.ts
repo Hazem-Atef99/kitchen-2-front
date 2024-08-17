@@ -235,6 +235,12 @@ export class FormQuotationComponent implements OnInit {
       this.itemsFormArray.controls[index].patchValue({
         itemTypeId: ele.itemTypeId
       })
+      this.items1Form.controls[index].patchValue({
+        itemTypeId: ele.itemTypeId
+      })
+      this.items2Form.controls[index].patchValue({
+        itemTypeId: ele.itemTypeId
+      })
     })
     this.LoadPriceOffer();
     this.GetUnitsItemsbyCategory();
@@ -345,6 +351,7 @@ export class FormQuotationComponent implements OnInit {
         this.countTotal()
       }
     })
+    console.log(this.myArrayAsForm1);
     console.log('My Array2',this.myArray2);
     console.log('My Array1',this.myArray1);
   }
@@ -358,24 +365,8 @@ export class FormQuotationComponent implements OnInit {
       discount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
       accessoryDiscount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
       items: this._FormBuilder.array([]),
-      items1: this._FormBuilder.group({
-        itemId: [null, [Validators.required]],
-        itemCount: [1, [Validators.required]],
-        itemTypeId: [1, [Validators.required]],
-        itemPrice: [null],
-        eachItemPrice: [null],
-        notes: [null],
-        categoryId: [null, [Validators.required]]
-      }),
-      items2: this._FormBuilder.group({
-        itemId: [null, [Validators.required]],
-        itemCount: [1, [Validators.required]],
-        itemTypeId: [3, [Validators.required]],
-        itemPrice: [null],
-        eachItemPrice: [null],
-        notes: [null],
-        categoryId: [null, [Validators.required]]
-      })
+      items1: this._FormBuilder.array([]),
+      items2: this._FormBuilder.array([]),
     })
   }
 
@@ -468,11 +459,11 @@ export class FormQuotationComponent implements OnInit {
   }
 
   get items1Form() {
-    return this.AddClientFileForm.controls["items1"]
+    return this.AddClientFileForm.controls["items1"]as FormArray;
   }
 
   get items2Form() {
-    return this.AddClientFileForm.controls["items2"]
+    return this.AddClientFileForm.controls["items2"]as FormArray;
   }
 
   addItemsFormArray() {
@@ -538,12 +529,15 @@ export class FormQuotationComponent implements OnInit {
 
   AddClientFile() {
     for (let i = 0; i < this.myArrayAsForm1.length; i++) {
-      this.itemsFormArray.push(this.myArrayAsForm1[i])
+      this.items1Form.push(this.myArrayAsForm1[i])
     }
     for (let i = 0; i < this.myArrayAsForm2.length; i++) {
-      this.itemsFormArray.push(this.myArrayAsForm2[i])
+      this.items1Form.push(this.myArrayAsForm2[i])
     }
+    console.log(this.AddClientFileForm.value);
     if (!this.clientFileId) {
+
+
       this._QuotationsService.AddClientFile(this.AddClientFileForm.value).subscribe({
         next: (res: any) => {
           this.toastr.success(`${res.message}`);
