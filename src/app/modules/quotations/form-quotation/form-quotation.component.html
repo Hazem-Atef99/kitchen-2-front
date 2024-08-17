@@ -82,7 +82,7 @@
                                                 <div class="col-2" *ngIf="ListOfItems[i].isCount">
                                                     <label>العدد</label>
                                                     <input  aria-label="default input example" cFormControl
-                                                        formControlName="itemCount" type="number" (keyup)="getPrice(i)"
+                                                        formControlName="itemCount" type="number" (change)="getPrice(i)"
                                                     />
                                                 </div>
                                                 <div class="col-2">
@@ -155,7 +155,7 @@
                                             <div class="col-2">
                                                 <label>العدد</label>
                                                 <input aria-label="default input example" cFormControl
-                                                    formControlName="itemCount" type="number" (keyup)="getPrice1()"/>
+                                                    formControlName="itemCount" type="number" (change)="getPrice1()"/>
                                             </div>
                                             <div class="col-2">
                                                 <label>السعر</label>
@@ -249,7 +249,7 @@
                             <div class="col-2">
                               <label>العدد</label>
                               <input aria-label="default input example" cFormControl
-                                     formControlName="itemCount" type="number" (keyup)="getPrice2(); setPrice2($event)"/>
+                                     formControlName="itemCount" type="number" (change)="getPrice2(); setPrice2($event)"/>
                             </div>
                             <div class="col-2">
                               <label>السعر</label>

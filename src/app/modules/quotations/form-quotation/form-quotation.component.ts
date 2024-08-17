@@ -203,9 +203,8 @@ export class FormQuotationComponent implements OnInit {
   countTotal() {
     let count = 0;
     for (let i = 0; i < this.itemsFormArray.controls.length; i++) {
-      count += (this.itemsFormArray.controls[i]?.get('itemCount')?.value!=0?
-       this.itemsFormArray.controls[i]?.get('itemPrice')?.value*this.itemsFormArray.controls[i]?.get('itemCount')?.value:
-       this.itemsFormArray.controls[i]?.get('itemCount')?.value )
+      count += this.itemsFormArray.controls[i]?.get('itemPrice')?.value
+
     }
     this.TopCount = count
     let count1 = 0;
@@ -300,6 +299,7 @@ export class FormQuotationComponent implements OnInit {
               categoryId: ele.parentCategoryId,
               notes: ele.notes,
               itemPrice: ele.itemPrice,
+              eachItemPrice:ele.itemPrice,
               itemCount: ele.itemCount,
               itemTypeId: 4,
             })
@@ -311,7 +311,7 @@ export class FormQuotationComponent implements OnInit {
                 itemTypeId: 1,
                 itemPrice: ele.itemPrice,
                 notes: ele.notes,
-                categoryId: ele.parentCategoryId
+                categoryId: ele.categoryId
               })
             )
             this.myArray1.push({
@@ -320,7 +320,7 @@ export class FormQuotationComponent implements OnInit {
               itemTypeId: 1,
               itemPrice: ele.itemPrice,
               notes: ele.notes,
-              categoryId: ele.parentCategoryId,
+              categoryId: ele.categoryId,
 
               unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == ele.itemId,)[0]?.description,
              // unit2: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == ele.categoryId)[0]?.description,
@@ -334,7 +334,7 @@ export class FormQuotationComponent implements OnInit {
                 itemTypeId: 3,
                 itemPrice: ele.itemPrice,
                 notes: ele.notes,
-                categoryId: ele.parentCategoryId
+                categoryId: ele.categoryId
               })
             )
             this.myArray2.push({
@@ -389,8 +389,10 @@ export class FormQuotationComponent implements OnInit {
   }
 
   getPrice(i: number) {
+    let statusId = this.itemsFormArray.controls[i]?.get('itemId')?.value;
+    let eachitemPrice = this.loadPriceOffer[this.ListOfItems[i].value]?.statuses.filter((ele: any) => ele.statusId == this.itemsFormArray.controls[i]?.get('itemId')?.value)[0].price
     let totPrice = 0
-    totPrice = (this.itemsFormArray.controls[i]?.get('eachItemPrice')?.value * this.itemsFormArray.controls[i]?.get('itemCount')?.value)
+    totPrice = (eachitemPrice * this.itemsFormArray.controls[i]?.get('itemCount')?.value)
     this.itemsFormArray.controls[i]?.get('itemPrice')?.patchValue(totPrice)
     console.log("price",totPrice);
 
@@ -459,11 +461,11 @@ export class FormQuotationComponent implements OnInit {
   }
 
   get items1Form() {
-    return this.AddClientFileForm.controls["items1"]as FormArray;
+    return this.AddClientFileForm.controls["items1"] as FormArray;
   }
 
   get items2Form() {
-    return this.AddClientFileForm.controls["items2"]as FormArray;
+    return this.AddClientFileForm.controls["items2"] as FormArray;
   }
 
   addItemsFormArray() {
