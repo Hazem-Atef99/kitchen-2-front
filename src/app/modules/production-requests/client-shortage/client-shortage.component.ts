@@ -133,6 +133,14 @@ export class ClientShortageComponent implements OnInit {
     console.log(this.detailsForm.value);
     this.productionRequestService.AddClientShortagedetails(this.detailsForm.value).subscribe({next:(res:any)=>{
       this.toastr.success("تم اضافة التفاصيل")
+      this.detailsForm.patchValue({
+        bayan:'',
+        hieght:'',
+        width:'',
+        itemCount:'',
+        qshatColor:'',
+        notes:''
+      });
       this.GetAllShortageDetails(this.clientShortageId)
     },
     error:(err:any)=>{

@@ -6,6 +6,7 @@ import { Clients, DataClients } from '../../clients/modal/clients';
 import { ClientsService } from '../../clients/clients.service';
 import { ContractService } from '../../contract/contract.service';
 import { EMPTY } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-payment',
@@ -29,6 +30,7 @@ export class ClientPaymentComponent {
               private _ClientsService:ClientsService,
               private _ClientPaymentService:ClientPaymentService,
               private _ConttactService:ContractService,
+              private _Router:Router,
               private toastr:ToastrService) {
 
     this.clientForm=this.initClientForm()
@@ -106,10 +108,12 @@ export class ClientPaymentComponent {
     this._ClientPaymentService.AddClientPayment(data).subscribe(
       //next:
        (res: any) => {
-        if (res.message) {
+        if (res.message!="Sucssed") {
           this.toastr.error(res.message)
         }else{
+
           this.toastr.success('تم اضافة المستند');
+          this._Router.navigateByUrl('/home')
           console.log('Response:', res);
         }
 

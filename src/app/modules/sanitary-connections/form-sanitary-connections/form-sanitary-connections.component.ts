@@ -60,6 +60,16 @@ export class FormSanitaryConnectionsComponent implements OnInit {
 
       this.sanitaryConnectionService.AddSanitaryConnection(data).subscribe({next:(res:any)=>{
         this.toastr.success("تم الاضافة")
+        this.viewImg = []
+        this.uploadedImg = []
+        this.AddSanitaryConnectionsForm.patchValue({
+          PointId:'',
+          KitchenHeight:'',
+          TarkeebDate:'',
+          Attachement:'',
+          Notes:''
+
+        })
         //this._Router.navigateByUrl('/sanitaryConnections')
         this.GetAllSanitaryConnectionsByClientAndFileNo(this.AddSanitaryConnectionsForm.get('clientId')?.value,this.AddSanitaryConnectionsForm.get('FileNo')?.value)
       },error:(err:any)=>{

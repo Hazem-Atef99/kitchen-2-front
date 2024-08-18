@@ -399,6 +399,7 @@ export class FormQuotationComponent implements OnInit {
 
   getPrice(i: number) {
     let statusId = this.itemsFormArray.controls[i]?.get('itemId')?.value;
+    console.log(i)
     let eachitemPrice = this.loadPriceOffer[this.ListOfItems[i].value]?.statuses.filter((ele: any) => ele.statusId == this.itemsFormArray.controls[i]?.get('itemId')?.value)[0].price
     let totPrice = 0
     totPrice = (eachitemPrice * this.itemsFormArray.controls[i]?.get('itemCount')?.value)
