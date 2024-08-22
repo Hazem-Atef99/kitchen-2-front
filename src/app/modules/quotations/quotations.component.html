@@ -210,7 +210,7 @@
                 <div class="col-md-6 mb-3" *ngFor="let item of allClientFileFollowUp">
                   <div class="row" *ngIf="item">
                     <div class="col-3 card-image p-0 m-2 position-relative">
-                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="Domain+item.attachmentPath" />
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item.attachmentPath" />
                       <p>{{item.statusName}}</p>
                     </div>
                   </div>
@@ -284,7 +284,7 @@
                 <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
                   <div class="row" *ngIf="item">
                     <div class="col-3 card-image p-0 m-2 position-relative">
-                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="Domain+item.attachmentPath" />
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item.attachmentPath" />
                       <p>{{item.statusName}}</p>
                     </div>
                   </div>
