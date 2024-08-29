@@ -137,18 +137,19 @@
                                                            bindLabel="description"
                                                            bindValue="statusId"
                                                            placeholder="اختر الوحدات"
-                                                           (change)="setPrice1($event); getPrice1()"
+                                                           (change)="setPrice1($event);"
                                                            formControlName="itemId">
                                                 </ng-select>
 
                                             </div>
                                             <div class="col-4">
                                                 <label>الوحدة</label>
-                                                <ng-select [items]="UnitsItemsbyCategory"
+                                                <ng-select #selectUnit [items]="UnitsItemsbyCategory"
                                                            bindLabel="description"
                                                            bindValue="statusId"
                                                            placeholder="اختر الوحدة"
-                                                           formControlName="categoryId">
+                                                           formControlName="categoryId"
+                                                           (change)="getPrice1()">
                                                 </ng-select>
                                             </div>
 
@@ -316,7 +317,7 @@
                   <div class="row">
                       <div class="col-4">
                           <label>الخصم الاضافى</label>
-                          <input [pattern]="'^[0-9]+([.]\d+)?$'" aria-label="default input example" cFormControl formControlName="additionaldiscount"
+                          <input [pattern]="'^[0-9]+([.]\d+)?$'" aria-label="default input example" cFormControl formControlName="additionaldiscount" (ngModelChange)="setTopPriceAfterDis()"
                               type="number" />
                               <div *ngIf="AddClientFileForm.get('additionaldiscount')?.invalid && (AddClientFileForm.get('additionaldiscount')?.dirty || AddClientFileForm.get('additionaldiscount')?.touched)">
                                 <div style="color: red;" *ngIf="AddClientFileForm.get('additionaldiscount')?.errors">
@@ -326,7 +327,8 @@
                       </div>
                     <div class="col-4">
                       <label>خصم الوحدات</label>
-                      <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="discount"
+                      <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="discount"  (ngModelChange)="setUnitPriceAfterDis()"
+
                              type="number" />
                              <div *ngIf="AddClientFileForm.get('discount')?.invalid && (AddClientFileForm.get('discount')?.dirty || AddClientFileForm.get('discount')?.touched)">
                               <div style="color: red;" *ngIf="AddClientFileForm.get('discount')?.errors">
@@ -336,7 +338,7 @@
                     </div>
                     <div class="col-4">
                       <label>خصم الاكسسوارات</label>
-                      <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="accessoryDiscount"
+                      <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="accessoryDiscount" (ngModelChange)="setaccPriceAfterDis()"
                              type="number" />
 
                     <div *ngIf="AddClientFileForm.get('accessoryDiscount')?.invalid && (AddClientFileForm.get('accessoryDiscount')?.dirty || AddClientFileForm.get('accessoryDiscount')?.touched)">
@@ -349,17 +351,33 @@
               </div>
 
               <div class="card-body">
-                  <div class="row">
+                  <div class="row ">
                     <div class="col-4">
+                      <div>
                       مجموع التوب: {{TopCount}}
                     </div>
-                    <div class="col-4">
-                      مجموع الوحدات: {{unitsCounts}}
+                    <div *ngIf="PriceTopAfterdis" >
+                      مجموع التوب بعد الخصم: {{PriceTopAfterdis}}
+                    </div>
                     </div>
                     <div class="col-4">
+                      <div>
+                      مجموع الوحدات: {{unitsCounts}}
+                      </div>
+                      <div *ngIf="unitsCountsAfterDis" >
+                      مجموع الوحدات بعد الخصم: {{unitsCountsAfterDis}}
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div>
                       مجموع الاكسسوارات: {{accessoriesCount}}
+                      </div>
+                      <div *ngIf="accessCountsAfterDis" >
+                      مجموع الاكسسوارات بعد الخصم: {{accessCountsAfterDis}}
+                      </div>
                     </div>
                   </div>
+                  <div *ngIf="PriceTopAfterdis" class="col-8 d-flex justify-content-end" style="width: 48.666667%;">المجموع الكلي بعد الخصم : {{TotalCountAfterdis}}</div>
               </div>
           </div>
       </c-col>

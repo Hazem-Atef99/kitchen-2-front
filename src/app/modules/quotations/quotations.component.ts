@@ -99,6 +99,8 @@ export class QuotationsComponent implements OnInit {
     this.GetStatusCategoryById();
     this.GetPermissionsOfRole(1);
     this.getDevices()
+    this.GetLoadFinalStatusList()
+    this.GetAllUsers()
     console.log(this.device)
   }
   getDevices(){

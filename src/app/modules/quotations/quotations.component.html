@@ -43,27 +43,28 @@
       </c-form-check>
     </c-col> -->
   </c-row>
-  <!-- <c-row class="px-2 mt-4">
+  <c-row class="px-2 mt-4">
     <c-col md="4">
-      <input aria-label="default input example" cFormControl placeholder="البحث" type="text" />
+      <label>ابحث بالاسم</label>
+      <input aria-label="default input example" cFormControl type="text" />
     </c-col>
     <c-col md="4">
-      <select aria-label="Default select example" cSelect>
-        <option>اختر المبيعات</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
+      <label>اختر الموظف</label>
+      <ng-select [items]="allUsersData"
+                             bindLabel="userName"
+                             bindValue="id"
+                             >
+                  </ng-select>
     </c-col>
     <c-col md="4">
-      <select aria-label="Default select example" cSelect>
-        <option>اختر الحاله</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
+      <label>اختر الحاله</label>
+      <ng-select [items]="LoadFinalStatusList"
+      bindLabel="defaultDesc"
+      bindValue="statusId"
+     >
+</ng-select>
     </c-col>
-  </c-row> -->
+  </c-row>
 </c-card>
 <c-col xs="12">
   <c-card class="mb-4">
@@ -283,8 +284,10 @@
               <div class="row">
                 <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
                   <div class="row" *ngIf="item">
-                    <div class="col-3 card-image p-0 m-2 position-relative">
-                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item.attachmentPath" />
+                    <div class="col-3 card-image p-0 m-2 position-relative" >
+                      <a [href]="item.attachmentPath" target="_blank">
+                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item.attachmentPath"/>
+                    </a>
                       <p>{{item.statusName}}</p>
                     </div>
                   </div>
@@ -351,7 +354,7 @@
                   <tr *ngFor="let item of AllFinalStatusClientFile">
                     <td>{{item.toValue}}</td>
                     <td>{{item.notes}}</td>
-                    <td>{{item.creationDate | date}}</td>
+                    <td>{{item.creationDate | date:'yyyy-MM-dd HH:mm'}}</td>
                     <td>{{item?.fileTypeName}}</td>
                   </tr>
                   </tbody>

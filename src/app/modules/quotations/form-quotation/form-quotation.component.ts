@@ -1,10 +1,11 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {Component, OnInit, HostListener, ViewChild, ElementRef} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {QuotationsService} from '../quotations.service';
 import {ClientsService} from '../../clients/clients.service';
 import {Clients, DataClients} from '../../clients/modal/clients';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 
 @Component({
@@ -13,7 +14,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./form-quotation.component.scss']
 })
 export class FormQuotationComponent implements OnInit {
-
+  @ViewChild('selectUnit', { static: false }) selectUnit!: NgSelectComponent;
   AddClientFileForm!: FormGroup;
   allClients: DataClients[] = [];
   myArray1: any = [];
@@ -194,6 +195,10 @@ export class FormQuotationComponent implements OnInit {
   ]
   loadPriceOffer: any;
   UnitsItemsbyCategory: any=[];
+  PriceTopAfterdis: any;
+  unitsCountsAfterDis: any;
+  accessCountsAfterDis: any;
+  TotalCountAfterdis: any;
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
@@ -216,7 +221,7 @@ export class FormQuotationComponent implements OnInit {
     for (let i = 0; i < this.myArrayAsForm2.length; i++) {
       count2 += this.myArrayAsForm2[i]?.get('itemPrice')?.value
     }
-    this.accessoriesCount = count2
+    this.accessCountsAfterDis=count2
   }
 
   constructor(
@@ -450,6 +455,10 @@ export class FormQuotationComponent implements OnInit {
       unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.items1Form.get('itemId')?.value)[0]?.description,
       unitName: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == this.items1Form.get('categoryId')?.value)[0]?.description,
     })
+    this.items1Form.get('categoryId')?.patchValue('')
+    this.items1Form.get('itemPrice')?.patchValue('')
+      this.selectUnit.focus();
+
   }
 
   addAccessoriesItem() {
@@ -567,5 +576,19 @@ export class FormQuotationComponent implements OnInit {
         }
       })
     }
+  }
+  setTopPriceAfterDis(){
+    this.PriceTopAfterdis =  this.TopCount - this.AddClientFileForm.get('additionaldiscount')?.value
+    this.unitsCountsAfterDis=this.unitsCounts
+    this.accessCountsAfterDis=this.accessCountsAfterDis
+    this.TotalCountAfterdis = this.PriceTopAfterdis+this.unitsCountsAfterDis+this.accessCountsAfterDis
+  }
+  setUnitPriceAfterDis(){
+    this.unitsCountsAfterDis =  this.unitsCounts - this.AddClientFileForm.get('discount')?.value
+    this.TotalCountAfterdis = this.PriceTopAfterdis+this.unitsCountsAfterDis+this.accessCountsAfterDis
+    }
+  setaccPriceAfterDis(){
+    this.accessCountsAfterDis =  this.accessoriesCount - this.AddClientFileForm.get('accessoryDiscount')?.value
+    this.TotalCountAfterdis = this.PriceTopAfterdis+this.unitsCountsAfterDis+this.accessCountsAfterDis
   }
 }
