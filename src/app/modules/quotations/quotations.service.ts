@@ -12,6 +12,8 @@ export class QuotationsService {
   constructor(private _HttpClient: HttpClient) { }
 
   GetShortClientFiles(query:any): Observable<any> {
+    console.log(query);
+
     let value:any = {}
     for (const key in query) {
       if (query[key] != null) {
@@ -49,6 +51,9 @@ export class QuotationsService {
       }
     }
     return this._HttpClient.put(`${this.domain}ClientFileAttachment/AddClientFileAttachment?clientFileId=${value.clientFileId}`,formData)
+  }
+  DeleteClientFileAttachment(value:any){
+    return this._HttpClient.delete(`${this.domain}ClientFileAttachment/DeleteClientFileAttachment/${value.clientFileId}/${value.attachmentId}`)
   }
   AddFinalStatusListApi(value:any): Observable<any> {
     return this._HttpClient.put(`${this.domain}ClientFile/ChangeFinalStatusClientFile`,value)

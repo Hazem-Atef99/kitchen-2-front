@@ -37,6 +37,7 @@ export class QuotationsComponent implements OnInit {
   allClientFileAttachment: any[] = [];
   currentPage: number = 1;
   filterForm!: FormGroup;
+  SearchForm!:FormGroup;
   clientFileId: number = 0;
   statusId: number = 0;
   Note: String = '';
@@ -60,6 +61,7 @@ export class QuotationsComponent implements OnInit {
     private userService:UsersService
   ) {
     this.AddReceiveNotice = this.initReceiveNoticeForm();
+    this.SearchForm=this.initSearchForm();
   }
   initReceiveNoticeForm(): FormGroup {
     return this._FormBuilder.group({
@@ -79,6 +81,15 @@ export class QuotationsComponent implements OnInit {
       devices: this._FormBuilder.array([]),
     })
   }
+  initSearchForm():FormGroup{
+    return this._FormBuilder.group({
+      clientName:[null],
+      fileTypeId:[1],
+      finalStatusId:[null],
+      userId:[null],
+      PageType:[0]
+    })
+  }
   initFilterForm(): FormGroup {
     return this._FormBuilder.group({
       userId: [null],
@@ -91,6 +102,9 @@ export class QuotationsComponent implements OnInit {
   filter(event: any) {
     console.log(event.value);
     event.value ? this.query['fileTypeId'] = event.value : this.query['fileTypeId'] = null;
+    this.GetShortClientFiles();
+  }
+  Filter(){
     this.GetShortClientFiles();
   }
 
@@ -177,7 +191,9 @@ export class QuotationsComponent implements OnInit {
     return newContractDate;
   }
   GetShortClientFiles() {
-    this._QuotationsService.GetShortClientFiles(this.query).subscribe({
+    console.log(this.SearchForm.value);
+
+    this._QuotationsService.GetShortClientFiles(this.SearchForm.value).subscribe({
       next: (res: any) => {
         this.allQuotations = res.data
       },
@@ -291,8 +307,25 @@ export class QuotationsComponent implements OnInit {
     this._QuotationsService.GetAllClientFileAttachment(query).subscribe({
       next: (res: any) => {
         this.allClientFileAttachment = res.data
+        console.log(this.allClientFileAttachment);
+
       }
     })
+  }
+  DeleteClientFileAttachment(AtthachmentId:any){
+      let data={
+        "clientFileId":this.clientFileId,
+        "attachmentId":AtthachmentId
+      }
+      this._QuotationsService.DeleteClientFileAttachment(data).subscribe({
+        next: (res: any) => {
+          this.toastr.success("تم مسح المرفق")
+          this.GetAllClientFileAttachment()
+        },
+        error: (err: any) => {
+          this.toastr.error("حدث خطأ أثناء حذف المرفق")
+        }
+      })
   }
   GetAllClientNotice(data: any) {
     this.clientData = data.client
