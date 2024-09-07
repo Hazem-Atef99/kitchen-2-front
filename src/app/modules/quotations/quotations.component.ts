@@ -111,7 +111,7 @@ export class QuotationsComponent implements OnInit {
     })
   }
   getReciveNotice(id:any){
-
+    this.AddReceiveNotice.reset();
     this._productionRequestsService.getReciveNotce(id).subscribe({
       next:(res:any)=>{
           console.log(res.data);
@@ -125,6 +125,7 @@ export class QuotationsComponent implements OnInit {
           }
 
         //statusCategoryById2.log("dataToPatchk",this.MyDevices);
+
         this.AddReceiveNotice.patchValue({
           salesId : res.data.salesId,
           fileDate:this.dateformat(res.data.fileDate),

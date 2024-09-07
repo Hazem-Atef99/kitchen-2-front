@@ -77,21 +77,29 @@ export class ContractFormComponent implements OnInit {
   initClientFileForm(): FormGroup {
     return this._FormBuilder.group({
       clientId: [null, [Validators.required]],
-      contractDate: [null, [Validators.required]],
+      contractDate: [this.handleDate(Date.now()), [Validators.required]],
       phoneNumber: [null, [Validators.required]],
       address: [null, [Validators.required]],
       allPrice: [null, [Validators.required]],
       contractStatusId: [0, [Validators.required]],
       startWeek: [null, [Validators.required]],
       startMonth: [null, [Validators.required]],
-      invoiceDate: [null, [Validators.required]],
+      invoiceDate: [this.handleDate(Date.now()), [Validators.required]],
       withTax: [0, [Validators.required]],
       fileTypeId: [null, [Validators.required]],
       notes: [null, [Validators.required]],
       items: this._FormBuilder.array([]),
     })
   }
-
+  handleDate(date:any){
+    let year, month, day;
+     let Fdate = new Date(date).toLocaleString().split(',')[0]
+    year = Fdate.split('/')[2]
+    month = Fdate.split('/')[0]
+    day = Fdate.split('/')[1]
+    let newDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
+    return newDate;
+  }
   get itemsFormArray() {
     return this.AddClientFileForm.controls["items"] as FormArray;
   }

@@ -62,7 +62,7 @@
         <tr *ngFor="let item of allQuotations">
           <td>{{item?.client.clientName}}</td>
           <td>{{item?.createdByUserName}}</td>
-          <td>{{item.creationDate | date}}</td>
+          <td>{{item.contractDate | date}}</td>
           <td>{{item?.fileTypeName}}</td>
           <td>
             <button [disabled]="!isAuthorized(352)" (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="visible=true" class="btn btn-light m-0 p-2">
@@ -277,7 +277,7 @@
                   <tr *ngFor="let item of AllFinalStatusClientFile">
                     <td>{{item.toValue}}</td>
                     <td>{{item.notes}}</td>
-                    <td>{{item.creationDate | date}}</td>
+                    <td>{{item.creationDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>{{item?.fileTypeName}}</td>
                   </tr>
                   </tbody>
