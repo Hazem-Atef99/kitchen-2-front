@@ -256,6 +256,21 @@ export class ProductionRequestsComponent implements OnInit{
       }
     })
   }
+  DeleteClientFileAttachment(AtthachmentId:any){
+    let data={
+      "clientFileId":this.clientFileId,
+      "attachmentId":AtthachmentId
+    }
+    this._QuotationsService.DeleteClientFileAttachment(data).subscribe({
+      next: (res: any) => {
+        this.toastr.success("تم مسح المرفق")
+        this.GetAllClientFileAttachment()
+      },
+      error: (err: any) => {
+        this.toastr.error("حدث خطأ أثناء حذف المرفق")
+      }
+    })
+}
   isSelected(statusId: number): boolean {
     return this.selectedOptions.includes(statusId);
   }

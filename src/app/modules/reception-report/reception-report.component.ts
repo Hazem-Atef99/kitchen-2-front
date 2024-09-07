@@ -94,6 +94,21 @@ export class ReceptionReportComponent implements OnInit {
       }
     })
   }
+  DeleteClientFileAttachment(AtthachmentId:any){
+    let data={
+      "clientFileId":this.clientFileId,
+      "attachmentId":AtthachmentId
+    }
+    this._QuotationsService.DeleteClientFileAttachment(data).subscribe({
+      next: (res: any) => {
+        this.toastr.success("تم مسح المرفق")
+        this.GetAllClientFileAttachment()
+      },
+      error: (err: any) => {
+        this.toastr.error("حدث خطأ أثناء حذف المرفق")
+      }
+    })
+}
   GetStatusCategoryById() {
     this._QuotationsService.GetStatusCategoryById(100).subscribe({
       next: (res: any) => {

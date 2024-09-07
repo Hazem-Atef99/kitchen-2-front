@@ -179,6 +179,21 @@ return this._FormBuilder.group({
       }
     })
   }
+  DeleteClientFileAttachment(AtthachmentId:any){
+    let data={
+      "clientFileId":this.clientFileId,
+      "attachmentId":AtthachmentId
+    }
+    this._QuotationsService.DeleteClientFileAttachment(data).subscribe({
+      next: (res: any) => {
+        this.toastr.success("تم مسح المرفق")
+        this.GetAllClientFileAttachment()
+      },
+      error: (err: any) => {
+        this.toastr.error("حدث خطأ أثناء حذف المرفق")
+      }
+    })
+}
   GetAllClientFileAttachment() {
     let query = {
       clientFileId: this.clientFileId,

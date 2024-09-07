@@ -72,7 +72,7 @@
           <td>{{item.creationDate | date}}</td>
           <td>{{item?.fileTypeName}}</td>
           <td>
-            <button [disabled]="!isAuthorized(317)" (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" (click)="attachmentsvisible=true" class="btn btn-light m-0 p-2">
+            <button [disabled]="!isAuthorized(317)" (click)="clientFileId = item?.clientFileId;GetAllClientFileAttachment()" [cModalToggle]="modalXl.id" class="btn btn-light m-0 p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
                 <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -179,10 +179,10 @@
     </div>
   </c-modal-body>
 </c-modal>
-<c-modal #modalXl [visible]="attachmentsvisible" id="modalXl" size="xl">
+<c-modal #modalXl  id="modalXl" size="xl">
   <c-modal-header>
     <h5 cModalTitle>المرفقات</h5>
-    <button class="mx-0" (click)="attachmentsvisible=false" cButtonClose></button>
+    <button class="mx-0" [cModalToggle]="modalXl.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="card">
@@ -239,9 +239,16 @@
               <div class="row">
                 <div class="col-md-6 mb-3" *ngFor="let item of allClientFileAttachment">
                   <div class="row" *ngIf="item">
-                    <div class="col-3 card-image p-0 m-2 position-relative">
-                      <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item.attachmentPath" />
-                      <p>{{item.statusName}}</p>
+                    <div class="col-12 row">
+                      <div class="col-3 card-image p-0 m-2 position-relative" >
+                        <a [href]="item.attachmentPath" target="_blank">
+                        <img  height="200" class="p-0 w-100" title="images" alt="imagesEdit" [src]="item.attachmentPath"/>
+                      </a>
+                        <p>{{item.statusName}}</p>
+                      </div>
+                      <div class="col-3 p-0 m-2 position-relative">
+                        <button class="btn btn-danger" (click)="DeleteClientFileAttachment(item.id)">حذق المرفق</button>
+                      </div>
                     </div>
                   </div>
                 </div>

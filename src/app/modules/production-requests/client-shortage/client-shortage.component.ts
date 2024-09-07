@@ -42,16 +42,23 @@ export class ClientShortageComponent implements OnInit {
   ngOnInit(): void {
     this.getClientinfo();
     this.GetAllShortage();
+    this.GetStatusCategoryById()
   }
   addShortage(){
     this.shortageForm.get('clientFileId')?.patchValue(this.clientFileId)
 
       this.productionRequestService.AddShortage(this.shortageForm.value).subscribe({next:(res:any)=>{
+        this.shortageForm.patchValue({
+      tarkeebDate:'',
+      notes:''
+
+        })
         this.toastr.success(res.message)
+        this.GetAllShortage();
       },error:(err=>{
         this.toastr.error(err.message)
       })})
-      this.GetAllShortage();
+
   }
   initDetailForm():FormGroup{
     return this._FormBuilder.group({
@@ -65,6 +72,15 @@ export class ClientShortageComponent implements OnInit {
       itemCount: ['', ],
       qshatColor: ['', ],
       notes: ['', ]
+    })
+  }
+  GetStatusCategoryById() {
+    this._QuotationsService.GetStatusCategoryById(100).subscribe({
+      next: (res: any) => {
+        this.statusCategoryById = res.data
+        console.log()
+        this.statusId = res.data.statuses[0].statusId
+      }
     })
   }
   initClientForm():FormGroup{
@@ -177,6 +193,21 @@ export class ClientShortageComponent implements OnInit {
       }
     })
   }
+  DeleteClientFileAttachment(AtthachmentId:any){
+    let data={
+      "clientFileId":this.clientFileId,
+      "attachmentId":AtthachmentId
+    }
+    this._QuotationsService.DeleteClientFileAttachment(data).subscribe({
+      next: (res: any) => {
+        this.toastr.success("تم مسح المرفق")
+        this.GetAllClientFileAttachment()
+      },
+      error: (err: any) => {
+        this.toastr.error("حدث خطأ أثناء حذف المرفق")
+      }
+    })
+}
   GetAllClientFileAttachment() {
     let query = {
       clientFileId: this.clientFileId,
