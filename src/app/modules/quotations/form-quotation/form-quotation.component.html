@@ -239,18 +239,19 @@
                             </div>
                             <div class="col-4">
                               <label style="visibility: hidden;">.</label>
-                              <ng-select [items]="loadPriceOffer['accessories']?.statuses?.statuses"
+                              <ng-select [items]="loadPriceOffer['accessories']?.statuses"
                                          bindLabel="description"
                                          bindValue="statusId"
                                          placeholder="اختر الاضافات"
-                                         formControlName="itemId">
+                                         formControlName="itemId"
+                                         (change)="setPrice2($event);getPrice2();">
                               </ng-select>
                             </div>
 
                             <div class="col-2">
                               <label>العدد</label>
                               <input aria-label="default input example" cFormControl
-                                     formControlName="itemCount" type="number" (change)="getPrice2(); setPrice2($event)"/>
+                                     formControlName="itemCount" type="number" (change)="getPrice2()" />
                             </div>
                             <div class="col-2">
                               <label>السعر</label>
@@ -315,17 +316,17 @@
               </div>
               <div class="card-body">
                   <div class="row">
-                      <div class="col-4">
+                      <div class="col-3">
                           <label>الخصم الاضافى</label>
-                          <input [pattern]="'^[0-9]+([.]\d+)?$'" aria-label="default input example" cFormControl formControlName="additionaldiscount" (ngModelChange)="setTopPriceAfterDis()"
+                          <input [pattern]="'^[0-9]+([.]\d+)?$'" aria-label="default input example" cFormControl formControlName="topDiscount" (ngModelChange)="setTopPriceAfterDis()"
                               type="number" />
-                              <div *ngIf="AddClientFileForm.get('additionaldiscount')?.invalid && (AddClientFileForm.get('additionaldiscount')?.dirty || AddClientFileForm.get('additionaldiscount')?.touched)">
-                                <div style="color: red;" *ngIf="AddClientFileForm.get('additionaldiscount')?.errors">
+                              <div *ngIf="AddClientFileForm.get('topDiscount')?.invalid && (AddClientFileForm.get('topDiscount')?.dirty || AddClientFileForm.get('topDiscount')?.touched)">
+                                <div style="color: red;" *ngIf="AddClientFileForm.get('topDiscount')?.errors">
                                   لا يمكن أن يكون الخصم قيمه سالبه من فضلك ادخل قيمه صحيحه
                                 </div>
                               </div>
                       </div>
-                    <div class="col-4">
+                    <div class="col-3">
                       <label>خصم الوحدات</label>
                       <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="discount"  (ngModelChange)="setUnitPriceAfterDis()"
 
@@ -336,7 +337,7 @@
                               </div>
                             </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                       <label>خصم الاكسسوارات</label>
                       <input pattern="^[0-9]+([.]\d+)?$" aria-label="default input example" cFormControl formControlName="accessoryDiscount" (ngModelChange)="setaccPriceAfterDis()"
                              type="number" />
@@ -347,12 +348,22 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-3">
+                    <label>الخصم الاضافى</label>
+                    <input [pattern]="'^[0-9]+([.]\d+)?$'" aria-label="default input example" cFormControl formControlName="additionaldiscount" (ngModelChange)="setTopPriceAfterDis()"
+                        type="number" />
+                        <div *ngIf="AddClientFileForm.get('additionaldiscount')?.invalid && (AddClientFileForm.get('additionaldiscount')?.dirty || AddClientFileForm.get('additionaldiscount')?.touched)">
+                          <div style="color: red;" *ngIf="AddClientFileForm.get('additionaldiscount')?.errors">
+                            لا يمكن أن يكون الخصم قيمه سالبه من فضلك ادخل قيمه صحيحه
+                          </div>
+                        </div>
+                </div>
                   </div>
               </div>
 
               <div class="card-body">
                   <div class="row ">
-                    <div class="col-4">
+                    <div class="col-3">
                       <div>
                       مجموع التوب: {{TopCount}}
                     </div>
@@ -360,7 +371,7 @@
                       مجموع التوب بعد الخصم: {{PriceTopAfterdis}}
                     </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                       <div>
                       مجموع الوحدات: {{unitsCounts}}
                       </div>
@@ -368,7 +379,7 @@
                       مجموع الوحدات بعد الخصم: {{unitsCountsAfterDis}}
                       </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                       <div>
                       مجموع الاكسسوارات: {{accessoriesCount}}
                       </div>
@@ -376,8 +387,15 @@
                       مجموع الاكسسوارات بعد الخصم: {{accessCountsAfterDis}}
                       </div>
                     </div>
+                    <div class="col-3">
+                      <div>
+                        المجموع الكلي : {{totalCount}}
+                      </div>
+                      <div *ngIf="PriceTopAfterdis" >المجموع الكلي بعد الخصم : {{TotalCountAfterdis}}</div>
+                    </div>
                   </div>
-                  <div *ngIf="PriceTopAfterdis" class="col-8 d-flex justify-content-end" style="width: 48.666667%;">المجموع الكلي بعد الخصم : {{TotalCountAfterdis}}</div>
+
+
               </div>
           </div>
       </c-col>

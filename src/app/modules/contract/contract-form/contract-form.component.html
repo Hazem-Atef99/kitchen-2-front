@@ -79,7 +79,7 @@
                   </ng-select>
                 </div>
                 <div class="col-4">
-                  <label>تاريخ التركيب ف الأسبوع</label>
+                  <label>تاريخ التركيب ف الشهر</label>
                   <ng-select [items]="months"
                              bindLabel="id"
                              bindValue="id"
@@ -93,7 +93,7 @@
                   <input aria-label="default input example" cFormControl
                          formControlName="contractDate" type="date"/>
                 </div>
-                <div class="col-3" style="opacity: 50%; pointer-events: none">
+                <div *ngIf="clientFileId"  class="col-3" style="opacity: 50%; pointer-events: none">
                   <label>رقم العقد</label>
                   <input aria-label="default input example" cFormControl
                          formControlName="contractStatusId" type="number" />

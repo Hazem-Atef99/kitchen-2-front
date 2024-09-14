@@ -14,27 +14,41 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const _Router = inject(Router);
+    const router = inject(Router);
     return next.handle(request).pipe(
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse) {
+          // Check for application-specific errors in headers
           const applicationError = error.headers.get('Application-Error');
           if (applicationError) {
-            return throwError(applicationError);
+            return throwError(() => new Error(applicationError));
           }
-          if (error.status == (401||403)){
-            _Router.navigateByUrl('/login');
+
+          // Handle unauthorized and forbidden errors
+          if (error.status === 401 || error.status === 403) {
+            router.navigateByUrl('/login');
+            return throwError(() => new Error('UnauthorizedError'));
           }
-          const errors: any[] = error.error?.errors || [];
-          return throwError(
-            {
-              code: error.status,
-              errors,
-            } || 'serverError'
-          );
+
+          // Handle client-side or network errors
+          const errors = error.error?.errors;
+          const message = error.error?.message || 'An error occurred';
+
+          // Log the detailed error for debugging
+          console.error('Error details:', error);
+
+          // Return a formatted error object
+          return throwError(() => ({
+            code: error.status,
+            errors: errors && errors.length > 0 ? errors : [message],
+          }));
         }
-        return throwError('UnknownError');
+
+        // Handle unexpected errors
+        return throwError(() => new Error('UnknownError'));
       })
     );
   }
+
+
 }

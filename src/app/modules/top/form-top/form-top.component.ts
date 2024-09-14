@@ -105,7 +105,7 @@ initDeciveForm():FormGroup{
     Height:['', [Validators.required]],
     Length:['', [Validators.required]],
     Notes:['', [Validators.required]],
-    AttachmentPath:['', [Validators.required]],
+    AttachmentPath:['',],
 
   })
 }
@@ -186,22 +186,56 @@ onImageSelected(event: any): void {
     reader.readAsDataURL(event.target.files[0]);
   }
 }
-Getimage(index:any){
-  let image =this.AddedDevices[index].AttachmentPath
+// Getimage(index:any){
+//   let image =this.AddedDevices[index].AttachmentPath
 
-const reader = new FileReader();
-    this.viewUploadedImageContent.push(image);
-    reader.onload = (event: any) => {
-      this.viewImageContent.push(event.target.result);
-      this.ShowImage=this.viewImageContent[index]
-    };
-    console.log(this.viewImageContent);
+// const reader = new FileReader();
+//     this.viewUploadedImageContent.push(image);
+//     reader.onload = (event: any) => {
+//       this.viewImageContent.push(event.target.result);
+//       this.ShowImage=this.viewImageContent[index]
+//     };
+//     console.log(this.viewImageContent);
 
-    reader.readAsDataURL(image);
+//     reader.readAsDataURL(image);
+// }
+
+Getimage(index: any) {
+  let image = this.AddedDevices[index].pathStr;
+
+  // Check if image is a URL or file path (string), and fetch it as a Blob
+  fetch(image)
+    .then(response => response.blob()) // Convert the response to a Blob
+    .then(blob => {
+      const reader = new FileReader();
+      this.viewUploadedImageContent.push(image);
+      reader.onload = (event: any) => {
+        this.viewImageContent.push(event.target.result);
+        this.ShowImage = this.viewImageContent[index];
+      };
+      console.log(this.viewImageContent);
+
+      reader.readAsDataURL(blob); // Read the Blob as Data URL
+    })
+    .catch(error => console.error('Error fetching image as Blob:', error));
 }
+// GetAllClientFileAttachment() {
+//   let query = {
+//     clientFileId: this.clientFileId,
+//     statusId: this.statusId,
+//   }
+//   this._QuotationsService.GetAllClientFileAttachment(query).subscribe({
+//     next: (res: any) => {
+//       this.allClientFileAttachment = res.data
+//       console.log(this.allClientFileAttachment);
+
+//     }
+//   })
+// }
 GetTopById(id:any){
 this.topService.GetTopById(id).subscribe({next:(res:any)=>{
 console.log(res)
+this.ShowImage=res.data.pathStr
 this.clientForm.patchValue({
   clientId:res.data.client.clientId,
   phoneNumber:res.data.client.mobile
@@ -209,12 +243,14 @@ this.clientForm.patchValue({
 this.AddTopForm.patchValue({
 
   ClientFileId:this.clientFileId,
+  FileNo:res.data.fileNo,
   TypeId:res.data.typeId,
   TopColor:res.data.topColor,
   TopHieght:res.data.topHieght,
   SinkHoleId:res.data.sinkHoleId,
   PanelTypeId:res.data.panelTypeId,
   notes:res.data.notes
+
 })
 this.AddedDevices = res.data.devices
 },error:(err:any)=>{

@@ -46,7 +46,7 @@
                   <div class="col-3">
                     <label>المدفوع</label>
                     <input readonly aria-label="default input example" cFormControl
-                    formControlName="total" type="number"/>
+                    formControlName="paied" type="number"/>
 
                   </div>
                   <div class="col-3">
@@ -60,12 +60,12 @@
                     <input aria-label="default input example" cFormControl
                            formControlName="paymentDate" type="date"/>
                   </div>
-                  <div class="col-4">
+                  <!-- <div class="col-4">
                     <label>رقم المستند</label>
                     <input  aria-label="default input example" cFormControl
                     formControlName="noOfDoc" type="number"/>
 
-                  </div>
+                  </div> -->
                   <div class="col-4">
                     <label>المبلغ</label>
                     <input  aria-label="default input example" cFormControl
@@ -124,3 +124,17 @@
   </c-col>
   </form>
 </c-card>
+<ng-template #successModal let-modal>
+  <div class="modal-header d-flex justify-content-between">
+    <div>
+      <h5 class="modal-title">تم اضافة المستند</h5>
+    </div>
+    <div>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+  </div>
+  <div class="modal-body">
+    رقم المستند: {{ documentNumber }}
+  </div>
+
+</ng-template>

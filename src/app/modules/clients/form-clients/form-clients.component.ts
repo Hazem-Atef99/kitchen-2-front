@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ClientsService } from '../clients.service';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-clients',
@@ -17,6 +17,7 @@ export class FormClientsComponent implements OnInit{
               private clientService:ClientsService,
               private toastr:ToastrService,
               private _activatedRoute:ActivatedRoute,
+              private _Router : Router
               ) {
                 this.clientId=this._activatedRoute.snapshot.queryParamMap.get('clientId');
     this.clientsForm=this.initClientForm();
@@ -28,18 +29,21 @@ export class FormClientsComponent implements OnInit{
   }
   addClient(){
      this.mobile=this.clientsForm.get('mobile')?.value;
-     this.mobile=this.mobile.toString();
+     this.mobile=this.mobile ?this.mobile.toString():'';
      this.clientsForm.get('mobile')?.patchValue(this.mobile)
     if(this.clientId){
       this.clientsForm.get('')?.patchValue(this.clientId)
       this.clientService.UpdateClient(this.clientId, this.clientsForm.value).subscribe({next:(res:any)=>{
         this.toastr.success("تم تعديل الزبون");
+        this._Router.navigate(['/clients']);
+
       },error:(err=>{
         this.toastr.error("حدث خطأ");
       })});
     }else{
       this.clientService.AddClient(this.clientsForm.value).subscribe({next:(res:any)=>{
         this.toastr.success("تم اضافة الزبون");
+        this._Router.navigate(['/clients']);
       },error:(err=>{
         this.toastr.error("حدث خطأ");
       })});

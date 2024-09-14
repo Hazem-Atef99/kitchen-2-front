@@ -1,19 +1,21 @@
 import { ToastrService } from 'ngx-toastr';
 import { ClientPaymentService } from './../client-payment.service';
-import { Component } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Clients, DataClients } from '../../clients/modal/clients';
 import { ClientsService } from '../../clients/clients.service';
 import { ContractService } from '../../contract/contract.service';
 import { EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
-
-@Component({
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';@Component({
   selector: 'app-client-payment',
   templateUrl: './client-payment.component.html',
   styleUrls: ['./client-payment.component.scss']
 })
 export class ClientPaymentComponent {
+
+  @ViewChild('successModal') successModal!: TemplateRef<any>; // Get reference to the modal template
+  documentNumber: string = '';
   clientForm! :FormGroup;
   allClients: DataClients[] = [];
   allUsers:any[] = [];
@@ -31,7 +33,8 @@ export class ClientPaymentComponent {
               private _ClientPaymentService:ClientPaymentService,
               private _ConttactService:ContractService,
               private _Router:Router,
-              private toastr:ToastrService) {
+              private toastr:ToastrService,
+              private modalService: NgbModal) {
 
     this.clientForm=this.initClientForm()
   }
@@ -45,7 +48,7 @@ export class ClientPaymentComponent {
       paied: [null, [Validators.required]],
        total:[null,[Validators.required]],
        remaining:[null,[Validators.required]],
-       paymentDate:[null,[Validators.required]],
+       paymentDate:[this.handleDate(Date.now()),[Validators.required]],
        noOfDoc:[null,Validators.required],
        amount:[null,Validators.required],
        notes:[null,Validators.required],
@@ -95,6 +98,15 @@ export class ClientPaymentComponent {
     this._ConttactService.GetAllUsersApi().subscribe(res=>{
       this.allUsers = res.data
   })}
+  handleDate(date:any){
+    let year, month, day;
+     let Fdate = new Date(date).toLocaleString().split(',')[0]
+    year = Fdate.split('/')[2]
+    month = Fdate.split('/')[0]
+    day = Fdate.split('/')[1]
+    let newDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
+    return newDate;
+  }
   AddClientPayment(){
     let data={
       clientId:this.clientForm.get('clientId')?.value,
@@ -103,7 +115,8 @@ export class ClientPaymentComponent {
       paidTypeId:this.clientForm.get('paidTypeId')?.value,
       notes:this.clientForm.get('notes')?.value,
       checkNo:this.payType==1?this.clientForm.get('checkNo')?.value:null,
-      checkDate:this.payType==1?this.clientForm.get('checkDate')?.value:null
+      checkDate:this.payType==1?this.clientForm.get('checkDate')?.value:null,
+      saleId:this.clientForm.get('salesId')?.value
     }
     this._ClientPaymentService.AddClientPayment(data).subscribe(
       //next:
@@ -113,6 +126,8 @@ export class ClientPaymentComponent {
         }else{
 
           this.toastr.success('تم اضافة المستند');
+          this.documentNumber=res.data;
+          this.modalService.open(this.successModal);
           this._Router.navigateByUrl('/home')
           console.log('Response:', res);
         }
@@ -123,10 +138,11 @@ export class ClientPaymentComponent {
         if (err.message) {
           this.toastr.error(err.message);
         } else {
-          this.toastr.error('An unknown error occurred.');
+          this.toastr.error(`${err.errors[0]}`);
         }
       }
     );
   }
+
 
 }

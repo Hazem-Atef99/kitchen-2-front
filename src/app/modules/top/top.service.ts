@@ -30,7 +30,7 @@ export class TopService {
     return this.http.put(`${this.domain}ClientFileTop/EditClientFileTop?id=${id}`,data)
   }
   DeletTop(id:any){
-    return this.http.get(`${this.domain}ClientFileTop/DeleteFileClientTopById?Id=${id}`)
+    return this.http.delete(`${this.domain}ClientFileTop/DeleteFileClientTopById?Id=${id}`)
   }
   AddTopDevices(data:any){
     return this.http.post(`${this.domain}ClientFileTop/AddTopDevices`,data);

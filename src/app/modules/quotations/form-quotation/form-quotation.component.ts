@@ -1,5 +1,6 @@
+import { filter } from 'rxjs/operators';
 import {Component, OnInit, HostListener, ViewChild, ElementRef} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {QuotationsService} from '../quotations.service';
 import {ClientsService} from '../../clients/clients.service';
 import {Clients, DataClients} from '../../clients/modal/clients';
@@ -31,6 +32,7 @@ export class FormQuotationComponent implements OnInit {
   clientsForm!:FormGroup;
   mobile:string="";
   clientFormvisible=false;
+  totalCount:number=0;
   ListOfItems: any = [
     {
       isCount: true,
@@ -118,7 +120,7 @@ export class FormQuotationComponent implements OnInit {
       name: 'الكورنيش',
       value: 'corniche',
       itemTypeId: 4,
-      id: 178
+      id: 278
     },
     {
       isCount: false,
@@ -207,8 +209,19 @@ export class FormQuotationComponent implements OnInit {
 
   countTotal() {
     let count = 0;
-    for (let i = 0; i < this.itemsFormArray.controls.length; i++) {
-      count += this.itemsFormArray.controls[i]?.get('itemPrice')?.value
+    console.log(this.itemsFormArray.controls);
+
+    let filtered= this.itemsFormArray.controls.filter((group: AbstractControl) => {
+      // Ensure it's a FormGroup and check the category ID
+      return group instanceof FormGroup && group.get('categoryId')?.value === 16||group.get('categoryId')?.value === 15;
+    }) as FormGroup[];
+    let filteredFormArray = new FormArray(filtered);
+    console.log(filtered);
+
+    for (let i = 0; i < filteredFormArray.controls.length; i++) {
+
+
+      count += filteredFormArray.controls[i]?.get('itemPrice')?.value
 
     }
     this.TopCount = count
@@ -221,7 +234,8 @@ export class FormQuotationComponent implements OnInit {
     for (let i = 0; i < this.myArrayAsForm2.length; i++) {
       count2 += this.myArrayAsForm2[i]?.get('itemPrice')?.value
     }
-    this.accessCountsAfterDis=count2
+    this.accessoriesCount=count2
+    this.totalCount=this.accessoriesCount+this.unitsCounts+this.TopCount
   }
 
   constructor(
@@ -283,12 +297,15 @@ export class FormQuotationComponent implements OnInit {
   GetClientFileById(id: number) {
     this._QuotationsService.GetClientFileByIdApi(id).subscribe({
       next: (res: any) => {
+        this.totalCount=res.data.allPrice
         this.AddClientFileForm.patchValue({
           clientId: res.data.client.clientId,
           deviceNotes: res.data.deviceNotes,
           additionaldiscount: res.data.additionaldiscount,
           discount: res.data.discount,
           accessoryDiscount: res.data.accessoryDiscount,
+          topDiscount:res.data.topDiscount
+
         });
         res.data.items.forEach((ele: any) => {
           if (ele.itemTypeId == 4) {
@@ -362,6 +379,7 @@ export class FormQuotationComponent implements OnInit {
       additionaldiscount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
       discount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
       accessoryDiscount: [0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
+      topDiscount:[0, [Validators.pattern('^[0-9]+([.]\d+)?$')]],
       items: this._FormBuilder.array([]),
       items1: this._FormBuilder.group({
         itemId: [null, [Validators.required]],
@@ -379,7 +397,7 @@ export class FormQuotationComponent implements OnInit {
         itemPrice: [null],
         eachItemPrice: [null],
         notes: [null],
-        categoryId: [null, [Validators.required]]
+        categoryId: [29, [Validators.required]]
       })
     })
   }
@@ -432,7 +450,7 @@ export class FormQuotationComponent implements OnInit {
   setPrice2(e: any) {
 
     let price = 0
-    price = this.loadPriceOffer['accessories']?.statuses.filter((ele: any) => ele.statusId == e.target.value)[0].price
+    price = this.loadPriceOffer['accessories']?.statuses.filter((ele: any) => ele.statusId == e.statusId)[0].price
     this.items2Form.get('eachItemPrice')?.patchValue(price)
   }
 
@@ -473,6 +491,10 @@ export class FormQuotationComponent implements OnInit {
       categoryId: this.items2Form.get('categoryId')?.value,
       unit: this.loadPriceOffer['accessories']?.statuses.filter((item: any) => item.statusId == this.items2Form.get('itemId')?.value)[0]?.description,
     })
+    console.log(this.myArrayAsForm2);
+
+    console.log(this.myArray2);
+
   }
 
   get itemsFormArray() {
@@ -561,7 +583,9 @@ export class FormQuotationComponent implements OnInit {
           this.toastr.success(`${res.message}`);
           this._Router.navigateByUrl('/quotations')
         }, error: (err: any) => {
-          this.toastr.error(`${err.message}`);
+          console.log(err);
+
+          this.toastr.error(`${err.errors[0]}`);
          // this._Router.navigateByUrl('/quotations')
         }
       })
@@ -578,17 +602,47 @@ export class FormQuotationComponent implements OnInit {
     }
   }
   setTopPriceAfterDis(){
-    this.PriceTopAfterdis =  this.TopCount - this.AddClientFileForm.get('additionaldiscount')?.value
+    let discountPercentage = this.AddClientFileForm.get('topDiscount')?.value!==null?this.AddClientFileForm.get('topDiscount')?.value:0;
+
+// Ensure the discountPercentage is a valid number and calculate the discount
+if (typeof discountPercentage === 'number' && discountPercentage >= 0 && discountPercentage <= 100) {
+  // Calculate the discount amount
+  let discountAmount = (this.TopCount * discountPercentage) / 100;
+    this.PriceTopAfterdis =  this.TopCount - discountAmount
     this.unitsCountsAfterDis=this.unitsCounts
-    this.accessCountsAfterDis=this.accessCountsAfterDis
+    this.accessCountsAfterDis=this.accessoriesCount
     this.TotalCountAfterdis = this.PriceTopAfterdis+this.unitsCountsAfterDis+this.accessCountsAfterDis
+  } else {
+    //this.toastr.error('Invalid discount percentage')
+   // console.error('Invalid discount percentage');
+  }
   }
   setUnitPriceAfterDis(){
-    this.unitsCountsAfterDis =  this.unitsCounts - this.AddClientFileForm.get('discount')?.value
-    this.TotalCountAfterdis = this.PriceTopAfterdis+this.unitsCountsAfterDis+this.accessCountsAfterDis
+    let discountPercentage = this.AddClientFileForm.get('discount')?.value!==null?this.AddClientFileForm.get('discount')?.value:0;
+    if (typeof discountPercentage === 'number' && discountPercentage >= 0 && discountPercentage <= 100) {
+      let discountAmount = (this.unitsCounts * discountPercentage) / 100;
+      this.unitsCountsAfterDis =  this.unitsCounts - discountAmount
+    }
+    else {
+      //this.toastr.error('Invalid discount percentage')
+     // console.error('Invalid discount percentage');
+    }
+        this.TotalCountAfterdis = this.PriceTopAfterdis+this.unitsCountsAfterDis+this.accessCountsAfterDis
     }
   setaccPriceAfterDis(){
-    this.accessCountsAfterDis =  this.accessoriesCount - this.AddClientFileForm.get('accessoryDiscount')?.value
+    let discountPercentage = this.AddClientFileForm.get('accessoryDiscount')?.value!==null?this.AddClientFileForm.get('accessoryDiscount')?.value:0;
+    if (typeof discountPercentage === 'number' && discountPercentage >= 0 && discountPercentage <= 100) {
+      let discountAmount = (this.accessoriesCount * discountPercentage) / 100;
+      this.accessCountsAfterDis =  this.accessoriesCount - discountAmount
+    }
+    else {
+      //this.toastr.error('Invalid discount percentage')
+     // console.error('Invalid discount percentage');
+    }
+    //this.accessCountsAfterDis =  this.accessoriesCount - this.AddClientFileForm.get('accessoryDiscount')?.value
     this.TotalCountAfterdis = this.PriceTopAfterdis+this.unitsCountsAfterDis+this.accessCountsAfterDis
+  }
+  setTotalPriceAfterDiscount(){
+    this.TotalCountAfterdis = this.TotalCountAfterdis-this.AddClientFileForm.get('additionaldiscount')?.value;
   }
 }

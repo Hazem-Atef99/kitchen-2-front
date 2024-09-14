@@ -68,7 +68,7 @@ export class FormProductionRequestsComponent {
       notes: ['', [Validators.required]],
       address: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
-      contractDate: [null, [Validators.required]],
+      contractDate: [this.handleDate(Date.now()), [Validators.required]],
       fileTypeId: [1, [Validators.required]],
       items: this._FormBuilder.array([]),
       items1: this._FormBuilder.group({
@@ -80,7 +80,17 @@ export class FormProductionRequestsComponent {
       })
     })
   }
+  handleDate(date:any){
+    console.log(date);
 
+    let year, month, day;
+     let Fdate = new Date(date).toLocaleString().split(',')[0]
+    year = Fdate.split('/')[2]
+    month = Fdate.split('/')[0]
+    day = Fdate.split('/')[1]
+    let newDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
+    return newDate;
+  }
   ProductionRequestsFormGroup(): FormGroup {
     return this._FormBuilder.group({
       itemId: [null, [Validators.required]],
@@ -99,6 +109,7 @@ export class FormProductionRequestsComponent {
       this.AddProductionRequestsForm.patchValue({
         phoneNumber: client.mobile,
         address: client.clientAddress,
+
       })
     } else {
       this.AddProductionRequestsForm.patchValue({

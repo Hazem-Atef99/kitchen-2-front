@@ -13,9 +13,10 @@ export class ClientsComponent implements OnInit{
   today:Date = new Date();
   allClients:any[]=[];
   clientByName :any[]=[];
-  clientName:any;
+  clientName:string='';
   pagesRoleToPatch:any[]=[];
   selectedPageOpions:any[]=[];
+  userMobile:string='';
   constructor(
    private _ClientsService: ClientsService,
    private userService:UsersService,
@@ -32,17 +33,39 @@ export class ClientsComponent implements OnInit{
    })
   }
   getclientbyName(){
-    if (this.clientName.Length==0) {
+    if (this.clientName.length==0&&this.userMobile.length==0) {
       this.GetAllClients()
     }
-    this._ClientsService.GetClientByName(this.clientName).subscribe({next:(res:any)=>{
-      this.allClients=[res.data]
+    else if(this.clientName.length!=0&&this.userMobile.length==0){
+
+      this._ClientsService.GetClientByName(this.clientName).subscribe({next:(res:any)=>{
+        this.allClients=res.data
+        console.log(res);
+
+      },error:(err:any)=>{
+
+        this.toastr.error("No client with this name")
+        this.GetAllClients();
+      }
+    }
+
+  )}
+  else if(this.clientName.length==0&&this.userMobile.length!=0){
+
+    this._ClientsService.GetClientByName(this.userMobile).subscribe({next:(res:any)=>{
+      this.allClients=res.data
     },error:(err:any)=>{
 
-      this.toastr.error("No client with this name")
+      this.toastr.error("No client with this mobile number")
       this.GetAllClients();
     }
-  })
+  }
+
+)}
+else{
+  this.toastr.error("choose only to filter with name or mobile number")
+}
+
   }
   GetPermissionsOfRole(id: any) {
     this.userService.GetPermissionsOfRole(id).subscribe({
