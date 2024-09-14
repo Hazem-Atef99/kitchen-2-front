@@ -38,14 +38,14 @@ export class FormClientsComponent implements OnInit{
         this._Router.navigate(['/clients']);
 
       },error:(err=>{
-        this.toastr.error("حدث خطأ");
+        this.toastr.error(err.errors[0]);
       })});
     }else{
       this.clientService.AddClient(this.clientsForm.value).subscribe({next:(res:any)=>{
         this.toastr.success("تم اضافة الزبون");
         this._Router.navigate(['/clients']);
       },error:(err=>{
-        this.toastr.error("حدث خطأ");
+        this.toastr.error(err.errors[0]);
       })});
     }
 

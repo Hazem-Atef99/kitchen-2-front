@@ -83,7 +83,7 @@ export class FormReceptionReportComponent {
   AddClientFile(){
     this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AmORPm')?.value==0?this.AddClientFileForm.get('actionByHour')?.value:this.AddClientFileForm.get('actionByHour')?.value+12)
     let measermentID=this.AddClientFileForm.get('measurmentId')?.value
-    this.AddClientFileForm.get('measurmentId')?.patchValue(measermentID.toString());
+    this.AddClientFileForm.get('measurmentId')?.patchValue(measermentID? measermentID.toString():'');
     let val1, val2
     val1 = this.AddClientFileForm.controls['measurmentId']?.value
     val2 = val1.toString()

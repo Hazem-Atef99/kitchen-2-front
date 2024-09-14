@@ -27,7 +27,13 @@ export class ClientsService {
   UpdateClient(id:any,data:any){
     return this._HttpClient.put(`${this.domain}Client/UpdateClient?clientId=${id}`, data)
   }
-  GetClientByName(name:any){
-    return this._HttpClient.get<any[]>(`${this.domain}Client/GetAllClients?name=${name}`)
+  GetClientByName(name?:string,mobileNumber? :string ){
+    if (name?.length!=0) {
+      return this._HttpClient.get<any[]>(`${this.domain}Client/GetAllClients?clientName=${name}`)
+    }
+    else{
+      return this._HttpClient.get<any[]>(`${this.domain}Client/GetAllClients?mobile=${mobileNumber}`)
+    }
+
   }
 }

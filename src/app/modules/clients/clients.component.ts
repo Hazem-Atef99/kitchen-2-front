@@ -45,19 +45,19 @@ export class ClientsComponent implements OnInit{
       },error:(err:any)=>{
 
         this.toastr.error("No client with this name")
-        this.GetAllClients();
+       // this.GetAllClients();
       }
     }
 
   )}
   else if(this.clientName.length==0&&this.userMobile.length!=0){
 
-    this._ClientsService.GetClientByName(this.userMobile).subscribe({next:(res:any)=>{
+    this._ClientsService.GetClientByName('',this.userMobile).subscribe({next:(res:any)=>{
       this.allClients=res.data
     },error:(err:any)=>{
 
       this.toastr.error("No client with this mobile number")
-      this.GetAllClients();
+     // this.GetAllClients();
     }
   }
 
