@@ -251,7 +251,7 @@ export class FormProductionRequestsComponent {
           this.toastr.success(`${res.message}`);
           this._Router.navigateByUrl('/production-requests')
         }, error: (err: any) => {
-          this.toastr.error(`${err.message}`);
+          this.toastr.error(`${err.errors[0]}`);
         }
       })
     } else {
@@ -260,7 +260,7 @@ export class FormProductionRequestsComponent {
           this.toastr.success(`${res.message}`);
           this._Router.navigateByUrl('/production-requests')
         }, error: (err: any) => {
-          this.toastr.error(`${err.message}`);
+          this.toastr.error(`${err.errors[0]}`);
         }
       })
     }

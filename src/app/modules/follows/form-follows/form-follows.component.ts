@@ -66,7 +66,7 @@ this.FollowId=this._activatedRoute.snapshot.queryParamMap.get('FollowId')
       this.GetFollows();
     },
   error:(err:any)=>{
-    this.toastr.error('Not Added')
+    this.toastr.error(`${err.errors[0]}`)
   }})
   }
   GetFollows(){

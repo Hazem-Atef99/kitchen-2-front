@@ -277,7 +277,7 @@ export class FormQuotationComponent implements OnInit {
        this.GetAllClients();
        this.clientFormvisible=false;
      },error:(err=>{
-       this.toastr.error("حدث خطأ");
+       this.toastr.error(`${err.errors[0]}`);
        this.clientFormvisible=true;
      })});
 
@@ -595,7 +595,7 @@ export class FormQuotationComponent implements OnInit {
           this.toastr.success(`${res.message}`);
           this._Router.navigateByUrl('/quotations')
         }, error: (err: any) => {
-          this.toastr.error(`${err.message}`);
+          this.toastr.error(`${err.errors[0]}`);
           //this._Router.navigateByUrl('/quotations')
         }
       })

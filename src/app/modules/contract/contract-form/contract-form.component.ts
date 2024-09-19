@@ -167,7 +167,7 @@ export class ContractFormComponent implements OnInit {
           this.toastr.success(`${res.message}`);
           this._Router.navigateByUrl('/contract')
         }, error: (err: any) => {
-          this.toastr.error(`${err.message}`);
+          this.toastr.error(`${err.errors[0]}`);
         }
       })
     } else {
@@ -176,7 +176,7 @@ export class ContractFormComponent implements OnInit {
           this.toastr.success(`${res.message}`);
            this._Router.navigateByUrl('/contract')
         }, error: (err: any) => {
-          this.toastr.error(`${err.message}`);
+          this.toastr.error(`${err.errors[0]}`);
          // this._Router.navigateByUrl('/contract')
         }
       })
