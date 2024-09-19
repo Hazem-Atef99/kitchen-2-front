@@ -39,6 +39,7 @@ export class FormTopComponent implements OnInit {
     this.deviceForm=this.initDeciveForm()
     this.clientFileId=this._activatedRoute.snapshot.queryParamMap.get('clientFileId')
     this.detailId=this._activatedRoute.snapshot.queryParamMap.get('detailId')
+
   }
   ngOnInit(): void {
     this.GetAllClients();
@@ -154,6 +155,13 @@ LoadClientFileTopPage(){
 addDevice(){
 this.AddedDevices.push(this.deviceForm.value)
 let data = new FormData();
+data.append('clientId' ,this.clientForm.get('clientId')?.value)
+data.append('fileNo' ,this.AddTopForm.get('FileNo')?.value)
+data.append('typeId' ,this.AddTopForm.get('TypeId')?.value)
+data.append('topColor' ,this.AddTopForm.get('TopColor')?.value)
+data.append('panelTypeId' ,this.AddTopForm.get('PanelTypeId')?.value)
+data.append('topHieght' ,this.AddTopForm.get('TopHieght')?.value)
+data.append('sinkHoleId' ,this.AddTopForm.get('SinkHoleId')?.value)
 data.append('ClientFileTopId',this.detailId?.toString());
 data.append('Width',this.deviceForm.get('Width')?.value);
 data.append('Height',this.deviceForm.get('Height')?.value);
