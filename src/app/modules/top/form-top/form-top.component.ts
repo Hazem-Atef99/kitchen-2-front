@@ -95,31 +95,31 @@ this.GetFileNo(this.clientId);
  }
  initClientForm():FormGroup{
   return this._FormBuilder.group({
-    clientId: ['', [Validators.required]],
+    clientId: [null, [Validators.required]],
      phoneNumber: [null, [Validators.required]],
      clientAdress:[null,[Validators.required]]
   })
 }
 initDeciveForm():FormGroup{
   return this._FormBuilder.group({
-    Width:['', [Validators.required]],
-    Height:['', [Validators.required]],
-    Length:['', [Validators.required]],
-    Notes:['', [Validators.required]],
-    AttachmentPath:['',],
+    Width:[null, [Validators.required]],
+    Height:[null, [Validators.required]],
+    Length:[null, [Validators.required]],
+    Notes:[null, [Validators.required]],
+    AttachmentPath:[null,],
 
   })
 }
 initTopForm(){
   return this._FormBuilder.group({
-    FileNo:['',[Validators.required]],
-    ClientFileId:['',[Validators.required]],
-    TypeId:['',[Validators.required]],
-    TopColor:['',[Validators.required]],
-    PanelTypeId:['',[Validators.required]],
-    TopHieght:['',[Validators.required]],
-    SinkHoleId:['',[Validators.required]],
-    Notes:['',[Validators.required]],
+    FileNo:[null,[Validators.required]],
+    ClientFileId:[null,[Validators.required]],
+    TypeId:[null,[Validators.required]],
+    TopColor:[null,[Validators.required]],
+    PanelTypeId:[null,[Validators.required]],
+    TopHieght:[null,[Validators.required]],
+    SinkHoleId:[null,[Validators.required]],
+    Notes:[null,[Validators.required]],
   })
 }
 GetAllClients() {
@@ -155,13 +155,13 @@ LoadClientFileTopPage(){
 addDevice(){
 this.AddedDevices.push(this.deviceForm.value)
 let data = new FormData();
-data.append('clientId' ,this.clientForm.get('clientId')?.value)
-data.append('fileNo' ,this.AddTopForm.get('FileNo')?.value)
-data.append('typeId' ,this.AddTopForm.get('TypeId')?.value)
-data.append('topColor' ,this.AddTopForm.get('TopColor')?.value)
-data.append('panelTypeId' ,this.AddTopForm.get('PanelTypeId')?.value)
-data.append('topHieght' ,this.AddTopForm.get('TopHieght')?.value)
-data.append('sinkHoleId' ,this.AddTopForm.get('SinkHoleId')?.value)
+// data.append('clientId' ,this.clientForm.get('clientId')?.value)
+// data.append('fileNo' ,this.AddTopForm.get('FileNo')?.value)
+data.append('TypeId' ,this.AddTopForm.get('TypeId')?.value)
+data.append('TopColor' ,this.AddTopForm.get('TopColor')?.value)
+data.append('PanelTypeId' ,this.AddTopForm.get('PanelTypeId')?.value)
+data.append('TopHieght' ,this.AddTopForm.get('TopHieght')?.value)
+data.append('SinkHoleId' ,this.AddTopForm.get('SinkHoleId')?.value)
 data.append('ClientFileTopId',this.detailId?.toString());
 data.append('Width',this.deviceForm.get('Width')?.value);
 data.append('Height',this.deviceForm.get('Height')?.value);

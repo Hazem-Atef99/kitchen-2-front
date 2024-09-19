@@ -73,7 +73,7 @@
               <div class="col-4">
                 <label>الجرانيت</label>
                 <ng-select [items]="allTopLists?.type?.statuses"
-                           bindLabel="defaultDesc"
+                           bindLabel="description"
                            bindValue="statusId"
                            formControlName="TypeId"
                            >
@@ -82,7 +82,7 @@
             <div class="col-4">
               <label>لون التوب</label>
               <ng-select [items]="allTopLists?.topColor?.statuses"
-                         bindLabel="defaultDesc"
+                         bindLabel="description"
                          bindValue="statusId"
                          formControlName="TopColor"
                          >
@@ -91,7 +91,7 @@
           <div class="col-4">
             <label>البانيل</label>
             <ng-select [items]="allTopLists?.panelType?.statuses"
-                       bindLabel="defaultDesc"
+                       bindLabel="description"
                        bindValue="statusId"
                        formControlName="PanelTypeId"
                        >
@@ -100,7 +100,7 @@
         <div class="col-4">
           <label>سماكة التوب</label>
           <ng-select [items]="allTopLists?.topHieght?.statuses"
-                     bindLabel="defaultDesc"
+                     bindLabel="description"
                      bindValue="statusId"
                      formControlName="TopHieght"
                      >
@@ -109,7 +109,7 @@
       <div class="col-4">
         <label>حفرة المجلي</label>
         <ng-select [items]="allTopLists?.sinkHole?.statuses"
-                   bindLabel="defaultDesc"
+                   bindLabel="description"
                    bindValue="statusId"
                    formControlName="SinkHoleId"
                    >

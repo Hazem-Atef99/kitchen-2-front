@@ -44,7 +44,7 @@ export class ClientPaymentComponent {
   }
   initClientForm():FormGroup{
     return this._FormBuilder.group({
-      clientId: ['', [Validators.required]],
+      clientId: [null, [Validators.required]],
       paied: [null, [Validators.required]],
        total:[null,[Validators.required]],
        remaining:[null,[Validators.required]],

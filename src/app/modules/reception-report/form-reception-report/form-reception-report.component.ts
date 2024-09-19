@@ -118,7 +118,7 @@ this.toastr.success("added")
 this.getReceptionReportById(this.clientFileId)
 this._Router.navigateByUrl('/reception-report')
     },err=>{
-      this.toastr.error("not")
+      this.toastr.error(err.errors[0])
       this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AmORPm')?.value==0?this.AddClientFileForm.get('actionByHour')?.value:this.AddClientFileForm.get('actionByHour')?.value-12)
     })
 
@@ -160,7 +160,7 @@ this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
   }
   initClientForm():FormGroup{
     return this._FormBuilder.group({
-      clientId: ['', [Validators.required]],
+      clientId: [null, [Validators.required]],
        phoneNumber: [null, [Validators.required]],
        clientAdress:[null,[Validators.required]]
     })
@@ -170,7 +170,7 @@ this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
       clientFileId: [null, [Validators.required]],
       clientId: [null, [Validators.required]],
       fileDate: [null, [Validators.required]],
-      actionByHour: ['', [Validators.required]],
+      actionByHour: [null, [Validators.required]],
       clientNeed: [null, [Validators.required]],
       designerId: [null, [Validators.required]],
       designerDate: [null, [Validators.required]],
