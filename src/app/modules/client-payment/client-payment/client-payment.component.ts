@@ -129,7 +129,7 @@ export class ClientPaymentComponent {
           this.documentNumber=res.data;
           this.modalService.open(this.successModal);
           this._Router.navigateByUrl('/home')
-          console.log('Response:', res);
+          //console.log('Response:', res);
         }
 
       },

@@ -54,7 +54,8 @@ export class FormSanitaryConnectionsComponent implements OnInit {
     data.append('PointId',this.AddSanitaryConnectionsForm.get('PointId')?.value)
     data.append('Notes',this.AddSanitaryConnectionsForm.get('Notes')?.value)
     data.append('Attachement',this.AddSanitaryConnectionsForm.get('Attachement')?.value)
-    data.append('TarkeebDate',this.handleDate(this.AddSanitaryConnectionsForm.get('TarkeebDate')?.value))
+    data.append('TarkeebDate',this.AddSanitaryConnectionsForm.get('TarkeebDate')?.value?
+    this.handleDate(this.AddSanitaryConnectionsForm.get('TarkeebDate')?.value):"")
     data.append('KitchenHeight',this.AddSanitaryConnectionsForm.get('KitchenHeight')?.value)
 
 
@@ -73,7 +74,7 @@ export class FormSanitaryConnectionsComponent implements OnInit {
         //this._Router.navigateByUrl('/sanitaryConnections')
         this.GetAllSanitaryConnectionsByClientAndFileNo(this.AddSanitaryConnectionsForm.get('clientId')?.value,this.AddSanitaryConnectionsForm.get('FileNo')?.value)
       },error:(err:any)=>{
-        this.toastr.error("حدث خطأ")
+        this.toastr.error(`${err.errors[0]}`)
       }})
 
 
