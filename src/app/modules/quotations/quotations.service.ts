@@ -82,4 +82,7 @@ export class QuotationsService {
   LoadFinalStatusList(itemType :number): Observable<any> {
     return this._HttpClient.get(`${this.domain}StatusCategory/LoadFinalStatusList/${itemType}`)
   }
+  GetqutationReport(clientFileId,IsExcel=false){
+    return this._HttpClient.get(`${this.domain}Report/GeneratePurchaseOrderReport?clientFileId=${clientFileId}&IsExcel=${IsExcel}`)
+  }
 }

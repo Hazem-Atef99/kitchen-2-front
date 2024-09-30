@@ -62,6 +62,7 @@
           <th scope="col">الحالة النهائية</th>
           <th scope="col">محضر الاستلام</th>
           <th scope="col">النواقص</th>
+          <th scope="col">طباعة</th>
           <th scope="col">تعديل</th>
         </tr>
         </thead>
@@ -97,6 +98,11 @@
           <td>
             <button [disabled]="!isAuthorized(326)" routerLink="ClientShortage" [queryParams]="{clientFileId: item?.clientFileId, fileTypeId: item?.fileTypeId, }" class="btn btn-light m-0 p-2">
               <i class="bx bx-archive"></i>
+            </button>
+          </td>
+          <td>
+            <button routerLink="print" cButton [queryParams]="{clientFileId: item?.clientFileId }" class="btn btn-light m-0 p-2">
+              <svg cIcon name="cil-print"></svg>
             </button>
           </td>
           <td>

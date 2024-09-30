@@ -42,8 +42,10 @@
     "boxicons": "^2.1.4",
     "chart.js": "^3.9.1",
     "jwt-decode": "^4.0.0",
+    "ng2-pdf-viewer": "^10.3.1",
     "ngx-scrollbar": "^12.0.0",
     "ngx-toastr": "^17.0.2",
+    "pdfjs-dist": "^2.10.377",
     "rxjs": "~7.8.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.1"

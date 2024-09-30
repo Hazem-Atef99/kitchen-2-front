@@ -79,4 +79,7 @@ export class ContractService {
   GetFinalStatusOfRole(RoleId:any){
     return this._HttpClient.get(`${this.domain}RoleTypes/GetFinalStatusOfRole?roleId=${RoleId}`)
   }
+  GetContractReport(clientFileId,IsExcel=false){
+    return this._HttpClient.get(`${this.domain}Report/GenerateContractReport?clientFileId=${clientFileId}&IsExcel=${IsExcel}`)
+  }
 }

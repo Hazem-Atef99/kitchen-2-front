@@ -107,7 +107,7 @@
           <td></td>
           <td>
 
-           <button cButton class="btn btn-light m-0 p-2" [disabled]="!isAuthorized(305)">
+           <button cButton routerLink="print"  [queryParams]="{clientFileId: item?.clientFileId}" class="btn btn-light m-0 p-2" [disabled]="!isAuthorized(305)">
               <svg cIcon name="cil-print"></svg>
             </button>
             <td>

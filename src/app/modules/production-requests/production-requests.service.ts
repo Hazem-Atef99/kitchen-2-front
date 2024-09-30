@@ -104,4 +104,7 @@ export class ProductionRequestsService {
   getReciveNotce(id: any) {
     return this._HttpClient.get(`${this.domain}ClientFile/GetPreparingReception?clientFileId=${id}`);
   }
+  GetProductionReqestsReport(clientFileId,IsExcel=false){
+    return this._HttpClient.get(`${this.domain}Report/GenerateProductionRequestReport?clientFileId=${clientFileId}&IsExcel=${IsExcel}`)
+  }
 }

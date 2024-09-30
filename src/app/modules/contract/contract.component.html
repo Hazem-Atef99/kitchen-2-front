@@ -55,6 +55,7 @@
           <th scope="col">التاريخ</th>
           <th scope="col">النوع</th>
           <th scope="col">الحالة النهائية</th>
+          <th scope="col">طباعة</th>
           <th scope="col">تعديل</th>
         </tr>
         </thead>
@@ -67,6 +68,11 @@
           <td>
             <button [disabled]="!isAuthorized(352)" (click)="clientFileId = item?.clientFileId;GetLoadFinalStatusList();GetAllFinalStatusClientFile()" (click)="visible=true" class="btn btn-light m-0 p-2">
               {{item.finalStatusName? item.finalStatusName : 'لم يتم اضافة حالة'}}
+            </button>
+          </td>
+          <td>
+            <button routerLink="print" cButton [queryParams]="{clientFileId: item?.clientFileId }" class="btn btn-light m-0 p-2">
+              <svg cIcon name="cil-print"></svg>
             </button>
           </td>
           <td>

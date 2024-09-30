@@ -17,4 +17,7 @@ export class ReceptionReportService {
   GetReceptionReportById(id:any){
     return this.http.get(`${this.domain}ClientFile/GetPreparingReception?clientFileId=${id}`)
   }
+  GetReportReceptionReport(clientFileId,IsExcel=false){
+    return this.http.get(`${this.domain}Report/GenerateRecieptionRequestReport?clientFileId=${clientFileId}&IsExcel=${IsExcel}`)
+  }
 }
