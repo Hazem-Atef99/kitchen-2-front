@@ -137,7 +137,7 @@
                                                            bindLabel="description"
                                                            bindValue="statusId"
                                                            placeholder="اختر الوحدات"
-                                                           (change)="setPrice1($event);"
+                                                           (change)="setPrice1($event);getPrice1();"
                                                            formControlName="itemId">
                                                 </ng-select>
 
@@ -149,7 +149,7 @@
                                                            bindValue="statusId"
                                                            placeholder="اختر الوحدة"
                                                            formControlName="categoryId"
-                                                           (change)="getPrice1()">
+                                                           (change)="setPrice1($event);getPrice1();">
                                                 </ng-select>
                                             </div>
 

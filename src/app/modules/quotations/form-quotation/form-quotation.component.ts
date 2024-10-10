@@ -436,14 +436,32 @@ export class FormQuotationComponent implements OnInit {
   }
 
   setPrice1(e: any) {
-    let price = 0
-    price = this.loadPriceOffer['unites']?.statuses.filter((ele: any) => ele.statusId == e.statusId)[0].price
-    this.items1Form.get('eachItemPrice')?.patchValue(price)
+    console.log('units item by category',this.UnitsItemsbyCategory);
+
+    console.log(this.UnitsItemsbyCategory.filter((ele: any) => ele.statusId == e.statusId)[0]);
+    //let price = this.UnitsItemsbyCategory.filter((ele: any) => ele.statusId == e.statusId)[0].price?this.UnitsItemsbyCategory.filter((ele: any) => ele.statusId == e.statusId)[0].price:0;
+    let data= {
+      "itemTypeId": this.items1Form.get('itemId').value,
+      "itemID": this.items1Form.get('categoryId').value
+    }
+    let price ;
+    this._QuotationsService.LoadPriceForUnits(data).subscribe({
+      next:(res:any)=>{
+        price=res;
+        console.log(price);
+        this.items1Form.get('eachItemPrice')?.patchValue(price)
+        console.log(this.items1Form.get('eachItemPrice')?.value)
+      },error:(err:any)=>{
+        this.items1Form.get('eachItemPrice')?.patchValue(0)
+      }
+    })
+   // this.items1Form.get('eachItemPrice')?.patchValue(price)
+   // console.log(this.items1Form.get('eachItemPrice')?.value)
   }
 
   getPrice1() {
-    let totPrice = 0
-    totPrice = (this.items1Form.get('eachItemPrice')?.value * this.items1Form.get('itemCount')?.value)
+
+   let totPrice = (this.items1Form.get('eachItemPrice')?.value * this.items1Form.get('itemCount')?.value??0).toFixed(2)
     this.items1Form.get('itemPrice')?.patchValue(totPrice)
   }
 
@@ -535,6 +553,8 @@ export class FormQuotationComponent implements OnInit {
     this._QuotationsService.LoadPriceOffer().subscribe({
       next: (res: any) => {
         this.loadPriceOffer = res.data
+        console.log("load price pffer ", this.loadPriceOffer);
+
         if (this.clientFileId) {
           this.GetClientFileById(this.clientFileId)
         }
