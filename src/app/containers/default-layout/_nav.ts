@@ -81,7 +81,7 @@ export class nav{
         name: 'التقارير',
         description: "التقارير",
 
-        url: '/home',
+        url: '/reports',
         // iconComponent: { name: 'cil-speedometer' },
       },
       // {

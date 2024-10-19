@@ -81,6 +81,13 @@ const routes: Routes = [
           canActivate:[authGuard]
       },
       {
+        path: 'reports',
+        loadChildren:()=>
+          import('./modules/reports/reports.module').then((m)=>m.ReportsModule),
+          canActivate:[authGuard]
+      },
+
+      {
         path: 'users',
         loadChildren: () =>
           import('./modules/users/users.module').then((m)=>m.UsersModule),
@@ -146,6 +153,7 @@ const routes: Routes = [
           import('./views/pages/pages.module').then((m) => m.PagesModule),
         canActivate:[authGuard]
       },
+
     ]
   },
   {

@@ -385,7 +385,7 @@ export class FormQuotationComponent implements OnInit {
         itemId: [null, [Validators.required]],
         itemCount: [1, [Validators.required]],
         itemTypeId: [1, [Validators.required]],
-        itemPrice: [null],
+        itemPrice: [0.0],
         eachItemPrice: [null],
         notes: [null],
         categoryId: [null, [Validators.required]]
@@ -394,7 +394,7 @@ export class FormQuotationComponent implements OnInit {
         itemId: [null, [Validators.required]],
         itemCount: [1, [Validators.required]],
         itemTypeId: [3, [Validators.required]],
-        itemPrice: [null],
+        itemPrice: [0.0],
         eachItemPrice: [null],
         notes: [null],
         categoryId: [29, [Validators.required]]
@@ -407,10 +407,10 @@ export class FormQuotationComponent implements OnInit {
       itemId: [null, [Validators.required]],
       itemCount: [1, [Validators.required]],
       itemTypeId: [4, [Validators.required]],
-      itemPrice: [null],
+      itemPrice: [0.0],
       eachItemPrice: [null],
       notes: [null],
-      categoryId: null
+      categoryId: 16
     })
   }
 
@@ -484,15 +484,15 @@ export class FormQuotationComponent implements OnInit {
       itemId: this.items1Form.get('itemId')?.value,
       itemCount: this.items1Form.get('itemCount')?.value,
       itemTypeId: this.items1Form.get('itemTypeId')?.value,
-      itemPrice: this.items1Form.get('itemPrice')?.value,
+      itemPrice: this.items1Form.get('itemPrice')?.value??0.0,
       eachItemPrice: this.items1Form.get('eachItemPrice')?.value,
       notes: this.items1Form.get('notes')?.value,
       categoryId: this.items1Form.get('categoryId')?.value,
       unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.items1Form.get('itemId')?.value)[0]?.description,
       unitName: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == this.items1Form.get('categoryId')?.value)[0]?.description,
     })
-    this.items1Form.get('categoryId')?.patchValue('')
-    this.items1Form.get('itemPrice')?.patchValue('')
+    this.items1Form.get('categoryId')?.patchValue(0)
+    this.items1Form.get('itemPrice')?.patchValue(0.0)
       this.selectUnit.focus();
 
   }
@@ -503,7 +503,7 @@ export class FormQuotationComponent implements OnInit {
       itemId: this.items2Form.get('itemId')?.value,
       itemCount: this.items2Form.get('itemCount')?.value,
       itemTypeId: this.items2Form.get('itemTypeId')?.value,
-      itemPrice: this.items2Form.get('itemPrice')?.value,
+      itemPrice: this.items2Form.get('itemPrice')?.value??0.0,
       eachItemPrice: this.items2Form.get('eachItemPrice')?.value,
       notes: this.items2Form.get('notes')?.value,
       categoryId: this.items2Form.get('categoryId')?.value,

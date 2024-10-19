@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row text-center">
+
+      <!-- Team item -->
+      <ng-container *ngFor="let item of icons" >
+          <div   class="col-xl-3 col-sm-6 mb-5"  style="cursor: pointer;" [routerLink]="item.link">
+              <div class=" bg-hover rounded py-3 px-2">
+                  <div class="rounded-circle mb-3 img-thumbnail shadow-sm bg-icon">
+                      <img [src]="'assets/img/categories/'+item.icon+'.png'" alt="" srcset="">
+                  </div>
+                  <h5 class="mb-0">{{item.label}}</h5>
+              </div>
+          </div>
+      </ng-container>
+      <!-- End -->
+
+  </div>
+</div>

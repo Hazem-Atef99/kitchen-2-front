@@ -86,7 +86,7 @@ export class HomeComponent {
       icon:'11',
       description: "التقارير",
       name:'التقارير',
-      link:''
+      link:'reports'
 
     },
     {
