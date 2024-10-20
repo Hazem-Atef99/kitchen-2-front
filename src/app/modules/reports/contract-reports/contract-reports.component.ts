@@ -17,10 +17,12 @@ export class ContractReportsComponent {
   pdfDocument: any;
   pdfViewer: any;
   Isloading = false;
+  page: number = 1;
+  totalPages: number = 0;
   FilterForm :FormGroup;
    currentDate = new Date();
  threeMonthsAgo = new Date();
-
+ pageHeights: number[] = [];
   ngAfterViewInit(): void {
     const loadingTask = pdfjsLib.getDocument({ data: this.base64ToArrayBuffer(this.base64String) });
     loadingTask.promise.then((pdf) => {
@@ -149,5 +151,59 @@ export class ContractReportsComponent {
     day = Fdate.split('/')[1]
     let newDate = (year)+'-'+(+month < 10 ? '0'+month : month )+'-'+(+day < 10 ? '0'+day : day )
     return newDate;
+  }
+  onPDFLoad(pdf: any) {
+    this.totalPages = pdf.numPages;
+    this.calculatePageHeights(pdf);
+  }
+
+  calculatePageHeights(pdf: any) {
+    // Calculate the cumulative height of each page for scrolling
+    this.pageHeights = [];
+    let totalHeight = 0;
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      pdf.getPage(i).then((page: any) => {
+        const viewport = page.getViewport({ scale: this.zoom });
+        this.pageHeights.push(totalHeight); // Store the current height
+        totalHeight += viewport.height;
+      });
+    }
+  }
+
+  scrollToPage(pageNumber: any) {
+    const page = Number(pageNumber);
+    if (page >= 1 && page <= this.totalPages) {
+      this.page = page;
+
+      // Check if pdfViewer is initialized
+      if (this.pdfViewer && this.pdfViewer.nativeElement) {
+        // Get the container of the PDF viewer
+
+        const container = this.pdfViewer.nativeElement.querySelector('.pdf-container');
+
+        // Scroll to the top of the desired page
+        container.scrollTo({
+          top: this.pageHeights[page - 1] * this.zoom,
+          behavior: 'smooth'
+        });
+      } else {
+        console.error('PDF viewer is not initialized');
+      }
+    }
+  }
+
+  scrollToPreviousPage() {
+    if (this.page > 1) {
+      this.page--;
+      this.scrollToPage(this.page);
+    }
+  }
+
+  scrollToNextPage() {
+    if (this.page < this.totalPages) {
+      this.page++;
+      this.scrollToPage(this.page);
+    }
   }
 }
