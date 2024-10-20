@@ -226,6 +226,8 @@ export class FormQuotationComponent implements OnInit {
     }
     this.TopCount = count
     let count1 = 0;
+    console.log(this.myArrayAsForm1);
+
     for (let i = 0; i < this.myArrayAsForm1.length; i++) {
       count1 +=  this.myArrayAsForm1[i]?.get('itemPrice')?.value
     }
@@ -462,7 +464,7 @@ export class FormQuotationComponent implements OnInit {
   getPrice1() {
 
    let totPrice = (this.items1Form.get('eachItemPrice')?.value * this.items1Form.get('itemCount')?.value??0).toFixed(2)
-    this.items1Form.get('itemPrice')?.patchValue(totPrice)
+    this.items1Form.get('itemPrice')?.patchValue(Number.parseFloat(totPrice))
   }
 
   setPrice2(e: any) {
@@ -479,7 +481,11 @@ export class FormQuotationComponent implements OnInit {
   }
 
   addUnitItem() {
+    console.log("item price",this.items1Form.get('itemPrice')?.value);
+
     this.myArrayAsForm1.push(this.items1Form)
+    console.log(this.myArrayAsForm1);
+
     this.myArray1.push({
       itemId: this.items1Form.get('itemId')?.value,
       itemCount: this.items1Form.get('itemCount')?.value,
@@ -491,8 +497,8 @@ export class FormQuotationComponent implements OnInit {
       unit: this.loadPriceOffer['unites']?.statuses.filter((item: any) => item.statusId == this.items1Form.get('itemId')?.value)[0]?.description,
       unitName: this.UnitsItemsbyCategory?.filter((item: any) => item.statusId == this.items1Form.get('categoryId')?.value)[0]?.description,
     })
-    this.items1Form.get('categoryId')?.patchValue(0)
-    this.items1Form.get('itemPrice')?.patchValue(0.0)
+    // this.items1Form.get('categoryId')?.patchValue(0)
+    // this.items1Form.get('itemPrice')?.patchValue(0.0)
       this.selectUnit.focus();
 
   }
