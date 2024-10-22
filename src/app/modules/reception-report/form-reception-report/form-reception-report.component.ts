@@ -42,7 +42,32 @@ export class FormReceptionReportComponent {
       name: 'الاعمال الخشبية',
       id: 6
     },
-  ]
+  ];
+  buildingData: any = [
+    {name: "في عهده الحارس", id: 1},
+    {name: " تصميم ", id: 2},
+    {name: " الترتيب مسبقا ", id: 3},
+    {name: "قياس  ", id: 4},
+    {name: "جاهز  ", id: 5},
+    {name: "تحت التشطيب  ", id: 6},
+    {name: "تحت الإنشاء  ", id: 7},
+  ];
+  ServicesData: any = [
+    {name: " مطبخ ", id: 1},
+    {name: " مفروشات ", id: 2},
+    {name: " مغاسل ", id: 3},
+    {name: " غرفة غسيل ", id: 4},
+    {name: "خزائن حائط  ", id: 5},
+  ];
+  orderData: any = [
+    {name: " مناسب ", id: 1},
+    {name: " كاونتر ", id: 2},
+    {name: " امريكي ", id: 3},
+    {name: "  جزيرة وسطية ", id: 4},
+    {name: " ألماني  ", id: 5},
+    {name: " طاولة  ", id: 6},
+
+  ];
 
   KitchenType:any[]=[]
   MyDevices: any[]=[];

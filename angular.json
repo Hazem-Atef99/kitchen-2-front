@@ -42,7 +42,10 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "chart.js"
+              "chart.js",
+              "pdfjs-dist",
+              "pdfjs-dist/build/pdf",
+              "pdfjs-dist/build/pdf.worker.js"
             ]
           },
           "configurations": {
