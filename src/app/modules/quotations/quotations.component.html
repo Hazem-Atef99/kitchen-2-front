@@ -410,6 +410,11 @@
                   <input aria-label="default input example" cFormControl value="{{clientData?.email}}"
                           type="text" />
                 </div>
+                <div class="col-12" style="opacity: 90%; pointer-events: none">
+                  <label>البريد الالكترونى	</label>
+                  <input aria-label="default input example" cFormControl
+                          type="email" />
+                </div>
               </div>
             </div>
           </div>
@@ -435,12 +440,44 @@
                   <input aria-label="default input example" cFormControl
                          type="date" formControlName="fileDate"/>
                 </div>
+                <div class="col-6">
+                  <label>النظام</label>
+                  <ng-select [items]="allUsersData"
+                             bindLabel="userName"
+                             bindValue="id"
+                             placeholder="اختر النظام"
+                             formControlName="salesId">
+                  </ng-select>
+                </div>
+                <div class="col-6" >
+                  <label>عدد مستخدمي المطبخ</label>
+                  <input aria-label="default input example" cFormControl
+                          type="number" />
+                </div>
                 <div class="col-12">
-                  <label>الموقع</label>
+                  <label>كيف عرفت عنا</label>
                   <input aria-label="default input example" cFormControl
                          type="text" formControlName="kitchenLocation"/>
                 </div>
-                <div class="col-6">
+                <!-- <div class="col-12">
+                  <label>الموقع</label>
+                  <input aria-label="default input example" cFormControl
+                         type="text" formControlName="kitchenLocation"/>
+                </div> -->
+
+                <div class="row mb-4 ms-2">
+                  <div class="card-header mt-3">
+                    <h5>طبيعة المبني</h5>
+                </div >
+
+                  <div  class="col-3" *ngFor="let option of buildingData  let i= index ">
+                    <input type="radio" #radio name="selectedDevice"   [checked]="isSelected(option.statusId)"  formControlName="selectedDevice" [value]="option.statusId" (change)="selectOption($event, option)">
+                    {{ option.name }}
+
+                </div>
+
+                </div>
+                <!-- <div class="col-6">
                   <label>نوع المطبخ</label>
                   <ng-select [items]="statusCategoryById2?.statuses"
                              bindLabel="description"
@@ -448,9 +485,9 @@
                              placeholder="اختر نوع المطبخ"
                              formControlName="kitchenModelId">
                   </ng-select>
-                </div>
-                <div class="col-6">
-                  <!-- (change)="setMeasurement()" -->
+                </div> -->
+                <!-- <div class="col-6">
+                  (change)="setMeasurement()"
                   <label>مسئول القياس</label>
                   <ng-select [items]="allUsersData"
                              bindLabel="userName"
@@ -459,13 +496,13 @@
                              placeholder="اختر مسئول القياس"
                              formControlName="measurmentId">
                   </ng-select>
-                </div>
-                <div class="col-6">
+                </div> -->
+                <!-- <div class="col-6">
                   <label>تاريخ القياس</label>
                   <input aria-label="default input example" cFormControl
                          type="date" formControlName="measurmentDate"/>
-                </div>
-                <div class="col-6">
+                </div> -->
+                <!-- <div class="col-6">
                   <label>مسئول التصميم</label>
                   <ng-select [items]="allUsersData"
                              bindLabel="userName"
@@ -473,21 +510,21 @@
                              placeholder="اختر مسئول التصميم"
                              formControlName="designerId">
                   </ng-select>
-                </div>
-                <div class="col-6">
+                </div> -->
+                <!-- <div class="col-6">
                   <label>تاريخ التصميم</label>
                   <input aria-label="default input example" cFormControl
                          type="date" formControlName="designerDate"/>
-                </div>
-                <div class="col-6">
+                </div> -->
+                <!-- <div class="col-6">
                   <label>موعد القياس</label>
-                  <div class="d-flex mt-1">
+                  <div class="d-flex mt-1"> -->
 <!--                    <div class="d-flex">-->
 <!--                      <label>الدقيقة</label>-->
 <!--                      <input aria-label="default input example" cFormControl-->
 <!--                             type="number" formControlName="actionByHour"/>-->
 <!--                    </div>-->
-                    <div class="d-flex col-6">
+                    <!-- <div class="d-flex col-6">
                       <label>الساعة</label>
                       <input aria-label="default input example" cFormControl
                              type="number" formControlName="actionByHour"/>
@@ -500,7 +537,7 @@
                   </ng-select>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -508,7 +545,7 @@
       </c-row>
       <div class="card my-4">
         <div class="card-header">
-          الأجهزة الموجودة ومتطلبات العميل
+          الأجهزة الموجودة والملاحظات
         </div>
         <div class="card-body">
           <div class="row">
@@ -541,10 +578,40 @@
 
             </c-col>
             <c-col xs="12">
-              <label>متطلبات العميل</label>
+              <label> الملاحظات </label>
               <textarea formControlName="clientNeed"  class="form-control" rows="3">
               </textarea>
             </c-col>
+
+            <c-col xs="6">
+            <div class="row mb-4 ms-2">
+              <div class="card-header mt-3">
+                <h5> الخدمات المطلوبة</h5>
+            </div >
+
+              <div  class="col-3" *ngFor="let option of ServicesData  let i= index ">
+                <input type="checkbox" #checkbox name="selectedDevice"   [checked]="isSelected(option.statusId)"  formControlName="selectedDevice" [value]="option.statusId" (change)="selectOption($event, option)">
+                {{ option.name }}
+
+            </div>
+
+            </div>
+            </c-col>
+
+            <c-col xs="6">
+              <div class="row mb-4 ms-2">
+                <div class="card-header   mt-3">
+                  <h5> النظام</h5>
+              </div >
+
+                <div  class="col-3" *ngFor="let option of orderData  let i= index ">
+                  <input type="radio" #radio name="selectedDevice"   [checked]="isSelected(option.statusId)"  formControlName="selectedDevice" [value]="option.statusId" (change)="selectOption($event, option)">
+                  {{ option.name }}
+
+              </div>
+
+              </div>
+              </c-col>
           </div>
         </div>
       </div>
