@@ -45,27 +45,12 @@ export class FormQuotationComponent implements OnInit {
     {
       isCount: false,
       x: 1,
-      name: 'المجلى',
-      value: 'magla',
-      itemTypeId: 4,
-      id: 12
-    },
-    {
-      isCount: true,
-      x: 1,
       name: 'البانيل',
       value: 'panel',
       itemTypeId: 4,
       id: 15
     },
-    {
-      isCount: false,
-      x: 1,
-      name: 'حفرة المجلى',
-      value: 'maglaHole',
-      itemTypeId: 4,
-      id: 13
-    },
+
     {
       isCount: true,
       x: 1,
@@ -77,10 +62,10 @@ export class FormQuotationComponent implements OnInit {
     {
       isCount: false,
       x: 1,
-      name: 'سترب خارجي',
-      value: 'outerStrop',
+      name: 'نوع البرمة',
+      value: 'twineType',
       itemTypeId: 4,
-      id: 83
+      id: 294
     },
     {
       isCount: true,
@@ -93,26 +78,10 @@ export class FormQuotationComponent implements OnInit {
     {
       isCount: false,
       x: 1,
-      name: 'الشفاط',
-      value: 'shafat',
+      name: 'دوران الأسطح',
+      value: 'rotationOfSurfaces',
       itemTypeId: 4,
-      id: 23
-    },
-    {
-      isCount: true,
-      x: 1,
-      name: 'تسميك التوب',
-      value: 'thickeningTop',
-      itemTypeId: 4,
-      id: 276
-    },
-    {
-      isCount: false,
-      x: 1,
-      name: 'البطارية',
-      value: 'batery',
-      itemTypeId: 4,
-      id: 14
+      id: 295
     },
     {
       isCount: true,
@@ -125,10 +94,90 @@ export class FormQuotationComponent implements OnInit {
     {
       isCount: false,
       x: 1,
-      name: 'توصيلات صحية',
-      value: 'healthLinking',
+      name: 'المجلى',
+      value: 'magla',
       itemTypeId: 4,
-      id: 274
+      id: 12
+    },
+    {
+      isCount: true,
+      x: 1,
+      name: 'تصفيح خشب ',
+      value:'woodPlating',
+      itemTypeId: 4,
+      id: 96
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'حفرة المجلى',
+      value: 'maglaHole',
+      itemTypeId: 4,
+      id: 13
+    },
+    {
+      isCount: true,
+      x: 1,
+      name: 'التنجيد',
+      value: 'upholstery',
+      itemTypeId: 4,
+      id: 306
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'الشفاط',
+      value: 'shafat',
+      itemTypeId: 4,
+      id: 23
+    },
+    {
+      isCount: true,
+      x: 1,
+      name: 'الأعمدة',
+      value: 'columns',
+      itemTypeId: 4,
+      id: 301
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'البطارية',
+      value: 'batery',
+      itemTypeId: 4,
+      id: 14
+    },
+    {
+      isCount: true,
+      x: 1,
+      name: 'سبوت لايت',
+      value: 'spotLight',
+      itemTypeId: 4,
+      id: 298
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'تصفيح ديكور',
+      value: 'decorativeLamination',
+      itemTypeId: 4,
+      id: 300
+    },
+    {
+      isCount: true,
+      x: 1,
+      name: 'سترب لايت',
+      value: 'stripLight',
+      itemTypeId: 4,
+      id: 299
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'ديكورات معدنية',
+      value: 'metalDecorations',
+      itemTypeId: 4,
+      id: 302
     },
     {
       isCount: true,
@@ -138,6 +187,88 @@ export class FormQuotationComponent implements OnInit {
       itemTypeId: 4,
       id: 275
     },
+    {
+      isCount: false,
+      x: 1,
+      name: 'طاولة',
+      value: 'table',
+      itemTypeId: 4,
+      id: 303
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'كاونتر',
+      value: 'counter',
+      itemTypeId: 4,
+      id: 304
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'توصيلات صحية',
+      value: 'healthLinking',
+      itemTypeId: 4,
+      id: 274
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'توصيلات كهربا',
+      value: 'electricalLinking',
+      itemTypeId: 4,
+      id: 292
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'فتحةالهوب',
+      value: 'hopOpening',
+      itemTypeId: 4,
+      id: 293
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'فتحةالشفاط',
+      value: 'hoodOpening',
+      itemTypeId: 4,
+      id: 296
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'بوكس اباجور',
+      value: 'boxLamp',
+      itemTypeId: 4,
+      id: 297
+    },
+    {
+      isCount: false,
+      x: 1,
+      name: 'جلسة',
+      value: 'session',
+      itemTypeId: 4,
+      id: 305
+    },
+    // {
+    //   isCount: false,
+    //   x: 1,
+    //   name: 'سترب خارجي',
+    //   value: 'outerStrop',
+    //   itemTypeId: 4,
+    //   id: 83
+    // },
+
+    // {
+    //   isCount: true,
+    //   x: 1,
+    //   name: 'تسميك التوب',
+    //   value: 'thickeningTop',
+    //   itemTypeId: 4,
+    //   id: 276
+    // },
+
     // {
     //   name: 'تصفيح خشب ',
     //   value:'',
