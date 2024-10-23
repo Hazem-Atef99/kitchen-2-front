@@ -31,7 +31,121 @@
         </div>
         <div class="card-body">
           <div class="row">
+            <div class="col-6">
+              <label> الاسم</label>
+              <input
+                aria-label="default input example"
+                cFormControl
+                type="text"
+                formControlName="kitchenLocation"
+              />
+            </div>
+
+            <div class="col-6">
+              <label> الوصف </label>
+              <input
+                aria-label="default input example"
+                cFormControl
+                type="text"
+                formControlName="kitchenLocation"
+              />
+            </div>
+
+
+            <div class="col-6">
+              <label>هاتف 1 </label>
+              <input
+                readonly
+                aria-label="default input example"
+                cFormControl
+                formControlName="phoneNumber"
+                type="tel"
+              />
+            </div>
+
+            <div class="col-6">
+              <label>هاتف 2 </label>
+              <input
+                readonly
+                aria-label="default input example"
+                cFormControl
+                formControlName="phoneNumber"
+                type="tel"
+              />
+            </div>
             <div class="col-4">
+              <label>هاتف 3 </label>
+              <input
+                readonly
+                aria-label="default input example"
+                cFormControl
+                formControlName="phoneNumber"
+                type="tel"
+              />
+            </div>
+            <div class="col-4">
+              <label>هاتف 4 </label>
+              <input
+                readonly
+                aria-label="default input example"
+                cFormControl
+                formControlName="phoneNumber"
+                type="tel"
+              />
+            </div>
+            <div class="col-4">
+              <label>هاتف 5 </label>
+              <input
+                readonly
+                aria-label="default input example"
+                cFormControl
+                formControlName="phoneNumber"
+                type="tel"
+              />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </c-col>
+    <c-col class="mx-2 my-4">
+      <div class="card">
+        <div class="card-header m-0">
+          <h5>الزبون</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <label>البريد الالكترونى </label>
+              <input
+                aria-label="default input example"
+                cFormControl
+                type="email"
+              />
+            </div>
+
+            <div class="col-6">
+              <label> المحافظة </label>
+              <input
+                aria-label="default input example"
+                cFormControl
+                type="text"
+                formControlName="kitchenLocation"
+              />
+            </div>
+
+
+            <div class="col-12">
+              <label> المنطقة </label>
+              <input
+                aria-label="default input example"
+                cFormControl
+                type="text"
+                formControlName="kitchenLocation"
+              />
+            </div>
+
+            <!-- <div class="col-4">
               <label>الزبون</label>
               <ng-select
                 [items]="allClients"
@@ -42,8 +156,8 @@
                 (ngModelChange)="getClientInfo($event)"
               >
               </ng-select>
-            </div>
-            <div class="col-4">
+            </div> -->
+            <!-- <div class="col-4">
               <label>رقم الجوال</label>
               <input
                 readonly
@@ -52,22 +166,15 @@
                 formControlName="phoneNumber"
                 type="tel"
               />
-            </div>
-            <div class="col-4">
-              <label>البريد الالكترونى </label>
-              <input
-                aria-label="default input example"
-                cFormControl
-                type="email"
-              />
-            </div>
+            </div> -->
+
             <!-- <div class="col-4">
                     <label>تاريخ الانتاج</label>
                     <input aria-label="default input example" cFormControl
                            formControlName="contractDate" type="date"/>
                   </div> -->
             <div class="col-12 mt-2">
-              <label>العنوان</label>
+              <label>العنوان التفصيلي</label>
               <textarea
                 readonly
                 aria-label="default input example"
@@ -102,7 +209,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-4">
+            <div class="col-6">
               <label>مسئول المبيعات</label>
               <ng-select
                 [items]="users"
@@ -118,7 +225,7 @@
                       <input aria-label="default input example" cFormControl formControlName="kitchenLocation"
                              type="text" />
                     </div> -->
-            <div class="col-4">
+            <!-- <div class="col-4">
               <label>النظام</label>
               <ng-select
                 [items]="users"
@@ -128,31 +235,14 @@
                 formControlName="salesId"
               >
               </ng-select>
-            </div>
-            <div class="col-4">
+            </div> -->
+            <div class="col-6">
               <label>تاريخ فتح الملف</label>
               <input
                 aria-label="default input example"
                 cFormControl
                 formControlName="fileDate"
                 type="date"
-              />
-            </div>
-            <div class="col-6">
-              <label>عدد مستخدمي المطبخ</label>
-              <input
-                aria-label="default input example"
-                cFormControl
-                type="number"
-              />
-            </div>
-            <div class="col-6">
-              <label>كيف عرفت عنا</label>
-              <input
-                aria-label="default input example"
-                cFormControl
-                type="text"
-                formControlName="kitchenLocation"
               />
             </div>
             <div class="row mb-4 ms-2">
@@ -165,8 +255,8 @@
                 *ngFor="let option of buildingData; let i = index"
               >
                 <input
-                  type="radio"
-                  #radio
+                  type="checkbox"
+                  #checkbox
                   name="selectedDevice"
                   [checked]="isSelected(option.statusId)"
                   formControlName="selectedDevice"
@@ -176,6 +266,51 @@
                 {{ option.name }}
               </div>
             </div>
+            <c-row class="p-2 mt ms-2">
+              <c-col xs="6">
+                <div class="row ms-2">
+                  <div class="card-header mt-3">
+                    <h5>الخدمات المطلوبة</h5>
+                  </div>
+                  <div class="col-3" *ngFor="let option of ServicesData; let i = index">
+                    <input
+                      type="checkbox"
+                      #checkbox
+                      name="selectedDevice"
+                      [checked]="isSelected(option.statusId)"
+                      formControlName="selectedDevice"
+                      [value]="option.statusId"
+                      (change)="selectOption($event, option)"
+                    />
+                    {{ option.name }}
+                  </div>
+                </div>
+              </c-col>
+
+              <c-col xs="6">
+                <div class="row ms-2">
+                  <div class="card-header mt-3">
+                    <h5>النظام</h5>
+                  </div>
+                  <div class="col-3" *ngFor="let option of orderData; let i = index">
+                    <input
+                      type="checkbox"
+                      #checkbox
+                      name="selectedDevice"
+                      [checked]="isSelected(option.statusId)"
+                      formControlName="selectedDevice"
+                      [value]="option.statusId"
+                      (change)="selectOption($event, option)"
+                    />
+                    {{ option.name }}
+                  </div>
+                </div>
+              </c-col>
+            </c-row>
+
+
+
+
             <!-- <div class="col-4">
                       <label>نوع المطبخ</label>
                       <ng-select [items]="KitchenType"
@@ -253,8 +388,34 @@
               </c-form-check>
             </div>
       </c-row> -->
+      <c-col class="mx-2 my-4">
+      <div class="card">
+        <div class="card-header m-0">
+          <h5>المعلومات</h5>
+        </div>
     <c-row class="p-2 ms-2">
-      <div class="card-header m-0">
+      <div class="col-12">
+        <label>عدد مستخدمي المطبخ</label>
+        <input
+          aria-label="default input example"
+          cFormControl
+          type="number"
+        />
+      </div>
+
+      <div class="col-12 mt-2">
+        <label>كيف عرفت عنا </label>
+        <textarea
+          readonly
+          aria-label="default input example"
+          cFormControl
+          formControlName="kitchenLocation"
+          rows="3"
+        >
+        </textarea>
+      </div>
+
+      <div class="card-header mt-3">
         <h5>الاجهزه</h5>
       </div>
       <div class="col-2" *ngFor="let option of Alldevices; let i = index">
@@ -270,6 +431,8 @@
         {{ option.defaultDesc }}
       </div>
     </c-row>
+    </div>
+  </c-col>
     <!-- <c-row class="px-2">
            <div class="col-12 mt-2">
                         <label>متطلبات العميل</label>
@@ -278,7 +441,7 @@
                         </textarea>
                       </div>
       </c-row> -->
-    <c-row class="px-2">
+    <!-- <c-row class="px-2">
       <div class="col-12 mt-2">
         <label> الملاحظات</label>
         <textarea
@@ -289,47 +452,7 @@
         >
         </textarea>
       </div>
-    </c-row>
-    <c-row class="p-2 mt ms-2">
-      <c-col xs="6">
-        <div class="row ms-2">
-          <div class="card-header mt-3">
-            <h5>الخدمات المطلوبة</h5>
-          </div>
-          <div class="col-3" *ngFor="let option of ServicesData; let i = index">
-            <input
-              type="checkbox"
-              #checkbox
-              name="selectedDevice"
-              [checked]="isSelected(option.statusId)"
-              formControlName="selectedDevice"
-              [value]="option.statusId"
-              (change)="selectOption($event, option)"
-            />
-            {{ option.name }}
-          </div>
-        </div>
-      </c-col>
+    </c-row> -->
 
-      <c-col xs="6">
-        <div class="row ms-2">
-          <div class="card-header mt-3">
-            <h5>النظام</h5>
-          </div>
-          <div class="col-3" *ngFor="let option of orderData; let i = index">
-            <input
-              type="radio"
-              #radio
-              name="selectedDevice"
-              [checked]="isSelected(option.statusId)"
-              formControlName="selectedDevice"
-              [value]="option.statusId"
-              (change)="selectOption($event, option)"
-            />
-            {{ option.name }}
-          </div>
-        </div>
-      </c-col>
-    </c-row>
   </form>
 </c-card>
