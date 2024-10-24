@@ -222,7 +222,7 @@ export class FormQuotationComponent implements OnInit {
     {
       isCount: false,
       x: 1,
-      name: 'فتحةالهوب',
+      name: 'فتحة الهوب',
       value: 'hopOpening',
       itemTypeId: 4,
       id: 293
@@ -230,7 +230,7 @@ export class FormQuotationComponent implements OnInit {
     {
       isCount: false,
       x: 1,
-      name: 'فتحةالشفاط',
+      name: 'فتحة الشفاط',
       value: 'hoodOpening',
       itemTypeId: 4,
       id: 296
@@ -687,7 +687,7 @@ export class FormQuotationComponent implements OnInit {
   }
 
   LoadPriceOffer() {
-    this._QuotationsService.LoadPriceOffer().subscribe({
+    this._QuotationsService.LoadPriceOfferVersion2().subscribe({
       next: (res: any) => {
         this.loadPriceOffer = res.data
         console.log("load price pffer ", this.loadPriceOffer);

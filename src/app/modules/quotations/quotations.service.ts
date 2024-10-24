@@ -40,6 +40,10 @@ export class QuotationsService {
   LoadPriceOffer(): Observable<any> {
     return this._HttpClient.get(`${this.domain}ClientFile/LoadPriceOffer`)
   }
+
+  LoadPriceOfferVersion2(): Observable<any> {
+    return this._HttpClient.get(`${this.domain}ClientFile/LoadPriceOffer2`)
+  }
   LoadPriceForUnits(data :any){
     return this._HttpClient.post(`${this.domain}ClientFile/LoadPriceForUnits`,data)
   }
