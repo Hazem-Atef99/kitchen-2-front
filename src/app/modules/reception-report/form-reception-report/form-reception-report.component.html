@@ -41,7 +41,7 @@
               />
             </div>
 
-            <div class="col-6">
+            <!-- <div class="col-6">
               <label> الوصف </label>
               <input
                 aria-label="default input example"
@@ -49,10 +49,22 @@
                 type="text"
                 formControlName="kitchenLocation"
               />
+            </div> -->
+
+            <div class="col-6">
+              <label> الوصف</label>
+              <ng-select
+                [items]="users"
+                bindLabel="userName"
+                bindValue="id"
+                placeholder="اختر الوصف"
+                formControlName="salesId"
+              >
+              </ng-select>
             </div>
 
 
-            <div class="col-6">
+            <div class="col-5">
               <label>هاتف 1 </label>
               <input
                 readonly
@@ -62,8 +74,16 @@
                 type="tel"
               />
             </div>
+            <div class="col-1 mt-4">
+              <label>  </label>
+              <input
+                  type="radio"
+                  #radio
+                  name="selectedDevice"
+                />
+            </div>
 
-            <div class="col-6">
+            <div class="col-5">
               <label>هاتف 2 </label>
               <input
                 readonly
@@ -73,7 +93,15 @@
                 type="tel"
               />
             </div>
-            <div class="col-4">
+            <div class="col-1 mt-4">
+              <label>  </label>
+              <input
+                  type="radio"
+                  #radio
+                  name="selectedDevice"
+                />
+            </div>
+            <div class="col-3">
               <label>هاتف 3 </label>
               <input
                 readonly
@@ -83,7 +111,15 @@
                 type="tel"
               />
             </div>
-            <div class="col-4">
+            <div class="col-1 mt-4">
+              <label>  </label>
+              <input
+                  type="radio"
+                  #radio
+                  name="selectedDevice"
+                />
+            </div>
+            <div class="col-3">
               <label>هاتف 4 </label>
               <input
                 readonly
@@ -93,7 +129,15 @@
                 type="tel"
               />
             </div>
-            <div class="col-4">
+            <div class="col-1 mt-4">
+              <label>  </label>
+              <input
+                  type="radio"
+                  #radio
+                  name="selectedDevice"
+                />
+            </div>
+            <div class="col-3">
               <label>هاتف 5 </label>
               <input
                 readonly
@@ -103,7 +147,14 @@
                 type="tel"
               />
             </div>
-
+            <div class="col-1 mt-4">
+              <label>  </label>
+              <input
+                  type="radio"
+                  #radio
+                  name="selectedDevice"
+                />
+            </div>
           </div>
         </div>
       </div>
@@ -115,7 +166,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-6">
+            <div class="col-4">
               <label>البريد الالكترونى </label>
               <input
                 aria-label="default input example"
@@ -124,25 +175,30 @@
               />
             </div>
 
-            <div class="col-6">
-              <label> المحافظة </label>
-              <input
-                aria-label="default input example"
-                cFormControl
-                type="text"
-                formControlName="kitchenLocation"
-              />
+
+            <div class="col-4">
+              <label> المحافظة</label>
+              <ng-select
+                [items]="users"
+                bindLabel="userName"
+                bindValue="id"
+                placeholder="اختر المحاغظة"
+                formControlName="salesId"
+              >
+              </ng-select>
             </div>
 
 
-            <div class="col-12">
-              <label> المنطقة </label>
-              <input
-                aria-label="default input example"
-                cFormControl
-                type="text"
-                formControlName="kitchenLocation"
-              />
+            <div class="col-4">
+              <label> المنطقة</label>
+              <ng-select
+                [items]="users"
+                bindLabel="userName"
+                bindValue="id"
+                placeholder="اختر المنظقة"
+                formControlName="salesId"
+              >
+              </ng-select>
             </div>
 
             <!-- <div class="col-4">
