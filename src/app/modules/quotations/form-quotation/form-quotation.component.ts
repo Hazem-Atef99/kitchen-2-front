@@ -103,7 +103,7 @@ export class FormQuotationComponent implements OnInit {
       isCount: true,
       x: 1,
       name: 'تصفيح خشب ',
-      value:'woodPlating',
+      value:'platingWood',
       itemTypeId: 4,
       id: 96
     },

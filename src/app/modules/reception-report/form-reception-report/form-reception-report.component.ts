@@ -106,36 +106,36 @@ export class FormReceptionReportComponent {
   }
 
   AddClientFile(){
-    this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AmORPm')?.value==0?this.AddClientFileForm.get('actionByHour')?.value:this.AddClientFileForm.get('actionByHour')?.value+12)
-    let measermentID=this.AddClientFileForm.get('measurmentId')?.value
-    this.AddClientFileForm.get('measurmentId')?.patchValue(measermentID? measermentID.toString():'');
-    let val1, val2
-    val1 = this.AddClientFileForm.controls['measurmentId']?.value
-    val2 = val1.toString()
-    console.log(val2)
-    if(this.clientFileId!=null){
+    // this.AddClientFileForm.get('actionByHour')?.patchValue(this.AddClientFileForm.get('AmORPm')?.value==0?this.AddClientFileForm.get('actionByHour')?.value:this.AddClientFileForm.get('actionByHour')?.value+12)
+    // let measermentID=this.AddClientFileForm.get('measurmentId')?.value
+    // this.AddClientFileForm.get('measurmentId')?.patchValue(measermentID? measermentID.toString():'');
+    // let val1, val2
+    // val1 = this.AddClientFileForm.controls['measurmentId']?.value
+    // val2 = val1.toString()
+    // console.log(val2)
+    // if(this.clientFileId!=null){
 
-      this.AddClientFileForm.get('clientFileId')?.patchValue(this.clientFileId)
-    }
+    //   this.AddClientFileForm.get('clientFileId')?.patchValue(this.clientFileId)
+    // }
 
-    this.AddClientFileForm.patchValue({
-      measurmentId: val2
-    })
-    this.AddClientFileForm.patchValue({
-      clientId:this.clientForm.get('clientId')?.value
-    })
-    console.log(this.AddClientFileForm.get('devices')?.value)
-    // this.AddClientFileForm.get('devices')?.reset();
-    const devicesArray = this.AddClientFileForm.get('devices') as FormArray;
+    // this.AddClientFileForm.patchValue({
+    //   measurmentId: val2
+    // })
+    // this.AddClientFileForm.patchValue({
+    //   clientId:this.clientForm.get('clientId')?.value
+    // })
+    // console.log(this.AddClientFileForm.get('devices')?.value)
+    // // this.AddClientFileForm.get('devices')?.reset();
+    // const devicesArray = this.AddClientFileForm.get('devices') as FormArray;
 
-    this.selectedOptions.forEach(device=>{
+    // this.selectedOptions.forEach(device=>{
 
-      devicesArray.push(
-        this._FormBuilder.group({
-          deviceId: [device, Validators.required],
-        })
-      )
-    })
+    //   devicesArray.push(
+    //     this._FormBuilder.group({
+    //       deviceId: [device, Validators.required],
+    //     })
+    //   )
+    // })
     console.log(this.AddClientFileForm.value);
 
     this.recptionReportService.AddUpdatereceptionReport(this.AddClientFileForm.value).subscribe(res=>{
@@ -185,31 +185,55 @@ this._ConttactService.GetStatusCategoryById(19).subscribe(res=>{
   }
   initClientForm():FormGroup{
     return this._FormBuilder.group({
-      clientId: [null, [Validators.required]],
-       phoneNumber: [null, [Validators.required]],
-       clientAdress:[null,[Validators.required]]
+       clientId: [null, [Validators.required]],
+      //  phoneNumber: [null, [Validators.required]],
+       phoneNumber1: [null, [Validators.required]],
+       phoneNumber2: [null, [Validators.required]],
+       phoneNumber3: [null, [Validators.required]],
+       phoneNumber4: [null, [Validators.required]],
+       phoneNumber5: [null, [Validators.required]],
+       governorateId: [null, [Validators.required]],
+       clientAdress:[null,[Validators.required]],
     })
   }
+
   initClientFileForm(): FormGroup {
     return this._FormBuilder.group({
-      clientFileId: [null, [Validators.required]],
-      clientId: [null, [Validators.required]],
-      fileDate: [null, [Validators.required]],
-      actionByHour: [null, [Validators.required]],
-      clientNeed: [null, [Validators.required]],
-      designerId: [null, [Validators.required]],
-      designerDate: [null, [Validators.required]],
-      measurmentDate: [null, [Validators.required]],
-      measurmentId: [null, [Validators.required]],
-      kitchenModelId: [null, [Validators.required]],
-      kitchenLocation: [null, [Validators.required]],
-      devices: this._FormBuilder.array([]),
-      selectedDevice:[null, [Validators.required]],
+      name: [null, [Validators.required]],
+      email: [null, [Validators.required]],
+      descriptionId: [null, [Validators.required]],
+      areaId: [null, [Validators.required]],
       salesId:[null,[Validators.required]],
-      AmORPm:[0,[Validators.required]]
-
+      fileDate: [null, [Validators.required]],
+      selectedDevice:[null, [Validators.required]],
+      selectedBuilding: [null, [Validators.required]],
+      selectedService: [null, [Validators.required]],
+      selectedOrder: [null, [Validators.required]],
+      kitchenUsers: [null, [Validators.required]],
+      kitchenLocation: [null, [Validators.required]],
+      // devices: this._FormBuilder.array([]),
 })
 }
+//   initClientFileForm(): FormGroup {
+//     return this._FormBuilder.group({
+//       clientFileId: [null, [Validators.required]],
+//       clientId: [null, [Validators.required]],
+//       fileDate: [null, [Validators.required]],
+//       actionByHour: [null, [Validators.required]],
+//       clientNeed: [null, [Validators.required]],
+//       designerId: [null, [Validators.required]],
+//       designerDate: [null, [Validators.required]],
+//       measurmentDate: [null, [Validators.required]],
+//       measurmentId: [null, [Validators.required]],
+//       kitchenModelId: [null, [Validators.required]],
+//       kitchenLocation: [null, [Validators.required]],
+//       devices: this._FormBuilder.array([]),
+//       selectedDevice:[null, [Validators.required]],
+//       salesId:[null,[Validators.required]],
+//       AmORPm:[0,[Validators.required]]
+
+// })
+// }
 setMeasurement() {
   let val1, val2
   val1 = this.AddClientFileForm.get('measurmentId')?.value

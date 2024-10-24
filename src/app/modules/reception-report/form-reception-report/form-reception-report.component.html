@@ -37,7 +37,7 @@
                 aria-label="default input example"
                 cFormControl
                 type="text"
-                formControlName="kitchenLocation"
+                formControlName="name"
               />
             </div>
 
@@ -58,7 +58,7 @@
                 bindLabel="userName"
                 bindValue="id"
                 placeholder="اختر الوصف"
-                formControlName="salesId"
+                formControlName="descriptionId"
               >
               </ng-select>
             </div>
@@ -70,7 +70,7 @@
                 readonly
                 aria-label="default input example"
                 cFormControl
-                formControlName="phoneNumber"
+                formControlName="phoneNumber1"
                 type="tel"
               />
             </div>
@@ -89,7 +89,7 @@
                 readonly
                 aria-label="default input example"
                 cFormControl
-                formControlName="phoneNumber"
+                formControlName="phoneNumber2"
                 type="tel"
               />
             </div>
@@ -107,7 +107,7 @@
                 readonly
                 aria-label="default input example"
                 cFormControl
-                formControlName="phoneNumber"
+                formControlName="phoneNumber3"
                 type="tel"
               />
             </div>
@@ -125,7 +125,7 @@
                 readonly
                 aria-label="default input example"
                 cFormControl
-                formControlName="phoneNumber"
+                formControlName="phoneNumber4"
                 type="tel"
               />
             </div>
@@ -143,7 +143,7 @@
                 readonly
                 aria-label="default input example"
                 cFormControl
-                formControlName="phoneNumber"
+                formControlName="phoneNumber5"
                 type="tel"
               />
             </div>
@@ -172,6 +172,7 @@
                 aria-label="default input example"
                 cFormControl
                 type="email"
+                formControlName="email"
               />
             </div>
 
@@ -183,7 +184,7 @@
                 bindLabel="userName"
                 bindValue="id"
                 placeholder="اختر المحاغظة"
-                formControlName="salesId"
+                formControlName="governorateId"
               >
               </ng-select>
             </div>
@@ -196,7 +197,7 @@
                 bindLabel="userName"
                 bindValue="id"
                 placeholder="اختر المنظقة"
-                formControlName="salesId"
+                formControlName="areaId"
               >
               </ng-select>
             </div>
@@ -313,9 +314,9 @@
                 <input
                   type="checkbox"
                   #checkbox
-                  name="selectedDevice"
+                  name="selectedBuilding"
                   [checked]="isSelected(option.statusId)"
-                  formControlName="selectedDevice"
+                  formControlName="selectedBuilding"
                   [value]="option.statusId"
                   (change)="selectOption($event, option)"
                 />
@@ -332,9 +333,9 @@
                     <input
                       type="checkbox"
                       #checkbox
-                      name="selectedDevice"
+                      name="selectedService"
                       [checked]="isSelected(option.statusId)"
-                      formControlName="selectedDevice"
+                      formControlName="selectedService"
                       [value]="option.statusId"
                       (change)="selectOption($event, option)"
                     />
@@ -352,9 +353,9 @@
                     <input
                       type="checkbox"
                       #checkbox
-                      name="selectedDevice"
+                      name="selectedOrder"
                       [checked]="isSelected(option.statusId)"
-                      formControlName="selectedDevice"
+                      formControlName="selectedOrder"
                       [value]="option.statusId"
                       (change)="selectOption($event, option)"
                     />
@@ -456,6 +457,7 @@
           aria-label="default input example"
           cFormControl
           type="number"
+          formControlName="kitchenUsers"
         />
       </div>
 
