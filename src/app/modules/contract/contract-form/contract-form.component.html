@@ -1,75 +1,75 @@
 <c-card class="mb-4">
-    <c-card-header class="d-flex justify-content-between align-items-center py-4">
-        <strong> اضافة العقود</strong>
-        <button class="btn btn-success" (click)="addContract()">
-            {{clientFileId? 'تعديل' : 'إضافة'}}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
-                viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-            </svg>
-        </button>
-        <button class="btn btn-success" routerLink="/contract">رجوع</button>
+  <c-card-header class="d-flex justify-content-between align-items-center py-4">
+    <strong> اضافة العقود</strong>
+    <button class="btn btn-success" (click)="addContract()">
+      {{clientFileId? 'تعديل' : 'إضافة'}}
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+      </svg>
+    </button>
+    <button class="btn btn-success" routerLink="/contract">رجوع</button>
 
-    </c-card-header>
+  </c-card-header>
 </c-card>
 <c-card class="mb-4 py-4">
-    <form [formGroup]="AddClientFileForm">
-<!--        <c-row class="p-2">-->
-<!--            <c-col *ngFor="let type of clientFileTypes">-->
-<!--                <c-form-check>-->
-<!--                    <input [id]="type.id" [checked]="+fileTypeId === +type.id" cFormCheckInput-->
-<!--                           formControlName="fileTypeId" type="radio" name="fileTypeId" value="{{type.id}}" />-->
-<!--                    <label [for]="type.id" cFormCheckLabel>{{type.name}}</label>-->
-<!--                </c-form-check>-->
-<!--            </c-col>-->
-<!--        </c-row>-->
-      <c-row class="px-2">
-        <div class="col-md-3 mb-3">
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <h5>الزبون</h5>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <label>الزبون</label>
-                  <ng-select [items]="allClients"
-                             bindLabel="clientName"
-                             (change)="setClient($event)"
-                             bindValue="clientId"
-                             placeholder="اختر الزبون"
-                             formControlName="clientId">
-                  </ng-select>
-                </div>
-                <div class="col-12 mt-2">
-<!--                <div class="col-12 mt-2" style="opacity: 50%; pointer-events: none">-->
-                  <label>رقم الجوال</label>
-                  <input readonly aria-label="default input example" cFormControl
-                         formControlName="phoneNumber" type="tel"/>
-                </div>
-                <div class="col-12 mt-2">
-                  <label>البريد</label>
-                  <input readonly aria-label="default input example" cFormControl
-                            formControlName="address">
-                </div>
+  <form [formGroup]="AddClientFileForm">
+    <!--        <c-row class="p-2">-->
+    <!--            <c-col *ngFor="let type of clientFileTypes">-->
+    <!--                <c-form-check>-->
+    <!--                    <input [id]="type.id" [checked]="+fileTypeId === +type.id" cFormCheckInput-->
+    <!--                           formControlName="fileTypeId" type="radio" name="fileTypeId" value="{{type.id}}" />-->
+    <!--                    <label [for]="type.id" cFormCheckLabel>{{type.name}}</label>-->
+    <!--                </c-form-check>-->
+    <!--            </c-col>-->
+    <!--        </c-row>-->
+    <c-row class="px-2">
+      <div class="col-md-3 mb-3">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <h5>الزبون</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <label>الزبون</label>
+                <ng-select [items]="allClients" bindLabel="clientName" (change)="setClient($event)" bindValue="clientId"
+                  placeholder="اختر الزبون" formControlName="clientId">
+                </ng-select>
+              </div>
+              <div class="col-12 mt-2">
+                <!--                <div class="col-12 mt-2" style="opacity: 50%; pointer-events: none">-->
+                <label>رقم الجوال</label>
+                <input readonly aria-label="default input example" cFormControl formControlName="phoneNumber"
+                  type="tel" />
+              </div>
+              <div class="col-12 mt-2">
+                <label>البريد</label>
+                <input readonly aria-label="default input example" cFormControl formControlName="address">
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-9 mb-3">
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <h5>العقد</h5>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-4">
+      </div>
+      <div class="col-md-9 mb-3">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <h5>العقد</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <!-- <div class="col-4">
                   <label>العقد كاملا</label>
                   <input aria-label="default input example" cFormControl
                          formControlName="allPrice" type="number"/>
-                </div>
-                <div class="col-4">
+                </div> -->
+
+              <div class="col-4">
+                <label>الرقم الوطني</label>
+                <input aria-label="default input example" cFormControl formControlName="allPrice" type="text" />
+              </div>
+              <!-- <div class="col-4">
                   <label>تاريخ التركيب ف الأسبوع</label>
                   <ng-select [items]="weeks"
                              bindLabel="id"
@@ -77,8 +77,45 @@
                              placeholder="الاسبوع"
                              formControlName="startWeek">
                   </ng-select>
+                </div> -->
+
+              <div class="col-4">
+                <label>قيمة العقد</label>
+                <input aria-label="default input example" cFormControl formControlName="allPrice" type="text" />
+              </div>
+              <div class="col-4">
+                <label>تاريخ العقد</label>
+                <input aria-label="default input example" cFormControl formControlName="contractDate" type="date" />
+              </div>
+
+              <div class="row mb-4 ms-2">
+                <div class="card-header mt-3">
+                  <h5> دفعات المطبخ</h5>
                 </div>
-                <div class="col-4">
+
+                <div class="col-6">
+                  <label>عند توقيع العقد</label>
+                  <input aria-label="default input example" cFormControl formControlName="allPrice" type="text">
+                </div>
+
+                <div class="col-6">
+                  <label> قبل التصنيع </label>
+                  <input aria-label="default input example" cFormControl formControlName="allPrice" type="text">
+                </div>
+
+                <div class="col-6">
+                  <label> قبل التوريد والتركيب بأسبوع</label>
+                  <input aria-label="default input example" cFormControl formControlName="allPrice" type="text">
+                </div>
+
+                <div class="col-6">
+                  <label>  التركيب خلال</label>
+                  <input aria-label="default input example" cFormControl formControlName="allPrice" type="text">
+                </div>
+
+              </div>
+
+              <!-- <div class="col-4">
                   <label>تاريخ التركيب ف الشهر</label>
                   <ng-select [items]="months"
                              bindLabel="id"
@@ -86,14 +123,9 @@
                              placeholder="اختر الشهر"
                              formControlName="startMonth">
                   </ng-select>
-                </div>
+                </div> -->
 
-                <div class="col-3">
-                  <label>تاريخ العقد</label>
-                  <input aria-label="default input example" cFormControl
-                         formControlName="contractDate" type="date"/>
-                </div>
-                <div *ngIf="clientFileId"  class="col-3" style="opacity: 50%; pointer-events: none">
+              <!-- <div *ngIf="clientFileId"  class="col-3" style="opacity: 50%; pointer-events: none">
                   <label>رقم العقد</label>
                   <input aria-label="default input example" cFormControl
                          formControlName="contractStatusId" type="number" />
@@ -111,19 +143,19 @@
                       <label cFormCheckLabel>شامل الضريبة</label>
                     </c-form-check>
                   </c-col>
-                </div>
-                <div class="col-md-12 mb-3">
+                </div> -->
+              <!-- <div class="col-md-12 mb-3">
                   <label>الملاحظات</label>
                   <textarea formControlName="notes" id="" cols="30"
                             rows="3" class="form-control">
                   </textarea>
-                </div>
-              </div>
+                </div> -->
             </div>
           </div>
         </div>
-      </c-row>
-      <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
+      </div>
+    </c-row>
+    <!-- <c-col class="mx-2 my-4" *ngIf="loadPriceOffer">
         <div class="card">
           <div class="card-header m-0">
             <h5>المطبخ</h5>
@@ -141,7 +173,7 @@
                                  placeholder="{{loadPriceOfferList[i]?.defaultDesc}}"
                                  formControlName="itemId">
                       </ng-select>
-                      <!--                          (change)="setPrice($event, i); getPrice(i)"-->
+                                               (change)="setPrice($event, i); getPrice(i)"
                     </div>
                   </ng-container>
                 </ng-container>
@@ -149,7 +181,7 @@
             </div>
           </div>
         </div>
-      </c-col>
-    </form>
+      </c-col> -->
+  </form>
 
 </c-card>
